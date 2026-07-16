@@ -9,6 +9,7 @@ $menu_fallback = [
 $home_url = esc_url(home_url('/'));
 $login_url = esc_url(drtalk_redesign_login_url());
 $demo_url = esc_url(drtalk_redesign_demo_url());
+$logo_url = esc_url(get_theme_file_uri('assets/images/drtalk-logo-dual.png'));
 $primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
 $primary_menu = wp_nav_menu([
 	'theme_location' => 'primary',
@@ -20,8 +21,8 @@ $primary_menu = wp_nav_menu([
 ?>
 <header class="border-b border-purple-dark/10 bg-cream">
 	<div class="site-container flex min-h-20 items-center justify-between gap-6">
-		<a class="font-heading text-2xl font-bold tracking-[-0.06em] text-purple-dark" href="<?php echo $home_url; ?>" rel="home">
-			DrTalk<span class="text-orange">.</span>
+		<a href="<?php echo $home_url; ?>" rel="home">
+			<img src="<?php echo $logo_url; ?>" width="119" height="32" alt="<?php esc_attr_e('DrTalk', 'drtalk-redesign'); ?>">
 		</a>
 
 		<button class="inline-flex size-11 items-center justify-center rounded-full border border-purple-dark/20 text-purple-dark lg:hidden" type="button" aria-controls="primary-navigation" aria-expanded="false" data-menu-toggle>
