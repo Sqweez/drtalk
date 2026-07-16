@@ -1,0 +1,29 @@
+# Default deny: this Local WordPress copy contains production-derived data.
+*
+
+# Repository documentation.
+!/.gitignore
+!/AGENTS.md
+!/docs/
+!/docs/**
+
+# Future redesign theme. Keep every parent directory visible to Git.
+!/app/
+!/app/public/
+!/app/public/wp-content/
+!/app/public/wp-content/themes/
+!/app/public/wp-content/themes/drtalk-redesign/
+!/app/public/wp-content/themes/drtalk-redesign/**
+
+# Theme-local dependencies, secrets, caches, and machine-specific files.
+/app/public/wp-content/themes/drtalk-redesign/node_modules/
+/app/public/wp-content/themes/drtalk-redesign/vendor/
+/app/public/wp-content/themes/drtalk-redesign/.env
+/app/public/wp-content/themes/drtalk-redesign/.env.*
+!/app/public/wp-content/themes/drtalk-redesign/.env.example
+/app/public/wp-content/themes/drtalk-redesign/.cache/
+/app/public/wp-content/themes/drtalk-redesign/coverage/
+/app/public/wp-content/themes/drtalk-redesign/*.log
+/app/public/wp-content/themes/drtalk-redesign/.DS_Store
+/app/public/wp-content/themes/drtalk-redesign/.idea/
+/app/public/wp-content/themes/drtalk-redesign/.vscode/
