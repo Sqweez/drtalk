@@ -14,11 +14,15 @@ for file in "$template" "$theme_dir/assets/images/icon-plus.svg"; do
 done
 
 grep -Fq 'Frequently Asked Questions' "$template"
-grep -Fq 'Security &amp; Compliance' "$template"
-grep -Fq 'Pricing &amp; Getting started' "$template"
-grep -Fq 'data-faq-category' "$template"
+grep -Fq '$faq_categories = [' "$template"
+grep -Fq 'wp_json_encode' "$template"
 grep -Fq 'data-faq-tabs' "$template"
+grep -Fq 'data-faq-content' "$template"
+grep -Fq 'data-faq-data' "$template"
 grep -Fq 'data-faq-tabs' "$script"
-grep -Fq 'data-faq-answer' "$script"
+grep -Fq 'cursor-pointer' "$script"
+grep -Fq 'grid-rows-[0fr]' "$script"
+grep -Fq 'grid-rows-[1fr]' "$script"
+grep -Fq 'opacity-0' "$script"
 
 echo "Home FAQ checks passed."

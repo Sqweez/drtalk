@@ -1,34 +1,84 @@
 <?php
 
-$plus_icon_url = esc_url(get_theme_file_uri('assets/images/icon-plus.svg')); ?>
-<section class="bg-cream px-10 py-[120px]" aria-labelledby="faq-title">
-	<div class="mx-auto flex w-full max-w-[75rem] flex-col items-center gap-12">
-		<h2 id="faq-title" class="text-center text-5xl leading-[1.1]">Frequently Asked Questions</h2>
-		<div class="flex items-center justify-center gap-2 rounded-[28px] border border-[#736962] p-2" role="tablist" aria-label="FAQ categories" data-faq-tabs>
-			<button class="flex h-10 items-center justify-center rounded-[20px] bg-purple-dark px-4 py-2 text-base font-bold leading-6 text-cream transition" type="button" role="tab" aria-selected="true" aria-controls="faq-panel-referrals" data-faq-category="referrals">Referrals &amp; Workflow</button>
-			<button class="flex h-10 items-center justify-center rounded-[20px] px-4 py-2 text-base font-bold leading-6 text-purple-dark transition" type="button" role="tab" aria-selected="false" aria-controls="faq-panel-security" data-faq-category="security">Security &amp; Compliance</button>
-			<button class="flex h-10 items-center justify-center rounded-[20px] px-4 py-2 text-base font-bold leading-6 text-purple-dark transition" type="button" role="tab" aria-selected="false" aria-controls="faq-panel-pricing" data-faq-category="pricing">Pricing &amp; Getting started</button>
-		</div>
+$faq_categories = [
+	[
+		'id' => 'referrals',
+		'label' => 'Referrals & Workflow',
+		'questions' => [
+			[
+				'question' => 'How does drtalk help reduce referral leakage?',
+				'answer' =>
+					'DrTalk gives your team a clear view of referral activity, follow-up, and next steps so opportunities are not lost between offices.'
+			],
+			[
+				'question' => 'Do my referring GPs need to learn a new system?',
+				'answer' =>
+					'No. DrTalk is designed to make collaboration straightforward for referring providers without adding a complicated new workflow.'
+			],
+			[
+				'question' => "What happens to a referral once it's sent?",
+				'answer' =>
+					'The referral is tracked through the workflow, giving your team visibility into its progress and the actions still needed.'
+			],
+			[
+				'question' => 'Is drtalk built for dental, or for broader healthcare?',
+				'answer' =>
+					'DrTalk is built for healthcare practice operations and supports dental practices as well as broader healthcare teams.'
+			],
+			[
+				'question' => 'Will my team actually adopt this, or will it just add more steps?',
+				'answer' =>
+					'The product is designed to reduce manual chasing and make the next action clear, fitting into your team’s day-to-day workflow.'
+			],
+			[
+				'question' => 'Does drtalk integrate with my existing EMR or other software?',
+				'answer' =>
+					'DrTalk can work alongside existing systems. A referral analysis is the best way to review your current workflow and integration needs.'
+			]
+		]
+	],
+	[
+		'id' => 'security',
+		'label' => 'Security & Compliance',
+		'questions' => [
+			[
+				'question' => 'How does drtalk protect patient information?',
+				'answer' =>
+					'DrTalk is built for healthcare operations with safeguards for protected health information in transit and at rest.'
+			],
+			[
+				'question' => 'Is drtalk HIPAA compliant?',
+				'answer' => 'DrTalk is designed as a HIPAA-compliant business tool for healthcare practice operations.'
+			]
+		]
+	],
+	[
+		'id' => 'pricing',
+		'label' => 'Pricing & Getting started',
+		'questions' => [
+			[
+				'question' => 'How do I get started with drtalk?',
+				'answer' =>
+					'Start with a free referral gap analysis. In 30 minutes, we review the workflow and identify the opportunities in your practice.'
+			],
+			[
+				'question' => 'What does the free referral analysis include?',
+				'answer' => 'We do the work and you keep the report. There is no pitch and no obligation.'
+			]
+		]
+	]
+];
 
-		<div class="w-full max-w-[45rem]">
-			<div id="faq-panel-referrals" role="tabpanel" data-faq-panel="referrals">
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-referrals-1" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">How does drtalk help reduce referral leakage?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-referrals-1" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>DrTalk gives your team a clear view of referral activity, follow-up, and next steps so opportunities are not lost between offices.</p></div>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-referrals-2" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">Do my referring GPs need to learn a new system?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-referrals-2" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>No. DrTalk is designed to make collaboration straightforward for referring providers without adding a complicated new workflow.</p></div>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-referrals-3" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">What happens to a referral once it's sent?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-referrals-3" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>The referral is tracked through the workflow, giving your team visibility into its progress and the actions still needed.</p></div>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-referrals-4" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">Is drtalk built for dental, or for broader healthcare?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-referrals-4" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>DrTalk is built for healthcare practice operations and supports dental practices as well as broader healthcare teams.</p></div>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-referrals-5" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">Will my team actually adopt this, or will it just add more steps?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-referrals-5" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>The product is designed to reduce manual chasing and make the next action clear, fitting into your team’s day-to-day workflow.</p></div>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-referrals-6" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">Does drtalk integrate with my existing EMR or other software?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-referrals-6" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>DrTalk can work alongside existing systems. A referral analysis is the best way to review your current workflow and integration needs.</p></div>
-			</div>
-
-			<div id="faq-panel-security" role="tabpanel" data-faq-panel="security" hidden>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-security-1" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">How does drtalk protect patient information?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-security-1" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>DrTalk is built for healthcare operations with safeguards for protected health information in transit and at rest.</p></div>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-security-2" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">Is drtalk HIPAA compliant?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-security-2" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>DrTalk is designed as a HIPAA-compliant business tool for healthcare practice operations.</p></div>
-			</div>
-
-			<div id="faq-panel-pricing" role="tabpanel" data-faq-panel="pricing" hidden>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-pricing-1" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">How do I get started with drtalk?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-pricing-1" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>Start with a free referral gap analysis. In 30 minutes, we review the workflow and identify the opportunities in your practice.</p></div>
-				<div class="border-b border-[#d6d1cb]"><button class="flex w-full items-center gap-4 p-6 text-left" type="button" aria-expanded="false" aria-controls="faq-answer-pricing-2" data-faq-question><span class="flex-1 text-lg font-bold leading-6 text-purple-dark">What does the free referral analysis include?</span><img class="size-6 shrink-0 transition-transform" src="<?php echo $plus_icon_url; ?>" width="24" height="24" alt="" aria-hidden="true" data-faq-plus></button><p id="faq-answer-pricing-2" class="hidden px-6 pb-6 text-lg leading-6 text-purple-dark/75" data-faq-answer>We do the work and you keep the report. There is no pitch and no obligation.</p></div>
-			</div>
-		</div>
-	</div>
+$faq_data_json = wp_json_encode($faq_categories, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+$plus_icon_url = get_theme_file_uri('assets/images/icon-plus.svg');
+?>
+<section class="bg-cream px-10 py-[120px]" aria-labelledby="faq-title" data-faq data-faq-icon="<?php echo esc_url(
+	$plus_icon_url
+); ?>">
+  <div class="mx-auto flex w-full max-w-[75rem] flex-col items-center gap-12">
+    <h2 id="faq-title" class="text-center text-5xl leading-[1.1]">Frequently Asked Questions</h2>
+    <div class="flex items-center justify-center gap-2 rounded-[28px] border border-[#736962] p-2" role="tablist" aria-label="FAQ categories" data-faq-tabs></div>
+    <div class="w-full max-w-[45rem] transition-[opacity,transform] duration-200 ease-out" data-faq-content></div>
+  </div>
+  <script type="application/json" data-faq-data><?php echo $faq_data_json; ?></script>
 </section>
