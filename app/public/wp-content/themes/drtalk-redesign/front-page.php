@@ -38,4 +38,5 @@ get_header();
 		<div class="rounded-3xl bg-purple-dark p-7 text-cream"><p class="font-heading text-3xl font-semibold">Close</p><p class="mt-3 leading-6 text-lilac/75">Turn overlooked gaps into better care, stronger relationships, and healthy growth.</p></div>
 	</div>
 </section>
+<?php get_template_part('template-parts/home', 'faq'); ?>
 <?php get_footer();
