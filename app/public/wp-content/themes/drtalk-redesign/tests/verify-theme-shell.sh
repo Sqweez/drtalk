@@ -27,5 +27,9 @@ grep -Fq 'Get a Free Referral Analysis' "$theme_dir/template-parts/site-header.p
 grep -Fq 'Log In' "$theme_dir/template-parts/site-header.php"
 grep -Fq "home_url('/about-us/')" "$theme_dir/template-parts/site-header.php"
 grep -Fq "home_url('/blog/')" "$theme_dir/template-parts/site-header.php"
+grep -Fq 'Create Account' "$theme_dir/template-parts/site-footer.php"
+grep -Fq 'Business Associates Agreement' "$theme_dir/template-parts/site-footer.php"
+grep -Fq 'icon-linkedin.svg' "$theme_dir/template-parts/site-footer.php"
+grep -Fq 'drtalk-logo-light.png' "$theme_dir/template-parts/site-footer.php"
 
 echo "Theme shell checks passed."
