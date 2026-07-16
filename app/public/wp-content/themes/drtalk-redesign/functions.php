@@ -5,6 +5,20 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Enqueues the redesign typography.
+ */
+function drtalk_redesign_enqueue_fonts()
+{
+	wp_enqueue_style(
+		'drtalk-redesign-fonts',
+		'https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=League+Spartan:wght@400;500;600;700;800&display=swap',
+		[],
+		null
+	);
+}
+add_action('wp_enqueue_scripts', 'drtalk_redesign_enqueue_fonts');
+
+/**
  * Enqueues the compiled redesign stylesheet.
  */
 function drtalk_redesign_enqueue_styles()

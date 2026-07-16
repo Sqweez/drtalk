@@ -1,4 +1,5 @@
 /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
@@ -7,8 +8,19 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --spacing: 0.25rem;
+    --font-weight-semibold: 600;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --color-cream: #f6f1eb;
+    --color-lilac: #f3e8f7;
+    --color-purple-dark: #4a1e4f;
+    --color-purple: #873bb7;
+    --color-orange: #ed8f43;
+    --font-heading: 'League Spartan', sans-serif;
+    --font-body: 'Lato', sans-serif;
   }
 }
 @layer base {
@@ -159,4 +171,121 @@
     display: none !important;
   }
 }
-@layer utilities;
+@layer utilities {
+  .font-body {
+    font-family: var(--font-body);
+  }
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-cream);
+    font-family: var(--font-body);
+    color: var(--color-purple-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    --tw-tracking: -0.03em;
+    letter-spacing: -0.03em;
+  }
+  :is(a,
+  button,
+  input,
+  select,
+  textarea):focus-visible {
+    outline-style: var(--tw-outline-style);
+    outline-width: 2px;
+    outline-offset: 4px;
+    outline-color: var(--color-orange);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+@layer components {
+  .site-container {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 75rem;
+    padding-inline: calc(var(--spacing) * 5);
+    @media (width >= 40rem) {
+      padding-inline: calc(var(--spacing) * 8);
+    }
+    @media (width >= 64rem) {
+      padding-inline: calc(var(--spacing) * 10);
+    }
+  }
+  .button-primary {
+    display: inline-flex;
+    min-height: calc(var(--spacing) * 12);
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(infinity * 1px);
+    background-color: var(--color-orange);
+    padding-inline: calc(var(--spacing) * 6);
+    padding-block: calc(var(--spacing) * 3);
+    font-family: var(--font-heading);
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-purple-dark);
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-cream);
+      }
+    }
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-purple-dark);
+      }
+    }
+    &:focus-visible {
+      outline-color: var(--color-orange);
+    }
+  }
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-tracking {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-font-weight: initial;
+      --tw-tracking: initial;
+      --tw-outline-style: solid;
+    }
+  }
+}

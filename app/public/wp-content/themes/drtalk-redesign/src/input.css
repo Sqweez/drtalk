@@ -3,3 +3,64 @@
 @source "../*.php";
 @source "../template-parts/**/*.php";
 @source "../assets/**/*.js";
+
+@theme {
+  --color-cream: #f6f1eb;
+  --color-lilac: #f3e8f7;
+  --color-purple-dark: #4a1e4f;
+  --color-purple: #873bb7;
+  --color-orange: #ed8f43;
+
+  --font-heading: 'League Spartan', sans-serif;
+  --font-body: 'Lato', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream font-body text-purple-dark antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-semibold tracking-[-0.03em];
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    &:focus-visible {
+      @apply outline-2 outline-offset-4 outline-orange;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-[75rem] px-5 sm:px-8 lg:px-10;
+  }
+
+  .button-primary {
+    @apply inline-flex min-h-12 items-center justify-center rounded-full bg-orange px-6 py-3 font-heading font-semibold text-purple-dark transition-colors hover:bg-cream hover:text-purple-dark focus-visible:outline-orange;
+  }
+}
