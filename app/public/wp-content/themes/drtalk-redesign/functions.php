@@ -4,6 +4,24 @@ if (!defined('ABSPATH')) {
 	exit();
 }
 
+require_once get_theme_file_path('inc/links.php');
+
+/**
+ * Configures WordPress features used by the public-facing theme.
+ */
+function drtalk_redesign_setup()
+{
+	add_theme_support('automatic-feed-links');
+	add_theme_support('title-tag');
+	add_theme_support('post-thumbnails');
+	add_theme_support('html5', ['comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script']);
+
+	register_nav_menus([
+		'primary' => __('Primary navigation', 'drtalk-redesign')
+	]);
+}
+add_action('after_setup_theme', 'drtalk_redesign_setup');
+
 /**
  * Enqueues the redesign typography.
  */
@@ -29,3 +47,17 @@ function drtalk_redesign_enqueue_styles()
 	wp_enqueue_style('drtalk-redesign', get_theme_file_uri('dist/output.css'), [], $stylesheet_version);
 }
 add_action('wp_enqueue_scripts', 'drtalk_redesign_enqueue_styles');
+
+/**
+ * Enqueues small progressive-enhancement interactions for the theme shell.
+ */
+function drtalk_redesign_enqueue_scripts()
+{
+	$script_path = get_theme_file_path('assets/js/theme.js');
+	$script_version = file_exists($script_path) ? (string) filemtime($script_path) : '1.0.0';
+
+	wp_enqueue_script('drtalk-redesign', get_theme_file_uri('assets/js/theme.js'), [], $script_version, [
+		'in_footer' => true
+	]);
+}
+add_action('wp_enqueue_scripts', 'drtalk_redesign_enqueue_scripts');
