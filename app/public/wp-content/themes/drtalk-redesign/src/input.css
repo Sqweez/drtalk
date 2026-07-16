@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+@source "../*.php";
+@source "../template-parts/**/*.php";
+@source "../assets/**/*.js";

@@ -1,0 +1,21 @@
+{
+  "name": "drtalk-redesign",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "postcss src/input.css -o dist/output.css",
+    "watch": "postcss src/input.css -o dist/output.css --watch",
+    "dev": "npm run watch",
+    "format": "prettier --write \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
+    "format:check": "prettier --check \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
+    "test:foundation": "sh tests/verify-foundation.sh"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.24.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "postcss": "^8.5.19",
+    "postcss-cli": "^11.0.1",
+    "prettier": "^3.9.5",
+    "tailwindcss": "4.3"
+  }
+}
