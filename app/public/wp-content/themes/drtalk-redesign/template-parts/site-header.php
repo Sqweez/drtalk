@@ -1,49 +1,25 @@
 <?php
 
-$menu_fallback = [
-	__('Features', 'drtalk-redesign') => home_url('/features/'),
-	__('Pricing', 'drtalk-redesign') => home_url('/pricing/'),
-	__('About us', 'drtalk-redesign') => home_url('/about-us/'),
-	__('Blog', 'drtalk-redesign') => home_url('/blog/')
-];
 $home_url = esc_url(home_url('/'));
+$about_url = esc_url(home_url('/about-us/'));
+$blog_url = esc_url(home_url('/blog/'));
 $login_url = esc_url(drtalk_redesign_login_url());
 $demo_url = esc_url(drtalk_redesign_demo_url());
 $logo_url = esc_url(get_theme_file_uri('assets/images/drtalk-logo-dual.png'));
-$primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
-$primary_menu = wp_nav_menu([
-	'theme_location' => 'primary',
-	'container' => false,
-	'menu_class' => 'flex items-center gap-7 text-sm font-bold',
-	'fallback_cb' => false,
-	'echo' => false
-]);
 ?>
-<header class="border-b border-purple-dark/10 bg-cream">
-	<div class="site-container flex min-h-20 items-center justify-between gap-6">
-		<a href="<?php echo $home_url; ?>" rel="home">
-			<img src="<?php echo $logo_url; ?>" width="119" height="32" alt="<?php esc_attr_e('DrTalk', 'drtalk-redesign'); ?>">
-		</a>
+<header class="bg-cream px-12 py-5">
+	<div class="mx-auto flex h-10 w-full max-w-[75rem] items-center justify-center gap-8 rounded-lg">
+		<div class="flex flex-1 items-center gap-6">
+			<a class="shrink-0" href="<?php echo $home_url; ?>" rel="home">
+				<img src="<?php echo $logo_url; ?>" width="119" height="32" alt="<?php esc_attr_e('DrTalk', 'drtalk-redesign'); ?>">
+			</a>
+			<a class="text-sm leading-[18px] text-purple-dark transition hover:text-purple" href="<?php echo $about_url; ?>">About</a>
+			<a class="text-sm leading-[18px] text-purple-dark transition hover:text-purple" href="<?php echo $blog_url; ?>">Blog</a>
+		</div>
 
-		<button class="inline-flex size-11 items-center justify-center rounded-full border border-purple-dark/20 text-purple-dark lg:hidden" type="button" aria-controls="primary-navigation" aria-expanded="false" data-menu-toggle>
-			<span class="sr-only"><?php esc_html_e('Toggle navigation', 'drtalk-redesign'); ?></span>
-			<span aria-hidden="true" class="text-2xl leading-none">☰</span>
-		</button>
-
-		<nav id="primary-navigation" class="hidden lg:block" aria-label="<?php echo $primary_navigation_label; ?>" data-primary-navigation>
-			<?php echo $primary_menu; ?>
-			<?php if (!has_nav_menu('primary')): ?>
-				<ul class="flex items-center gap-7 text-sm font-bold">
-					<?php foreach ($menu_fallback as $label => $url): ?>
-						<li><a class="transition hover:text-purple" href="<?php echo esc_url($url); ?>"><?php echo esc_html($label); ?></a></li>
-					<?php endforeach; ?>
-				</ul>
-			<?php endif; ?>
-		</nav>
-
-		<div class="hidden items-center gap-5 lg:flex">
-			<a class="text-sm font-bold transition hover:text-purple" href="<?php echo $login_url; ?>" target="_blank" rel="noreferrer">Login</a>
-			<a class="button-primary" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a demo</a>
+		<div class="flex shrink-0 items-center gap-4">
+			<a class="inline-flex h-10 items-center justify-center rounded-[28px] px-6 py-3 text-base font-bold leading-6 text-purple-dark transition hover:bg-purple-dark/5" href="<?php echo $login_url; ?>" target="_blank" rel="noreferrer">Log In</a>
+			<a class="inline-flex h-10 items-center justify-center rounded-[28px] bg-purple-dark px-6 py-3 text-base font-bold leading-6 text-cream transition hover:bg-purple" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Get a Free Referral Analysis</a>
 		</div>
 	</div>
 </header>
