@@ -34,6 +34,12 @@ sections rather than one long template: hero, proof, pain points, workflow,
 outcomes, statistics, role-specific value, testimonials, founder, objections,
 FAQ, and final CTA.
 
+Use Tailwind CSS 4.3 with PostCSS and `@tailwindcss/postcss`. Define the Figma
+colour, type, spacing, and breakpoint tokens as CSS-first `@theme` variables in
+the source stylesheet, with explicit `@source` paths for PHP templates and
+JavaScript. Do not depend on DaisyUI component styling for the redesign; build
+the Figma components from project-owned utilities and component classes.
+
 Retain templates for the current public surface: front page, features, goals,
 pricing, about, standard pages, blog index, single posts, and 404. Each route
 gets a parity checklist for content, CTAs, outbound destinations, responsive
