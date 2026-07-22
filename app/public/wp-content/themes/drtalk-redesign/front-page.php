@@ -131,6 +131,7 @@ $founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone.jpeg
 $about_page_url = esc_url(home_url('/about-us/'));
 $concerns_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
 $concerns_scribble_url = esc_url(get_theme_file_uri('assets/images/concerns-scribble.svg'));
+$fomo_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
 $concerns = [
 	[
 		'title' => '“We already have a system for referrals.”',
@@ -634,6 +635,20 @@ get_header();
     ?>
 				<button class="concerns-dot" type="button" role="tab" data-concerns-dot="<?php echo $concern_index_value; ?>" aria-selected="<?php echo $concern_selected; ?>" aria-label="<?php echo $concern_label; ?>"></button>
 			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+<section class="fomo-section" data-fomo data-fomo-baseline="194.33" data-fomo-hourly-rate="4640" aria-labelledby="fomo-title">
+	<img class="fomo-noise" src="<?php echo $fomo_noise_url; ?>" alt="">
+	<div class="fomo-content">
+		<div class="fomo-copy">
+			<h2 id="fomo-title">What you’re losing without<br>an intelligent digital referral process</h2>
+			<p>The average specialist practice loses $4,640 every hour to missed and unconverted referrals.<br>Here's what's slipped by since you landed on this page:</p>
+		</div>
+		<div class="fomo-counter">
+			<p class="fomo-amount" data-fomo-amount>$194.33</p>
+			<p class="fomo-time"><span aria-hidden="true"></span><span data-fomo-time>00m:00s on page</span></p>
+			<p class="fomo-disclaimer">Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.</p>
 		</div>
 	</div>
 </section>

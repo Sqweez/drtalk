@@ -279,6 +279,30 @@
     animationFrame = requestAnimationFrame(tick);
   }
 
+  // assets/js/fomo.js
+  var fomoRoot = document.querySelector("[data-fomo]");
+  if (fomoRoot) {
+    const amount = fomoRoot.querySelector("[data-fomo-amount]");
+    const time = fomoRoot.querySelector("[data-fomo-time]");
+    const baseline = Number.parseFloat(fomoRoot.dataset.fomoBaseline);
+    const hourlyRate = Number.parseFloat(fomoRoot.dataset.fomoHourlyRate);
+    const startedAt = performance.now();
+    const formatAmount = (value) => new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(value);
+    const update2 = (now2) => {
+      const elapsedSeconds = Math.floor((now2 - startedAt) / 1e3);
+      const lostRevenue = baseline + hourlyRate / 3600 * elapsedSeconds;
+      const minutes = Math.floor(elapsedSeconds / 60).toString().padStart(2, "0");
+      const seconds = (elapsedSeconds % 60).toString().padStart(2, "0");
+      amount.textContent = `$${formatAmount(lostRevenue)}`;
+      time.textContent = `${minutes}m:${seconds}s on page`;
+      requestAnimationFrame(update2);
+    };
+    requestAnimationFrame(update2);
+  }
+
   // assets/js/how-it-works.js
   var howItWorksRoot = document.querySelector("[data-how-it-works]");
   if (howItWorksRoot) {
