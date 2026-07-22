@@ -35,22 +35,34 @@ $different_points = [
 $different_divider_url = esc_url(get_theme_file_uri('assets/images/different-divider.svg'));
 $calculator_inputs = [
 	[
+		'id' => 'referrals',
 		'label' => 'Referrals per month',
-		'value' => '80',
-		'minimum' => '10',
-		'maximum' => '1000'
+		'value' => 80,
+		'minimum' => 10,
+		'maximum' => 1000,
+		'step' => 1,
+		'prefix' => '',
+		'suffix' => ''
 	],
 	[
+		'id' => 'case-value',
 		'label' => 'Average case value',
-		'value' => '$3,000',
-		'minimum' => '$100',
-		'maximum' => '$10,000'
+		'value' => 3000,
+		'minimum' => 100,
+		'maximum' => 10000,
+		'step' => 100,
+		'prefix' => '$',
+		'suffix' => ''
 	],
 	[
+		'id' => 'conversion-rate',
 		'label' => 'Current conversion rate',
-		'value' => '42%',
-		'minimum' => '0%',
-		'maximum' => '100%'
+		'value' => 42,
+		'minimum' => 0,
+		'maximum' => 100,
+		'step' => 1,
+		'prefix' => '',
+		'suffix' => '%'
 	]
 ];
 $calculator_noise_url = esc_url(get_theme_file_uri('assets/images/calculator-noise.png'));
@@ -131,7 +143,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]">
+<section class="bg-cream px-10 py-[120px]" data-calculator>
 	<div class="mx-auto flex max-w-[75rem] flex-col gap-20">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
 			<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Put Operational AI to Work for Your Office</p>
@@ -170,46 +182,59 @@ get_header();
 				<?php foreach ($calculator_inputs as $calculator_input): ?>
 					<?php
      $calculator_label = esc_html($calculator_input['label']);
-     $calculator_value = esc_html($calculator_input['value']);
-     $calculator_minimum = esc_html($calculator_input['minimum']);
-     $calculator_maximum = esc_html($calculator_input['maximum']);
+     $calculator_id = esc_attr($calculator_input['id']);
+     $calculator_value = esc_attr($calculator_input['value']);
+     $calculator_minimum = esc_attr($calculator_input['minimum']);
+     $calculator_maximum = esc_attr($calculator_input['maximum']);
+     $calculator_step = esc_attr($calculator_input['step']);
+     $calculator_prefix = esc_html($calculator_input['prefix']);
+     $calculator_suffix = esc_html($calculator_input['suffix']);
      ?>
 					<div class="flex flex-col gap-4">
 						<div class="flex items-center gap-2">
 							<p class="flex-1 text-sm leading-[1.125rem] text-[#524c45]"><?php echo $calculator_label; ?></p>
-							<div class="w-30 rounded-lg border border-[#d6d1cb] px-4 py-2 text-lg leading-6 text-purple-dark"><?php echo $calculator_value; ?></div>
+							<div class="flex w-30 items-center rounded-lg border border-[#d6d1cb] px-4 py-2 text-lg leading-6 text-purple-dark">
+								<span><?php echo $calculator_prefix; ?></span>
+								<input class="min-w-0 flex-1 bg-transparent text-lg leading-6 outline-none" type="number" min="<?php echo $calculator_minimum; ?>" max="<?php echo $calculator_maximum; ?>" step="<?php echo $calculator_step; ?>" value="<?php echo $calculator_value; ?>" data-calculator-number="<?php echo $calculator_id; ?>" aria-label="<?php echo $calculator_label; ?>">
+								<span><?php echo $calculator_suffix; ?></span>
+							</div>
 						</div>
 						<div class="flex flex-col gap-2">
-							<div class="relative h-1 rounded-lg bg-[#d6d1cb]">
-								<div class="h-1 w-[6.25rem] rounded-lg bg-purple"></div>
-								<img class="absolute left-24 top-1/2 size-4 -translate-y-1/2" src="<?php echo $calculator_thumb_url; ?>" width="16" height="16" alt="">
+							<div class="relative h-4">
+								<div class="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-lg bg-[#d6d1cb]"></div>
+								<div class="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-lg bg-purple" data-calculator-fill="<?php echo $calculator_id; ?>"></div>
+								<img class="pointer-events-none absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2" src="<?php echo $calculator_thumb_url; ?>" width="16" height="16" alt="" data-calculator-thumb="<?php echo $calculator_id; ?>">
+								<input class="absolute inset-0 h-4 w-full cursor-pointer opacity-0" type="range" min="<?php echo $calculator_minimum; ?>" max="<?php echo $calculator_maximum; ?>" step="<?php echo $calculator_step; ?>" value="<?php echo $calculator_value; ?>" data-calculator-input="<?php echo $calculator_id; ?>" aria-label="<?php echo $calculator_label; ?>">
 							</div>
 							<div class="flex justify-between text-sm leading-[1.125rem] text-[#736962]">
-								<span><?php echo $calculator_minimum; ?></span>
-								<span><?php echo $calculator_maximum; ?></span>
+								<span><?php echo $calculator_prefix . $calculator_minimum . $calculator_suffix; ?></span>
+								<span><?php echo $calculator_prefix . $calculator_maximum . $calculator_suffix; ?></span>
 							</div>
 						</div>
 					</div>
 				<?php endforeach; ?>
 			</div>
-			<div class="relative flex min-w-0 flex-1 flex-col gap-8 rounded-2xl p-8 text-purple-dark">
+			<div class="relative flex min-w-0 flex-1 flex-col gap-8 rounded-2xl p-8 text-purple-dark" data-calculator-results aria-live="polite">
 				<div class="flex flex-col gap-2">
 					<p class="text-sm leading-[1.125rem] text-purple-dark/75">Monthly revenue at risk:</p>
-					<p class="text-5xl leading-[1.1]">$12,000</p>
+					<p class="text-5xl leading-[1.1]" data-calculator-monthly>$139,200</p>
 				</div>
 				<img class="h-px w-full" src="<?php echo $calculator_divider_url; ?>" width="432" height="1" alt="">
 				<div class="flex gap-8">
 					<div class="flex flex-1 flex-col gap-3">
 						<p class="text-sm leading-[1.125rem] text-purple-dark/75">Annual revenue at risk:</p>
-						<p class="text-[2rem] font-medium leading-[1.1]">$144,000</p>
+						<p class="text-[2rem] font-medium leading-[1.1]" data-calculator-annual>$1,670,400</p>
 					</div>
 					<div class="flex flex-1 flex-col gap-3">
 						<p class="text-sm leading-[1.125rem] text-purple-dark/75">Health score:</p>
 						<div class="flex items-baseline gap-3">
-							<p class="text-[2rem] font-medium leading-[1.1] text-[#c9252d]">50%</p>
-							<div class="flex items-center gap-1">
+							<div>
+								<p class="text-[2rem] font-medium leading-[1.1] text-[#c9252d]" data-calculator-health>44%</p>
+								<p class="mt-1 text-sm leading-[1.125rem] text-[#c9252d]" data-calculator-health-band>Poor</p>
+							</div>
+							<div class="flex items-center gap-1" data-calculator-health-bars>
 								<?php for ($score_bar = 1; $score_bar <= 10; $score_bar++): ?>
-									<span class="h-6 w-1 rounded-sm <?php echo $score_bar <= 5 ? 'bg-[#c9252d]' : 'bg-purple-dark/25'; ?>"></span>
+									<span class="h-6 w-1 rounded-sm bg-purple-dark/25" data-calculator-health-bar></span>
 								<?php endfor; ?>
 							</div>
 						</div>

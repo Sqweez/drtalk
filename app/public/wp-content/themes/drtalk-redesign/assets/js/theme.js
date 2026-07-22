@@ -126,3 +126,103 @@ if (faqRoot) {
   renderTabs();
   renderQuestions(categories[0]);
 }
+
+const calculatorRoot = document.querySelector('[data-calculator]');
+
+if (calculatorRoot) {
+  const calculatorInputs = calculatorRoot.querySelectorAll('[data-calculator-input]');
+  const numberInputs = calculatorRoot.querySelectorAll('[data-calculator-number]');
+  const monthlyOutput = calculatorRoot.querySelector('[data-calculator-monthly]');
+  const annualOutput = calculatorRoot.querySelector('[data-calculator-annual]');
+  const healthOutput = calculatorRoot.querySelector('[data-calculator-health]');
+  const healthBandOutput = calculatorRoot.querySelector('[data-calculator-health-band]');
+  const healthBars = calculatorRoot.querySelectorAll('[data-calculator-health-bar]');
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  });
+
+  const healthBands = [
+    { minimum: 75, label: 'Healthy', color: '#237a57' },
+    { minimum: 50, label: 'At risk', color: '#ed8f43' },
+    { minimum: 25, label: 'Poor', color: '#c9252d' },
+    { minimum: 5, label: 'Critical', color: '#7f1d1d' },
+  ];
+
+  const getInput = (name) => calculatorRoot.querySelector(`[data-calculator-input="${name}"]`);
+  const getNumberInput = (name) =>
+    calculatorRoot.querySelector(`[data-calculator-number="${name}"]`);
+  const getValue = (name) => Number(getInput(name).value);
+
+  const syncInput = (name, value) => {
+    const rangeInput = getInput(name);
+    const numberInput = getNumberInput(name);
+    const fill = calculatorRoot.querySelector(`[data-calculator-fill="${name}"]`);
+    const thumb = calculatorRoot.querySelector(`[data-calculator-thumb="${name}"]`);
+    const minimum = Number(rangeInput.min);
+    const maximum = Number(rangeInput.max);
+    const percentage = ((value - minimum) / (maximum - minimum)) * 100;
+
+    rangeInput.value = String(value);
+    numberInput.value = String(value);
+    fill.style.width = `${percentage}%`;
+    thumb.style.left = `${percentage}%`;
+  };
+
+  const updateCalculator = () => {
+    const referrals = getValue('referrals');
+    const caseValue = getValue('case-value');
+    const conversionRate = getValue('conversion-rate');
+    const leakageRate = 100 - conversionRate;
+    const lostReferrals = referrals * (leakageRate / 100);
+    const lostRevenueMonthly = lostReferrals * caseValue;
+    const lostRevenueAnnual = lostRevenueMonthly * 12;
+    const healthScore = 100 - (lostRevenueAnnual / 3000000) * 100;
+    const clampedHealthScore = Math.max(5, Math.min(95, healthScore));
+    const roundedHealthScore = Math.round(clampedHealthScore);
+    const healthBand = healthBands.find((band) => roundedHealthScore >= band.minimum);
+    const filledBars = Math.round(roundedHealthScore / 10);
+
+    monthlyOutput.textContent = currencyFormatter.format(lostRevenueMonthly);
+    annualOutput.textContent = currencyFormatter.format(lostRevenueAnnual);
+    healthOutput.textContent = `${roundedHealthScore}%`;
+    healthBandOutput.textContent = healthBand.label;
+    healthOutput.style.color = healthBand.color;
+    healthBandOutput.style.color = healthBand.color;
+
+    healthBars.forEach((bar, index) => {
+      bar.style.backgroundColor = index < filledBars ? healthBand.color : 'rgba(74, 30, 79, 0.25)';
+    });
+
+    calculatorInputs.forEach((input) =>
+      syncInput(input.dataset.calculatorInput, Number(input.value)),
+    );
+  };
+
+  const clampInputValue = (input, minimum = Number(input.min), maximum = Number(input.max)) => {
+    const value = Number(input.value);
+
+    return Math.max(minimum, Math.min(maximum, Number.isFinite(value) ? value : minimum));
+  };
+
+  calculatorInputs.forEach((input) => {
+    input.addEventListener('input', () => {
+      syncInput(input.dataset.calculatorInput, clampInputValue(input));
+      updateCalculator();
+    });
+  });
+
+  numberInputs.forEach((input) => {
+    input.addEventListener('input', () => {
+      const name = input.dataset.calculatorNumber;
+      const rangeInput = getInput(name);
+      const value = clampInputValue(input, Number(rangeInput.min), Number(rangeInput.max));
+
+      syncInput(name, value);
+      updateCalculator();
+    });
+  });
+
+  updateCalculator();
+}
