@@ -1,18 +1,20 @@
 <?php
 
-get_header();
+get_header(); ?>
 
-if (have_posts()) {
-	while (have_posts()) {
-		the_post(); ?>
-		<article class="site-container py-16 lg:py-24">
-			<h1><?php the_title(); ?></h1>
-			<div class="mt-8 max-w-3xl text-lg leading-8">
-				<?php the_content(); ?>
-			</div>
-		</article>
-		<?php
-	}
-}
+<div class="flex min-h-screen flex-col" style="padding-top: var(--wp-admin--admin-bar--height, 0);">
+	<div class="container mx-auto flex-1 max-w-4xl px-4 py-8 lg:pt-24">
+		<?php if (have_posts()): ?>
+			<?php while (have_posts()): ?>
+				<?php the_post(); ?>
+				<div class="prose max-w-none">
+					<?php the_content(); ?>
+				</div>
+			<?php endwhile; ?>
+		<?php else: ?>
+			<p><?php esc_html_e('No posts found.', 'drtalk-redesign'); ?></p>
+		<?php endif; ?>
+	</div>
+</div>
 
-get_footer();
+<?php get_footer(); ?>
