@@ -482,7 +482,7 @@ get_header();
 				<div class="personalized-state" data-personalized-state="<?php echo $personalized_state_index; ?>" aria-hidden="<?php echo $personalized_state_hidden; ?>">
 					<div class="flex h-full w-[30rem] flex-col justify-between">
 						<div><h3 class="text-[2rem] font-medium leading-[1.1]"><?php echo $personalized_title; ?></h3><p class="mt-4 text-lg leading-6"><?php echo $personalized_description; ?></p></div>
-						<div><a class="button-primary" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p class="mt-4 text-base text-purple-dark/75">30 minutes. No pitch, no obligation.</p></div>
+						<div><a class="inline-flex h-14 items-center justify-center rounded-[28px] bg-purple px-8 text-base font-bold text-cream transition-colors hover:bg-purple-dark" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p class="mt-4 text-base text-purple-dark/75">30 minutes. No pitch, no obligation.</p></div>
 					</div>
 					<div class="personalized-screen"><img src="<?php echo $personalized_screen; ?>" alt="drtalk platform screen"></div>
 				</div>

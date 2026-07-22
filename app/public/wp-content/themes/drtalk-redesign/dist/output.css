@@ -308,6 +308,9 @@
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
+  .h-14 {
+    height: calc(var(--spacing) * 14);
+  }
   .h-20 {
     height: calc(var(--spacing) * 20);
   }
@@ -956,6 +959,9 @@
   @media (hover: hover) {
     .hover\:bg-purple:hover {
       background-color: var(--color-purple);
+    }
+    .hover\:bg-purple-dark:hover {
+      background-color: var(--color-purple-dark);
     }
     .hover\:bg-purple-dark\/5:hover {
       background-color: color-mix(in srgb, #4a1e4f 5%, transparent);
