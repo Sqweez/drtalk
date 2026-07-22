@@ -127,6 +127,8 @@ $personalized_audiences = [
 	]
 ];
 $personalized_noise_url = esc_url(get_theme_file_uri('assets/images/personalized-noise.png'));
+$founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone.jpeg'));
+$about_page_url = esc_url(home_url('/about-us/'));
 $testimonials = [
 	[
 		'eyebrow' => 'Save Time',
@@ -551,6 +553,28 @@ get_header();
 					<div class="personalized-screen"><img src="<?php echo $personalized_screen; ?>" alt="drtalk platform screen"></div>
 				</div>
 			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+<section class="founder-section" aria-labelledby="founder-title">
+	<div class="founder-section-content">
+		<div class="founder-section-profile">
+			<img class="founder-section-image" src="<?php echo $founder_image_url; ?>" alt="Thomas L. Stone">
+			<div class="founder-section-profile-copy">
+				<h3>Thomas L. Stone,<br>MD, DDS, FACS</h3>
+				<p>Oral &amp; Maxillofacial Surgeon;<br>Founder of drtalk (est. 2014)</p>
+			</div>
+		</div>
+		<div class="founder-section-story">
+			<h2 id="founder-title">Built by specialists who lived the problem. Not developers who read about it.</h2>
+			<p>Over more than 25 years in oral surgery, Dr. Stone watched referral workflows break under growth, GP relationships quietly cool when communication lagged, and talented staff spend hours on admin that a better system would have handled automatically.</p>
+			<p>He created drtalk because no existing tool was built for the way specialist practices actually work. Not as an outsider guessing at the problem, but as someone who lived it for decades.</p>
+			<a class="founder-section-link" href="<?php echo $about_page_url; ?>">
+				<span>Read Our Story</span>
+				<svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+					<path d="M14 4h6v6M20 4l-9 9M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" />
+				</svg>
+			</a>
 		</div>
 	</div>
 </section>

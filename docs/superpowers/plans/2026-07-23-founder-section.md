@@ -13,15 +13,15 @@
 ### Task 1: Add the founder portrait asset
 
 **Files:**
-- Create: `app/public/wp-content/themes/drtalk-redesign/assets/images/thomas-stone.png`
+- Create: `app/public/wp-content/themes/drtalk-redesign/assets/images/thomas-stone.jpeg`
 
 - [ ] **Step 1: Download the portrait supplied by Figma**
 
-Use the Figma asset endpoint and save the image as `thomas-stone.png` in the theme image directory.
+Use the Figma asset endpoint and save the image as `thomas-stone.jpeg` in the theme image directory.
 
 - [ ] **Step 2: Inspect the downloaded asset**
 
-Run: `file app/public/wp-content/themes/drtalk-redesign/assets/images/thomas-stone.png`
+Run: `file app/public/wp-content/themes/drtalk-redesign/assets/images/thomas-stone.jpeg`
 
 Expected: a valid PNG or JPEG image file.
 
@@ -33,8 +33,8 @@ Expected: a valid PNG or JPEG image file.
 - [ ] **Step 1: Define escaped local asset and About-page URLs near existing front-page data**
 
 ```php
-$founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone.png'));
-$about_page_url = esc_url(home_url('/about/'));
+$founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone.jpeg'));
+$about_page_url = esc_url(home_url('/about-us/'));
 ```
 
 - [ ] **Step 2: Insert the semantic section before testimonials**
@@ -76,7 +76,7 @@ Open `http://drtalk.local/` and compare the founder section’s layout, colour, 
 ```bash
 git add app/public/wp-content/themes/drtalk-redesign/front-page.php \\
   app/public/wp-content/themes/drtalk-redesign/src/input.css \\
-  app/public/wp-content/themes/drtalk-redesign/assets/images/thomas-stone.png \\
+  app/public/wp-content/themes/drtalk-redesign/assets/images/thomas-stone.jpeg \\
   app/public/wp-content/themes/drtalk-redesign/dist/output.css
 git commit -m "Add founder story section"
 ```
