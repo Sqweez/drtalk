@@ -26,7 +26,7 @@ Follow WordPress conventions in PHP: tabs for indentation, snake_case functions,
 
 ## Testing Guidelines
 
-No first-party automated test suite is configured. Before submitting changes, run `npm run format:check` and `npm run build`, then verify affected pages in the local WordPress site at desktop and mobile widths. Check browser console output, PHP logs in `logs/php/`, and Nginx errors in `logs/nginx/`. Treat tests bundled inside WordPress plugins or installer code as third-party and out of scope.
+No first-party automated test suite is configured. Do not add or modify shell (`.sh`) tests unless the user explicitly requests them. Before submitting changes, run `npm run format:check` and `npm run build`, then verify affected pages in the local WordPress site at desktop and mobile widths. Check browser console output, PHP logs in `logs/php/`, and Nginx errors in `logs/nginx/`. Treat tests bundled inside WordPress plugins or installer code as third-party and out of scope.
 
 ## Commit & Pull Request Guidelines
 
