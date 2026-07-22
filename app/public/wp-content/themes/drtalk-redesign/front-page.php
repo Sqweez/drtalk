@@ -33,6 +33,37 @@ $different_points = [
 	]
 ];
 $different_divider_url = esc_url(get_theme_file_uri('assets/images/different-divider.svg'));
+$how_it_works_steps = [
+	[
+		'number' => '01',
+		'title' => 'Connect your existing workflow',
+		'description' =>
+			'We pull in every channel you’re already using. One place. No missed leads. And your referring doctors don’t have to change a single habit.',
+		'demo_label' => 'Referral received',
+		'demo_title' => 'New referral lands in your inbox',
+		'demo_detail' => 'Dr. Anthony Blakes · New patient'
+	],
+	[
+		'number' => '02',
+		'title' => 'Every referral lands in one place',
+		'description' =>
+			'Every fax, call, email, and web form becomes one clear referral record your whole office can see and move forward.',
+		'demo_label' => 'One shared inbox',
+		'demo_title' => 'Nothing falls through the gaps',
+		'demo_detail' => '4 new referrals · 3 files attached'
+	],
+	[
+		'number' => '03',
+		'title' => 'Collaborate and close the loop',
+		'description' =>
+			'Keep your team aligned, update referring dentists automatically, and give every patient a clear next step.',
+		'demo_label' => 'Referral updated',
+		'demo_title' => 'Your team closes the loop',
+		'demo_detail' => 'Status shared with the referring dentist'
+	]
+];
+$how_it_works_noise_url = esc_url(get_theme_file_uri('assets/images/how-it-works-noise.png'));
+$how_it_works_demo_url = esc_url(get_theme_file_uri('assets/images/how-it-works-demo.png'));
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -168,6 +199,62 @@ get_header();
 					</div>
 				</article>
 			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<section class="bg-cream px-10 py-[120px]" data-how-it-works>
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
+		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
+			<h2 class="text-5xl leading-[1.1]">From chaos to clarity.<br>No disruption. No overhaul.</h2>
+			<p class="text-lg leading-6">drtalk plugs into the referral channels you’re already using.<br>Your referring GPs keep doing what they’re doing. You just capture everything.</p>
+		</div>
+		<div class="flex w-full items-start gap-16">
+			<div class="flex min-w-0 flex-1 flex-col gap-4" role="group" aria-label="How drtalk works">
+				<?php foreach ($how_it_works_steps as $step_index => $how_it_works_step): ?>
+					<?php
+     $step_number = esc_html($how_it_works_step['number']);
+     $step_title = esc_html($how_it_works_step['title']);
+     $step_description = esc_html($how_it_works_step['description']);
+     $step_active = $step_index === 0;
+     $step_class = $step_active ? ' is-active' : '';
+     $step_index_value = esc_attr($step_index);
+     $step_aria_pressed = $step_active ? 'true' : 'false';
+     ?>
+					<button class="how-it-works-step<?php echo $step_class; ?>" type="button" data-how-it-works-step data-how-it-works-index="<?php echo $step_index_value; ?>" aria-pressed="<?php echo $step_aria_pressed; ?>">
+						<span class="flex gap-6 text-left">
+							<span class="w-10 shrink-0 text-center font-heading text-[2rem] font-medium leading-[1.1] tracking-[-0.02em] text-purple-dark/50"><?php echo $step_number; ?></span>
+							<span class="flex min-w-0 flex-1 flex-col gap-3">
+								<span class="how-it-works-step-title font-heading text-[2rem] font-medium leading-[1.1] tracking-[-0.02em] text-purple-dark"><?php echo $step_title; ?></span>
+								<span class="how-it-works-step-description text-lg leading-6 text-purple-dark"><?php echo $step_description; ?></span>
+							</span>
+						</span>
+						<span class="flex items-center py-6"><span class="how-it-works-progress-fill"></span><span class="h-0.5 flex-1 bg-purple-dark/10"></span></span>
+					</button>
+				<?php endforeach; ?>
+			</div>
+			<div class="how-it-works-demo" data-how-it-works-demo data-active-step="0">
+				<img class="pointer-events-none absolute inset-0 size-full object-cover opacity-10" src="<?php echo $how_it_works_noise_url; ?>" width="1024" height="1024" alt="">
+				<div class="how-it-works-demo-screen">
+					<img class="size-full object-cover" src="<?php echo $how_it_works_demo_url; ?>" width="378" height="246" alt="A drtalk referral dashboard">
+					<?php foreach ($how_it_works_steps as $step_index => $how_it_works_step): ?>
+						<?php
+      $demo_label = esc_html($how_it_works_step['demo_label']);
+      $demo_title = esc_html($how_it_works_step['demo_title']);
+      $demo_detail = esc_html($how_it_works_step['demo_detail']);
+      $demo_step_index = esc_attr($step_index);
+      ?>
+						<div class="how-it-works-demo-state" data-how-it-works-demo-state="<?php echo $demo_step_index; ?>" aria-hidden="<?php echo $step_index ===
+0
+	? 'false'
+	: 'true'; ?>">
+							<p class="text-xs font-black uppercase tracking-[0.12em] text-purple-dark/70"><?php echo $demo_label; ?></p>
+							<p class="mt-2 font-heading text-2xl font-medium leading-[1.1] text-purple-dark"><?php echo $demo_title; ?></p>
+							<p class="mt-2 text-sm leading-[1.125rem] text-[#524c45]"><?php echo $demo_detail; ?></p>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
