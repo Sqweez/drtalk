@@ -4,6 +4,7 @@
 # Repository documentation.
 !/.gitignore
 !/AGENTS.md
+!/Makefile
 !/docs/
 !/docs/**
 
