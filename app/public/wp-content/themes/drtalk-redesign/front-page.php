@@ -515,7 +515,7 @@ get_header();
 		</div>
 	</div>
 </section>
-<section class="relative bg-cream px-10 py-[120px]" data-testimonials>
+<section class="relative overflow-hidden bg-cream px-10 py-[120px]" data-testimonials>
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
 		<h2 class="text-center text-5xl leading-[1.1]">For the people who use it every day.</h2>
 		<div class="testimonials-swiper w-full" data-testimonials-swiper>
