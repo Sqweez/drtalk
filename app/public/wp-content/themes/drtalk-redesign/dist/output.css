@@ -215,6 +215,9 @@
   .relative {
     position: relative;
   }
+  .static {
+    position: static;
+  }
   .inset-0 {
     inset: 0px;
   }
@@ -241,6 +244,24 @@
   }
   .z-10 {
     z-index: 10;
+  }
+  .container {
+    width: 100%;
+    @media (width >= 40rem) {
+      max-width: 40rem;
+    }
+    @media (width >= 48rem) {
+      max-width: 48rem;
+    }
+    @media (width >= 64rem) {
+      max-width: 64rem;
+    }
+    @media (width >= 80rem) {
+      max-width: 80rem;
+    }
+    @media (width >= 96rem) {
+      max-width: 96rem;
+    }
   }
   .mx-auto {
     margin-inline: auto;
@@ -988,6 +1009,9 @@
     --tw-outline-style: none;
     outline-style: none;
   }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
   @media (hover: hover) {
     .hover\:bg-purple:hover {
       background-color: var(--color-purple);
@@ -1224,8 +1248,27 @@
     height: 100%;
     object-fit: cover;
   }
-  .testimonials-track {
-    transition: transform 350ms ease;
+  .testimonials-swiper {
+    overflow: visible;
+    width: 100%;
+  }
+  .testimonials-swiper .swiper-wrapper {
+    align-items: center;
+    display: flex;
+    position: relative;
+    transition-property: transform;
+  }
+  .testimonials-swiper .swiper-slide {
+    flex-shrink: 0;
+    width: 480px;
+  }
+  .testimonials-swiper .swiper-slide:not(.swiper-slide-active) {
+    opacity: 0.72;
+    transform: scale(0.96);
+  }
+  .testimonial-card {
+    transition: opacity 350ms ease,
+      transform 350ms ease;
   }
   .testimonial-control {
     display: inline-flex;

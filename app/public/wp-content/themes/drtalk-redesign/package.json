@@ -20,5 +20,8 @@
     "postcss-cli": "^11.0.1",
     "prettier": "^3.9.5",
     "tailwindcss": "4.3"
+  },
+  "dependencies": {
+    "swiper": "^14.0.6"
   }
 }
