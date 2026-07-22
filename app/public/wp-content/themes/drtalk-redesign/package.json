@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "postcss src/input.css -o dist/output.css",
-    "watch": "postcss src/input.css -o dist/output.css --watch",
+    "build": "postcss src/input.css -o dist/output.css && esbuild assets/js/theme.js --bundle --outfile=dist/theme.js --target=es2017",
+    "watch": "npm run watch:css & npm run watch:js",
+    "watch:css": "postcss src/input.css -o dist/output.css --watch",
+    "watch:js": "esbuild assets/js/theme.js --bundle --outfile=dist/theme.js --target=es2017 --watch",
     "dev": "npm run watch",
     "format": "prettier --write \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
     "format:check": "prettier --check \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
@@ -13,6 +15,7 @@
   "devDependencies": {
     "@prettier/plugin-php": "^0.24.0",
     "@tailwindcss/postcss": "^4.3.3",
+    "esbuild": "^0.28.1",
     "postcss": "^8.5.19",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.9.5",

@@ -53,10 +53,10 @@ add_action('wp_enqueue_scripts', 'drtalk_redesign_enqueue_styles');
  */
 function drtalk_redesign_enqueue_scripts()
 {
-	$script_path = get_theme_file_path('assets/js/theme.js');
+	$script_path = get_theme_file_path('dist/theme.js');
 	$script_version = file_exists($script_path) ? (string) filemtime($script_path) : '1.0.0';
 
-	wp_enqueue_script('drtalk-redesign', get_theme_file_uri('assets/js/theme.js'), [], $script_version, [
+	wp_enqueue_script('drtalk-redesign', get_theme_file_uri('dist/theme.js'), [], $script_version, [
 		'in_footer' => true
 	]);
 }
