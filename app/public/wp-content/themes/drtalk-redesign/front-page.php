@@ -2,6 +2,43 @@
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
 $hero_art_url = esc_url(get_theme_file_uri('assets/images/hero-art.png'));
+$trusted_partners = [
+	[
+		'file' => 'partner-logo-1.png',
+		'class' => 'trusted-partner-dental-designs',
+		'label' => 'Dental Designs',
+		'width' => '106.5',
+		'height' => '48'
+	],
+	[
+		'file' => 'partner-logo-3.png',
+		'class' => 'trusted-partner-dentistry-automation',
+		'label' => 'Dentistry Automation',
+		'width' => '147',
+		'height' => '48'
+	],
+	[
+		'file' => 'partner-logo-5.png',
+		'class' => 'trusted-partner-collective-health',
+		'label' => 'Collective Health Society',
+		'width' => '181.5',
+		'height' => '48'
+	],
+	[
+		'file' => 'partner-logo-4.png',
+		'class' => 'trusted-partner-tarnow-chu',
+		'label' => 'Tarnow Chu Institute',
+		'width' => '207',
+		'height' => '48'
+	],
+	[
+		'file' => 'partner-logo-6.png',
+		'class' => 'trusted-partner-hdl',
+		'label' => 'HDL Partners',
+		'width' => '166',
+		'height' => '48'
+	]
+];
 
 get_header();
 ?>
@@ -24,6 +61,18 @@ get_header();
 	'A DrTalk referral dashboard and healthcare illustrations',
 	'drtalk-redesign'
 ); ?>">
+		</div>
+	</div>
+	<div class="mx-auto mt-20 flex max-w-[75rem] flex-col items-center gap-8">
+		<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark">Trusted By Dentistry’s Top Leaders</p>
+		<div class="flex w-full items-start justify-center gap-12 overflow-hidden">
+			<?php foreach ($trusted_partners as $partner): ?>
+				<span
+					class="trusted-partner-logo <?php echo esc_attr($partner['class']); ?> block shrink-0 bg-purple-dark"
+					role="img"
+					aria-label="<?php echo esc_attr($partner['label']); ?>"
+				></span>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>

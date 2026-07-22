@@ -18,5 +18,11 @@ done
 grep -Fq "Stop Losing Referrals You Never Know You Missed" "$theme_dir/front-page.php"
 grep -Fq "Claim Your Free Referral Gap Analysis" "$theme_dir/front-page.php"
 grep -Fq "Built by Dentists for Dentists" "$theme_dir/front-page.php"
+grep -Fq "Trusted By Dentistry’s Top Leaders" "$theme_dir/front-page.php"
+grep -Fq "partner-logo-1.png" "$theme_dir/front-page.php"
+grep -Fq "partner-logo-3.png" "$theme_dir/front-page.php"
+grep -Fq "partner-logo-4.png" "$theme_dir/front-page.php"
+grep -Fq "partner-logo-5.png" "$theme_dir/front-page.php"
+grep -Fq "partner-logo-6.png" "$theme_dir/front-page.php"
 
 echo "Home page checks passed."

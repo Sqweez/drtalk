@@ -236,6 +236,12 @@
   .mt-16 {
     margin-top: calc(var(--spacing) * 16);
   }
+  .mt-20 {
+    margin-top: calc(var(--spacing) * 20);
+  }
+  .block {
+    display: block;
+  }
   .flex {
     display: flex;
   }
@@ -570,6 +576,10 @@
   .text-\[2\.75rem\] {
     font-size: 2.75rem;
   }
+  .leading-4 {
+    --tw-leading: calc(var(--spacing) * 4);
+    line-height: calc(var(--spacing) * 4);
+  }
   .leading-5 {
     --tw-leading: calc(var(--spacing) * 5);
     line-height: calc(var(--spacing) * 5);
@@ -858,6 +868,44 @@
     &:focus-visible {
       outline-color: var(--color-orange);
     }
+  }
+  .trusted-partner-logo {
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+  }
+  .trusted-partner-dental-designs {
+    width: 106.5px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-1.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-1.png');
+  }
+  .trusted-partner-dentistry-automation {
+    width: 147px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-3.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-3.png');
+  }
+  .trusted-partner-collective-health {
+    width: 181.5px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-5.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-5.png');
+  }
+  .trusted-partner-tarnow-chu {
+    width: 207px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-4.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-4.png');
+  }
+  .trusted-partner-hdl {
+    width: 166px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-6.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-6.png');
   }
 }
 @property --tw-translate-x {

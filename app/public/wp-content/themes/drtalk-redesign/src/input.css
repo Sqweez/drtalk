@@ -63,4 +63,48 @@
   .button-primary {
     @apply inline-flex min-h-12 items-center justify-center rounded-full bg-orange px-6 py-3 font-heading font-semibold text-purple-dark transition-colors hover:bg-cream hover:text-purple-dark focus-visible:outline-orange;
   }
+
+  .trusted-partner-logo {
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+  }
+
+  .trusted-partner-dental-designs {
+    width: 106.5px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-1.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-1.png');
+  }
+
+  .trusted-partner-dentistry-automation {
+    width: 147px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-3.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-3.png');
+  }
+
+  .trusted-partner-collective-health {
+    width: 181.5px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-5.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-5.png');
+  }
+
+  .trusted-partner-tarnow-chu {
+    width: 207px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-4.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-4.png');
+  }
+
+  .trusted-partner-hdl {
+    width: 166px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-6.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-6.png');
+  }
 }
