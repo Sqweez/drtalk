@@ -129,6 +129,30 @@ $personalized_audiences = [
 $personalized_noise_url = esc_url(get_theme_file_uri('assets/images/personalized-noise.png'));
 $founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone.jpeg'));
 $about_page_url = esc_url(home_url('/about-us/'));
+$concerns_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
+$concerns_scribble_url = esc_url(get_theme_file_uri('assets/images/concerns-scribble.svg'));
+$concerns = [
+	[
+		'title' => '“We already have a system for referrals.”',
+		'answer' =>
+			'Great - then the analysis will help you pressure-test it. We\'ll walk through how practices with similar setups handle growth, staff turnover, and GP responsiveness expectations. If your workflow holds up, you\'ll know it. If there are gaps, you\'ll see them before they become expensive.'
+	],
+	[
+		'title' => '“I don\'t want to add another subscription.”',
+		'answer' =>
+			'You\'re not being asked to. The analysis is free and comes with no obligation. If after seeing how drtalk works alongside your current setup the ROI isn\'t obvious, it\'s probably not the right move and we\'ll say so.'
+	],
+	[
+		'title' => '“My GPs won\'t use another platform.”',
+		'answer' =>
+			'They don\'t have to, and many join on their own once they realize it makes their life easier too. Free access for GPs, nothing to install, and direct secure messaging and point-of-care scheduling with your office instead of chasing calls and faxes.'
+	],
+	[
+		'title' => '“My staff won\'t adopt another tool.”',
+		'answer' =>
+			'Staff resistance comes from tools that add to their workload. During the review we\'ll show specifically how drtalk reduces the daily chaos your team already deals with, not pile on top of it.'
+	]
+];
 $testimonials = [
 	[
 		'eyebrow' => 'Save Time',
@@ -575,6 +599,41 @@ get_header();
 					<path d="M14 4h6v6M20 4l-9 9M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" />
 				</svg>
 			</a>
+		</div>
+	</div>
+</section>
+<section class="concerns-section" data-concerns aria-labelledby="concerns-title">
+	<div class="concerns-section-content">
+		<h2 id="concerns-title">Common concerns. Honest answers.</h2>
+		<div class="concerns-carousel" data-concerns-carousel>
+			<div class="concerns-track" data-concerns-track>
+				<?php foreach ($concerns as $concern_index => $concern): ?>
+					<?php
+     $concern_title = esc_html($concern['title']);
+     $concern_answer = esc_html($concern['answer']);
+     $concern_index_value = esc_attr($concern_index);
+     ?>
+					<article class="concerns-card" data-concerns-card="<?php echo $concern_index_value; ?>">
+						<img class="concerns-card-noise" src="<?php echo $concerns_noise_url; ?>" alt="">
+						<img class="concerns-card-scribble" src="<?php echo $concerns_scribble_url; ?>" alt="">
+						<div class="concerns-card-copy">
+							<h3><?php echo $concern_title; ?></h3>
+							<p><?php echo $concern_answer; ?></p>
+						</div>
+						<button class="concerns-next" type="button" data-concerns-next aria-label="Show next concern"><span aria-hidden="true">→</span></button>
+					</article>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<div class="concerns-pagination" role="tablist" aria-label="Common concerns">
+			<?php foreach ($concerns as $concern_index => $concern): ?>
+				<?php
+    $concern_index_value = esc_attr($concern_index);
+    $concern_selected = $concern_index === 0 ? 'true' : 'false';
+    $concern_label = esc_attr('Show concern ' . ($concern_index + 1));
+    ?>
+				<button class="concerns-dot" type="button" role="tab" data-concerns-dot="<?php echo $concern_index_value; ?>" aria-selected="<?php echo $concern_selected; ?>" aria-label="<?php echo $concern_label; ?>"></button>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>
