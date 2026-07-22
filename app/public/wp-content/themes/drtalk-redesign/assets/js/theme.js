@@ -127,7 +127,7 @@ if (faqRoot) {
   renderQuestions(categories[0]);
 }
 
-const calculatorRoot = document.querySelector('[data-calculator]');
+const calculatorRoot = document.querySelector('[data-calculator-root]');
 
 if (calculatorRoot) {
   const calculatorInputs = calculatorRoot.querySelectorAll('[data-calculator-input]');

@@ -143,7 +143,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-calculator>
+<section class="bg-cream px-10 py-[120px]">
 	<div class="mx-auto flex max-w-[75rem] flex-col gap-20">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
 			<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Put Operational AI to Work for Your Office</p>
@@ -172,7 +172,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]">
+<section class="bg-cream px-10 py-[120px]" data-calculator-root>
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
 		<h2 class="w-full text-center text-5xl leading-none">If you can't measure your referral leakage, you can't fix it.</h2>
 		<div class="relative flex w-full max-w-[64rem] gap-4 overflow-hidden rounded-3xl bg-lilac p-4">
