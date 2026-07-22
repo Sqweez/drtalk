@@ -8,4 +8,4 @@
 <body <?php body_class(); ?>>
 	<?php wp_body_open(); ?>
 	<?php get_template_part('template-parts/site', 'header'); ?>
-	<main id="main-content">
+	<main id="main-content" class="pt-20">
