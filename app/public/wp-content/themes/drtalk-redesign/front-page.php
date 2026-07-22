@@ -127,6 +127,41 @@ $personalized_audiences = [
 	]
 ];
 $personalized_noise_url = esc_url(get_theme_file_uri('assets/images/personalized-noise.png'));
+$testimonials = [
+	[
+		'eyebrow' => 'Save Time',
+		'quote' =>
+			'“Every referral is captured, tracked, and converted into scheduled appointments without manual chasing or missed connections.”',
+		'name' => 'Yost Smith',
+		'role' => 'Oral & Maxillofacial Surgeon',
+		'company' => 'NorthShore Center for Oral & Facial Surgery and Implantology',
+		'avatar' => 'testimonial-6.png',
+		'logo' => 'testimonial-1.png',
+		'tone' => 'orange'
+	],
+	[
+		'eyebrow' => 'Stay Connected',
+		'quote' =>
+			'“Our lab runs smoother than ever. We process cases securely and stay connected with every dentist we serve.”',
+		'name' => 'Ross Ballinger',
+		'role' => 'Full Arch Director',
+		'company' => 'Dental Designs',
+		'avatar' => 'testimonial-7.png',
+		'logo' => 'testimonial-3.png',
+		'tone' => 'lilac'
+	],
+	[
+		'eyebrow' => 'Eliminate Leakage',
+		'quote' => 'drtalk has eliminated referral leakage and increased our overall profitability.',
+		'name' => 'Ali Salehpour',
+		'role' => 'Oral & Maxillofacial Surgeon',
+		'company' => 'Oral, Facial, & Implant Surgery Center of Monterey',
+		'avatar' => 'testimonial-8.png',
+		'logo' => 'testimonial-4.png',
+		'tone' => 'orange'
+	]
+];
+$testimonials_noise_url = esc_url(get_theme_file_uri('assets/images/testimonial-5.png'));
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -452,6 +487,35 @@ get_header();
 				</div>
 			</div>
 		</div>
+	</div>
+</section>
+<section class="relative bg-cream px-10 py-[120px]" data-testimonials>
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
+		<h2 class="text-center text-5xl leading-[1.1]">For the people who use it every day.</h2>
+		<div class="testimonials-viewport w-full overflow-hidden">
+			<div class="testimonials-track flex gap-4" data-testimonials-track>
+				<?php foreach ($testimonials as $testimonial): ?>
+					<?php
+     $testimonial_avatar = esc_url(get_theme_file_uri('assets/images/' . $testimonial['avatar']));
+     $testimonial_logo = esc_url(get_theme_file_uri('assets/images/' . $testimonial['logo']));
+     $testimonial_tone = $testimonial['tone'] === 'lilac' ? 'bg-lilac border-purple' : 'bg-[#fce2cc] border-orange';
+     $testimonial_tone_class = esc_attr($testimonial_tone);
+     $testimonial_eyebrow = esc_html($testimonial['eyebrow']);
+     $testimonial_quote = esc_html($testimonial['quote']);
+     $testimonial_border = $testimonial['tone'] === 'lilac' ? 'border-purple' : 'border-orange';
+     $testimonial_name = esc_html($testimonial['name']);
+     $testimonial_role = esc_html($testimonial['role']);
+     $testimonial_company = esc_html($testimonial['company']);
+     ?>
+					<article class="testimonial-card flex h-[34rem] w-[30rem] shrink-0 flex-col gap-10 overflow-hidden rounded-3xl border-l-4 <?php echo $testimonial_tone_class; ?> px-8 py-12 text-purple-dark">
+						<div class="flex items-start justify-between"><img class="size-20 rounded-full object-cover" src="<?php echo $testimonial_avatar; ?>" alt=""><img class="h-20 w-30 object-contain" src="<?php echo $testimonial_logo; ?>" alt=""></div>
+						<div class="flex flex-1 flex-col gap-4"><p class="text-[0.8125rem] font-black uppercase tracking-[0.15em] text-purple-dark/75"><?php echo $testimonial_eyebrow; ?></p><p class="text-2xl leading-8"><?php echo $testimonial_quote; ?></p></div>
+						<div class="border-l-4 pl-4 <?php echo $testimonial_border; ?>"><p class="font-bold"><?php echo $testimonial_name; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_role; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_company; ?></p></div>
+					</article>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<div class="flex gap-6"><button class="testimonial-control" type="button" data-testimonials-previous aria-label="Previous testimonial">←</button><button class="testimonial-control" type="button" data-testimonials-next aria-label="Next testimonial">→</button></div>
 	</div>
 </section>
 <section class="bg-cream px-10 py-[120px]" data-personalized>

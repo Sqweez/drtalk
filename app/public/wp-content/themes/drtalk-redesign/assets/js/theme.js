@@ -4,3 +4,4 @@ import './calculator.js';
 import './how-it-works.js';
 import './responsiveness.js';
 import './personalized.js';
+import './testimonials.js';

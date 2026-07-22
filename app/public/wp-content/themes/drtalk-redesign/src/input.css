@@ -186,6 +186,31 @@
     object-fit: cover;
   }
 
+  .testimonials-track {
+    transition: transform 350ms ease;
+  }
+
+  .testimonial-control {
+    display: inline-flex;
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-purple-dark);
+    border-radius: 9999px;
+    color: var(--color-purple-dark);
+    font-size: 1.5rem;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+
+  .testimonial-control:hover {
+    background-color: var(--color-purple-dark);
+    color: var(--color-cream);
+  }
+
   .how-it-works-step {
     cursor: pointer;
     text-align: left;
