@@ -1171,10 +1171,15 @@
     transform: translate3d(0, 0, 0);
   }
   .personalized-screen {
-    width: 36rem;
+    width: 1000px;
+    height: 649px;
+    flex: none;
     overflow: hidden;
     border: 8px solid var(--color-purple-dark);
     border-radius: 8px;
+  }
+  .personalized-state > div:first-child {
+    flex: none;
   }
   .personalized-screen img {
     width: 100%;

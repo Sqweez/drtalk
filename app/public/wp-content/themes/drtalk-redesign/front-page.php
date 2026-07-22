@@ -109,21 +109,21 @@ $personalized_audiences = [
 		'title' => 'Be the First Choice for Referrals',
 		'description' =>
 			'Most specialists compete on reputation. The best ones compete on responsiveness. drtalk gives you the system to make sure every referral is handled - and every GP knows it.',
-		'image' => 'personalized-1.png'
+		'image' => 'personalized-screen.png'
 	],
 	[
 		'label' => 'Office Managers',
 		'title' => 'Keep the Whole Office in Sync',
 		'description' =>
 			'Every referral, task, message, and next step lives in one clear workflow. Your team spends less time chasing updates and more time helping patients.',
-		'image' => 'personalized-2.png'
+		'image' => 'personalized-screen.png'
 	],
 	[
 		'label' => 'Referring GPs',
 		'title' => 'Know What Happens Next',
 		'description' =>
 			'Send a referral, see its progress, and get updates without a phone call. drtalk makes it simple to work with the specialists your patients trust.',
-		'image' => 'personalized-3.png'
+		'image' => 'personalized-screen.png'
 	]
 ];
 $personalized_noise_url = esc_url(get_theme_file_uri('assets/images/personalized-noise.png'));
