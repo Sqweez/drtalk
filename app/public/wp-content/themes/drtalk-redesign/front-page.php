@@ -494,7 +494,7 @@ get_header();
 		<h2 class="text-center text-5xl leading-[1.1]">For the people who use it every day.</h2>
 		<div class="testimonials-swiper w-full" data-testimonials-swiper>
 			<div class="swiper-wrapper">
-				<?php foreach (array_merge($testimonials, $testimonials) as $testimonial): ?>
+				<?php foreach ($testimonials as $testimonial): ?>
 					<?php
      $testimonial_avatar = esc_url(get_theme_file_uri('assets/images/' . $testimonial['avatar']));
      $testimonial_logo = esc_url(get_theme_file_uri('assets/images/' . $testimonial['logo']));

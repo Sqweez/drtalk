@@ -4121,8 +4121,14 @@
   var testimonialsRoot = document.querySelector("[data-testimonials]");
   if (testimonialsRoot) {
     const swiperElement = testimonialsRoot.querySelector("[data-testimonials-swiper]");
+    const wrapper = swiperElement.querySelector(".swiper-wrapper");
     const previous = testimonialsRoot.querySelector("[data-testimonials-previous]");
     const next = testimonialsRoot.querySelector("[data-testimonials-next]");
+    [...wrapper.children].forEach((slide2) => {
+      const clone = slide2.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      wrapper.append(clone);
+    });
     const swiper = new Swiper(swiperElement, {
       centeredSlides: true,
       initialSlide: 1,
