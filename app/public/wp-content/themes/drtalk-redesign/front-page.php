@@ -33,6 +33,29 @@ $different_points = [
 	]
 ];
 $different_divider_url = esc_url(get_theme_file_uri('assets/images/different-divider.svg'));
+$calculator_inputs = [
+	[
+		'label' => 'Referrals per month',
+		'value' => '80',
+		'minimum' => '10',
+		'maximum' => '1000'
+	],
+	[
+		'label' => 'Average case value',
+		'value' => '$3,000',
+		'minimum' => '$100',
+		'maximum' => '$10,000'
+	],
+	[
+		'label' => 'Current conversion rate',
+		'value' => '42%',
+		'minimum' => '0%',
+		'maximum' => '100%'
+	]
+];
+$calculator_noise_url = esc_url(get_theme_file_uri('assets/images/calculator-noise.png'));
+$calculator_thumb_url = esc_url(get_theme_file_uri('assets/images/calculator-slider-thumb.svg'));
+$calculator_divider_url = esc_url(get_theme_file_uri('assets/images/calculator-divider.svg'));
 $trusted_partners = [
 	[
 		'file' => 'partner-logo-1.png',
@@ -133,6 +156,71 @@ get_header();
 					</div>
 				</article>
 			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<section class="bg-cream px-10 py-[120px]">
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
+		<h2 class="w-full text-center text-5xl leading-none">If you can't measure your referral leakage, you can't fix it.</h2>
+		<div class="relative flex w-full max-w-[64rem] gap-4 overflow-hidden rounded-3xl bg-lilac p-4">
+			<img class="pointer-events-none absolute inset-0 size-full object-cover opacity-10" src="<?php echo $calculator_noise_url; ?>" width="1024" height="1024" alt="">
+			<div class="relative flex w-[30rem] shrink-0 flex-col gap-8 rounded-2xl bg-cream p-8">
+				<p class="max-w-60 text-lg leading-6 text-[#524c45]">How much revenue is slipping through your fingers?</p>
+				<?php foreach ($calculator_inputs as $calculator_input): ?>
+					<?php
+     $calculator_label = esc_html($calculator_input['label']);
+     $calculator_value = esc_html($calculator_input['value']);
+     $calculator_minimum = esc_html($calculator_input['minimum']);
+     $calculator_maximum = esc_html($calculator_input['maximum']);
+     ?>
+					<div class="flex flex-col gap-4">
+						<div class="flex items-center gap-2">
+							<p class="flex-1 text-sm leading-[1.125rem] text-[#524c45]"><?php echo $calculator_label; ?></p>
+							<div class="w-30 rounded-lg border border-[#d6d1cb] px-4 py-2 text-lg leading-6 text-purple-dark"><?php echo $calculator_value; ?></div>
+						</div>
+						<div class="flex flex-col gap-2">
+							<div class="relative h-1 rounded-lg bg-[#d6d1cb]">
+								<div class="h-1 w-[6.25rem] rounded-lg bg-purple"></div>
+								<img class="absolute left-24 top-1/2 size-4 -translate-y-1/2" src="<?php echo $calculator_thumb_url; ?>" width="16" height="16" alt="">
+							</div>
+							<div class="flex justify-between text-sm leading-[1.125rem] text-[#736962]">
+								<span><?php echo $calculator_minimum; ?></span>
+								<span><?php echo $calculator_maximum; ?></span>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<div class="relative flex min-w-0 flex-1 flex-col gap-8 rounded-2xl p-8 text-purple-dark">
+				<div class="flex flex-col gap-2">
+					<p class="text-sm leading-[1.125rem] text-purple-dark/75">Monthly revenue at risk:</p>
+					<p class="text-5xl leading-[1.1]">$12,000</p>
+				</div>
+				<img class="h-px w-full" src="<?php echo $calculator_divider_url; ?>" width="432" height="1" alt="">
+				<div class="flex gap-8">
+					<div class="flex flex-1 flex-col gap-3">
+						<p class="text-sm leading-[1.125rem] text-purple-dark/75">Annual revenue at risk:</p>
+						<p class="text-[2rem] font-medium leading-[1.1]">$144,000</p>
+					</div>
+					<div class="flex flex-1 flex-col gap-3">
+						<p class="text-sm leading-[1.125rem] text-purple-dark/75">Health score:</p>
+						<div class="flex items-baseline gap-3">
+							<p class="text-[2rem] font-medium leading-[1.1] text-[#c9252d]">50%</p>
+							<div class="flex items-center gap-1">
+								<?php for ($score_bar = 1; $score_bar <= 10; $score_bar++): ?>
+									<span class="h-6 w-1 rounded-sm <?php echo $score_bar <= 5 ? 'bg-[#c9252d]' : 'bg-purple-dark/25'; ?>"></span>
+								<?php endfor; ?>
+							</div>
+						</div>
+					</div>
+				</div>
+				<img class="h-px w-full" src="<?php echo $calculator_divider_url; ?>" width="432" height="1" alt="">
+				<div class="flex flex-col items-start gap-6">
+					<p class="w-full text-center text-sm leading-[1.125rem]">Get the full report after the demo call with drtalk team.</p>
+					<a class="flex w-full items-end rounded-[3.5rem] bg-purple px-12 py-7 text-center text-lg font-bold leading-6 text-cream" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
