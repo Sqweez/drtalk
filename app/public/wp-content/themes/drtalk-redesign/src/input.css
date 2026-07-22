@@ -187,7 +187,7 @@
   }
 
   .testimonials-swiper {
-    overflow: visible;
+    overflow: hidden;
     width: 100%;
   }
 

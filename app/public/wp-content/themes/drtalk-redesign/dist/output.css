@@ -1249,7 +1249,7 @@
     object-fit: cover;
   }
   .testimonials-swiper {
-    overflow: visible;
+    overflow: hidden;
     width: 100%;
   }
   .testimonials-swiper .swiper-wrapper {
