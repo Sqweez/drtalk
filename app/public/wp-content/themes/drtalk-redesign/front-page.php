@@ -64,6 +64,34 @@ $how_it_works_steps = [
 ];
 $how_it_works_noise_url = esc_url(get_theme_file_uri('assets/images/how-it-works-noise.png'));
 $how_it_works_demo_url = esc_url(get_theme_file_uri('assets/images/how-it-works-demo.png'));
+$responsiveness_cards = [
+	[
+		'image' => 'responsiveness-1.svg',
+		'title' => 'Handle referral volume with confidence',
+		'description' =>
+			'Our Smart Referral Inbox captures every inbound referral regardless of how it arrives and tracks it through to scheduling with clear visibility. No referral falls through because it came in via the wrong channel.',
+		'count' => 1300,
+		'suffix' => '+'
+	],
+	[
+		'image' => 'responsiveness-2.svg',
+		'title' => 'Become the easiest specialist to work with',
+		'description' =>
+			'Communicate instantly with referring dentists through HIPAA-compliant messaging. No scattered emails. No phone tag. Just fast responses that make GPs want to send their next case to you.'
+	],
+	[
+		'image' => 'responsiveness-3.svg',
+		'title' => 'Reduce your team’s workload',
+		'description' =>
+			'Eliminate repetitive admin tasks, close follow-up gaps, and free your staff to focus on patients instead of paperwork. Less back-and-forth means shorter handling time per referral and fewer things slipping through the cracks.'
+	],
+	[
+		'image' => 'responsiveness-4.svg',
+		'title' => 'Manage referrals from anywhere',
+		'description' =>
+			'A web-based platform for your front desk. A native mobile app for dentists and specialists. Your whole team stays in control and securely connected, no matter where the work happens.'
+	]
+];
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -196,6 +224,39 @@ get_header();
 						<p class="text-lg font-bold italic leading-6 text-purple-dark"><?php echo $point_quote; ?></p>
 						<img class="h-0.5 w-8" src="<?php echo $different_divider_url; ?>" width="32" height="2" alt="">
 						<p class="text-base leading-[1.375rem] text-[#524c45]"><?php echo $point_description; ?></p>
+					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<section class="bg-cream px-10 py-[120px]" data-responsiveness>
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
+		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
+			<h2 class="text-5xl leading-[1.1]">Most specialists compete on reputation.<br>The best ones compete on responsiveness.</h2>
+			<p class="max-w-[72rem] text-lg leading-6">drtalk is the only mobile-first platform built by practicing dentists that brings referrals, communication, and visibility into one place. So nothing gets missed, delayed, or lost again.</p>
+		</div>
+		<div class="grid w-full grid-cols-2 gap-12">
+			<?php foreach ($responsiveness_cards as $responsiveness_card): ?>
+				<?php
+    $responsiveness_image = esc_url(get_theme_file_uri('assets/images/' . $responsiveness_card['image']));
+    $responsiveness_title = esc_html($responsiveness_card['title']);
+    $responsiveness_description = esc_html($responsiveness_card['description']);
+    $responsiveness_count = $responsiveness_card['count'] ?? null;
+    $responsiveness_count_value = esc_attr($responsiveness_count ?? '');
+    $responsiveness_suffix = esc_attr($responsiveness_card['suffix'] ?? '');
+    ?>
+				<article class="flex flex-col items-start gap-6 text-purple-dark">
+					<div class="relative h-40 w-[16.875rem]">
+						<img class="size-full" src="<?php echo $responsiveness_image; ?>" width="270" height="160" alt="">
+						<?php if ($responsiveness_count): ?>
+							<span class="absolute right-3 top-3 rounded-lg bg-cream/90 px-3 py-1 font-heading text-xl font-medium text-purple-dark" data-count-target="<?php echo $responsiveness_count_value; ?>" data-count-suffix="<?php echo $responsiveness_suffix; ?>">0<?php echo $responsiveness_suffix; ?></span>
+						<?php endif; ?>
+					</div>
+					<div class="flex flex-col gap-2">
+						<h3 class="text-[2rem] font-medium leading-[1.1] tracking-[-0.02em] text-purple-dark"><?php echo $responsiveness_title; ?></h3>
+						<p class="text-base leading-[1.375rem] text-purple-dark"><?php echo $responsiveness_description; ?></p>
 					</div>
 				</article>
 			<?php endforeach; ?>
