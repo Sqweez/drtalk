@@ -103,6 +103,30 @@ $results_stats = [
 	['value' => '60%', 'copy' => '<strong>Reduction</strong> in administrative workload', 'image' => 'results-4.svg'],
 	['value' => '70%', 'copy' => '<strong>Faster</strong> time-to-scheduled appointment', 'image' => 'results-5.svg']
 ];
+$personalized_audiences = [
+	[
+		'label' => 'Dental Specialists',
+		'title' => 'Be the First Choice for Referrals',
+		'description' =>
+			'Most specialists compete on reputation. The best ones compete on responsiveness. drtalk gives you the system to make sure every referral is handled - and every GP knows it.',
+		'image' => 'personalized-1.png'
+	],
+	[
+		'label' => 'Office Managers',
+		'title' => 'Keep the Whole Office in Sync',
+		'description' =>
+			'Every referral, task, message, and next step lives in one clear workflow. Your team spends less time chasing updates and more time helping patients.',
+		'image' => 'personalized-2.png'
+	],
+	[
+		'label' => 'Referring GPs',
+		'title' => 'Know What Happens Next',
+		'description' =>
+			'Send a referral, see its progress, and get updates without a phone call. drtalk makes it simple to work with the specialists your patients trust.',
+		'image' => 'personalized-3.png'
+	]
+];
+$personalized_noise_url = esc_url(get_theme_file_uri('assets/images/personalized-noise.png'));
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -427,6 +451,42 @@ get_header();
 					<a class="flex w-full items-end rounded-[3.5rem] bg-purple px-12 py-7 text-center text-lg font-bold leading-6 text-cream" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
 				</div>
 			</div>
+		</div>
+	</div>
+</section>
+<section class="bg-cream px-10 py-[120px]" data-personalized>
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-12">
+		<h2 class="text-center text-5xl leading-[1.1]">The same platform, different relief for everyone it touches.</h2>
+		<div class="flex items-center justify-center gap-2 rounded-[1.75rem] border border-[#736962] p-2" role="tablist" aria-label="Audience">
+			<?php foreach ($personalized_audiences as $audience_index => $audience): ?>
+				<?php
+    $audience_active = $audience_index === 0;
+    $audience_class = $audience_active ? ' is-active' : '';
+    $audience_index_value = esc_attr($audience_index);
+    $audience_selected = $audience_active ? 'true' : 'false';
+    $audience_label = esc_html($audience['label']);
+    ?>
+				<button class="personalized-tab<?php echo $audience_class; ?>" type="button" role="tab" data-personalized-tab data-personalized-index="<?php echo $audience_index_value; ?>" aria-selected="<?php echo $audience_selected; ?>"><?php echo $audience_label; ?></button>
+			<?php endforeach; ?>
+		</div>
+		<div class="personalized-panel relative flex h-[32.5rem] w-full gap-16 overflow-hidden rounded-3xl bg-lilac p-16" data-personalized-panel data-active-index="0">
+			<img class="pointer-events-none absolute inset-0 size-full object-cover opacity-10" src="<?php echo $personalized_noise_url; ?>" alt="">
+			<?php foreach ($personalized_audiences as $audience_index => $audience): ?>
+				<?php
+    $personalized_state_index = esc_attr($audience_index);
+    $personalized_state_hidden = $audience_index === 0 ? 'false' : 'true';
+    $personalized_title = esc_html($audience['title']);
+    $personalized_description = esc_html($audience['description']);
+    $personalized_screen = esc_url(get_theme_file_uri('assets/images/' . $audience['image']));
+    ?>
+				<div class="personalized-state" data-personalized-state="<?php echo $personalized_state_index; ?>" aria-hidden="<?php echo $personalized_state_hidden; ?>">
+					<div class="flex h-full w-[30rem] flex-col justify-between">
+						<div><h3 class="text-[2rem] font-medium leading-[1.1]"><?php echo $personalized_title; ?></h3><p class="mt-4 text-lg leading-6"><?php echo $personalized_description; ?></p></div>
+						<div><a class="button-primary" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p class="mt-4 text-base text-purple-dark/75">30 minutes. No pitch, no obligation.</p></div>
+					</div>
+					<div class="personalized-screen"><img src="<?php echo $personalized_screen; ?>" alt="drtalk platform screen"></div>
+				</div>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>
