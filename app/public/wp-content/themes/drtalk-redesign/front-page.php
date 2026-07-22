@@ -132,6 +132,33 @@ $about_page_url = esc_url(home_url('/about-us/'));
 $concerns_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
 $concerns_scribble_url = esc_url(get_theme_file_uri('assets/images/concerns-scribble.svg'));
 $fomo_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
+$cta_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
+$cta_steps = [
+	[
+		'icon' => 'cta-step-2.svg',
+		'title' => 'We learn your workflow',
+		'emphasis' => 'How referrals come in',
+		'copy' => ' today, who handles them, and how it gets back to referring GPs.'
+	],
+	[
+		'icon' => 'cta-step-3.svg',
+		'title' => 'We show you the breakpoints',
+		'emphasis' => 'We give you a score',
+		'copy' => ' and highlight common pain points for practices with similar setups.'
+	],
+	[
+		'icon' => 'cta-step-4.svg',
+		'title' => 'You keep the full findings',
+		'emphasis' => 'A written analysis summary',
+		'copy' => ' is yours to keep, regardless of what you decide to do next.'
+	],
+	[
+		'icon' => 'cta-step-1.svg',
+		'title' => 'No follow up pressure',
+		'emphasis' => "If drtalk isn't right",
+		'copy' => " for your practice, we'll tell you that. Our job is to be useful. Not to close you."
+	]
+];
 $concerns = [
 	[
 		'title' => '“We already have a system for referrals.”',
@@ -649,6 +676,33 @@ get_header();
 			<p class="fomo-amount" data-fomo-amount>$194.33</p>
 			<p class="fomo-time"><span aria-hidden="true"></span><span data-fomo-time>00m:00s on page</span></p>
 			<p class="fomo-disclaimer">Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.</p>
+		</div>
+	</div>
+</section>
+<section class="cta-section" aria-labelledby="cta-title">
+	<img class="cta-noise" src="<?php echo $cta_noise_url; ?>" alt="">
+	<div class="cta-content">
+		<h2 id="cta-title">Your referral workflow has gaps.<br>Give us 30 minutes and we’ll find them.</h2>
+		<div class="cta-steps">
+			<?php foreach ($cta_steps as $cta_step): ?>
+				<?php
+    $cta_icon = esc_url(get_theme_file_uri('assets/images/' . $cta_step['icon']));
+    $cta_title = esc_html($cta_step['title']);
+    $cta_emphasis = esc_html($cta_step['emphasis']);
+    $cta_copy = esc_html($cta_step['copy']);
+    ?>
+				<article class="cta-step">
+					<img class="cta-step-icon" src="<?php echo $cta_icon; ?>" alt="">
+					<div class="cta-step-copy">
+						<h3><?php echo $cta_title; ?></h3>
+						<p><strong><?php echo $cta_emphasis; ?></strong><?php echo $cta_copy; ?></p>
+					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
+		<div class="cta-action">
+			<a class="cta-button" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+			<p>30 minutes. No obligation<br>Best with practice owner + office manager.</p>
 		</div>
 	</div>
 </section>

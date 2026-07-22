@@ -565,6 +565,126 @@
     opacity: 0.9;
   }
 
+  .cta-section {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-purple-dark);
+    padding: 120px 40px;
+  }
+
+  .cta-noise {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .cta-content {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+    margin: 0 auto;
+    color: var(--color-cream);
+  }
+
+  .cta-content > h2 {
+    margin: 0;
+    color: var(--color-cream);
+    font-size: 48px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  .cta-steps {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 48px;
+  }
+
+  .cta-step {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .cta-step-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+
+  .cta-step-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cta-step-copy h3,
+  .cta-step-copy p,
+  .cta-action p {
+    margin: 0;
+  }
+
+  .cta-step-copy h3 {
+    color: var(--color-cream);
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-step-copy p {
+    color: var(--color-cream);
+    font-size: 16px;
+    line-height: 22px;
+    opacity: 0.9;
+  }
+
+  .cta-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+    background-color: var(--color-purple);
+    padding: 20px 40px;
+    color: var(--color-cream);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    transition: background-color 180ms ease;
+  }
+
+  .cta-button:hover {
+    background-color: #a65bc9;
+  }
+
+  .cta-action p {
+    color: var(--color-cream);
+    font-size: 14px;
+    font-style: italic;
+    line-height: 18px;
+    opacity: 0.75;
+    text-align: center;
+  }
+
   .how-it-works-step {
     cursor: pointer;
     text-align: left;
