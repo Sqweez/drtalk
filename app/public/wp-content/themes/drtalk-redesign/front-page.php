@@ -158,8 +158,8 @@ get_header();
     $point_quote = esc_html($point['quote']);
     $point_description = esc_html($point['description']);
     ?>
-				<article class="flex flex-col gap-8">
-					<img class="h-20 w-[7.875rem]" src="<?php echo $point_icon_url; ?>" width="126" height="80" alt="">
+				<article class="operational-ai-card flex flex-col gap-8" tabindex="0">
+					<img class="operational-ai-icon h-20 w-[7.875rem]" src="<?php echo $point_icon_url; ?>" width="126" height="80" alt="">
 					<div class="flex flex-col gap-4">
 						<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark/75"><?php echo $point_title; ?></p>
 						<p class="text-lg font-bold italic leading-6 text-purple-dark"><?php echo $point_quote; ?></p>

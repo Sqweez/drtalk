@@ -971,6 +971,28 @@
     animation: hero-art-float 4.8s ease-in-out infinite;
     transform-origin: center;
   }
+  .operational-ai-card {
+    border-radius: 1rem;
+    outline: none;
+    padding: 0.75rem;
+    transition: transform 220ms ease,
+      box-shadow 220ms ease,
+      background-color 220ms ease;
+  }
+  .operational-ai-icon {
+    transform-origin: center;
+    transition: transform 220ms ease;
+  }
+  .operational-ai-card:hover,
+  .operational-ai-card:focus-visible {
+    background-color: rgba(243, 232, 247, 0.48);
+    box-shadow: 0 14px 28px rgba(74, 30, 79, 0.12);
+    transform: translateY(-0.5rem);
+  }
+  .operational-ai-card:hover .operational-ai-icon,
+  .operational-ai-card:focus-visible .operational-ai-icon {
+    transform: scale(1.08) rotate(-3deg);
+  }
   .trusted-partner-logo {
     mask-position: center;
     mask-repeat: no-repeat;
