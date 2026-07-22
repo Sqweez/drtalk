@@ -7,7 +7,7 @@ $login_url = esc_url(drtalk_redesign_login_url());
 $demo_url = esc_url(drtalk_redesign_demo_url());
 $logo_url = esc_url(get_theme_file_uri('assets/images/drtalk-logo-dual.png'));
 ?>
-<header class="fixed inset-x-0 z-40 bg-cream/80 px-12 py-5 backdrop-blur-lg" style="top: var(--wp-admin--admin-bar--height, 0);">
+<header class="fixed inset-x-0 z-40 bg-cream/80 px-12 py-5" style="top: var(--wp-admin--admin-bar--height, 0);">
 	<div class="mx-auto flex h-10 w-full max-w-[75rem] items-center justify-center gap-8 rounded-lg">
 		<div class="flex flex-1 items-center gap-6">
 			<a class="shrink-0" href="<?php echo $home_url; ?>" rel="home">
