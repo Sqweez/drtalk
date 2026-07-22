@@ -2,6 +2,37 @@
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
 $hero_art_url = esc_url(get_theme_file_uri('assets/images/hero-art.png'));
+$different_points = [
+	[
+		'icon' => 'different-referral-friction.svg',
+		'title' => 'Referral Friction',
+		'quote' => '“Our current system is primitive - half our referrals come through channels we can barely track.”',
+		'description' =>
+			'Faxes. Calls. Emails. Web Forms. Referrals slip through every gap. Stop relying on a workflow that can’t catch them all.'
+	],
+	[
+		'icon' => 'different-relationship-risk.svg',
+		'title' => 'Relationship Risk',
+		'quote' => '“We got told we were hard to work with. By a dentist we thought was our friend.”',
+		'description' =>
+			'GPs won’t call to complain about a slow response; they’ll just route the next case to your competitor.'
+	],
+	[
+		'icon' => 'different-staff-dependency.svg',
+		'title' => 'Staff Dependency',
+		'quote' => '“When she left, no one knew the status of any referral. We lost track of everything.”',
+		'description' =>
+			'Your growth shouldn’t live with one person. Build a system that moves referrals forward, no matter who is at the front desk.'
+	],
+	[
+		'icon' => 'different-growth-risk.svg',
+		'title' => 'Growth Risk',
+		'quote' => '“We thought we had a system. We just hadn’t grown into the point where it failed yet.”',
+		'description' =>
+			'A manual workflow breaks at scale. The system that got you here won’t get you where you’re going.'
+	]
+];
+$different_divider_url = esc_url(get_theme_file_uri('assets/images/different-divider.svg'));
 $trusted_partners = [
 	[
 		'file' => 'partner-logo-1.png',
@@ -77,14 +108,32 @@ get_header();
 	</div>
 </section>
 
-<section class="site-container pb-20 text-center lg:pb-28">
-	<p class="text-sm font-black uppercase tracking-[0.12em] text-purple">Referral conversations, connected</p>
-	<h2 class="mx-auto mt-4 max-w-3xl text-4xl leading-tight sm:text-5xl">A clearer path from referral to treatment</h2>
-	<p class="mx-auto mt-6 max-w-2xl text-lg leading-7 text-purple-dark/75">DrTalk gives practices visibility into each referral, so every patient gets timely care and every opportunity stays on track.</p>
-	<div class="mt-10 grid gap-4 text-left md:grid-cols-3">
-		<div class="rounded-3xl bg-lilac p-7"><p class="font-heading text-3xl font-semibold">Capture</p><p class="mt-3 leading-6 text-purple-dark/75">See referral activity in one place instead of relying on manual follow-up.</p></div>
-		<div class="rounded-3xl bg-cream p-7 ring-1 ring-purple-dark/10"><p class="font-heading text-3xl font-semibold">Track</p><p class="mt-3 leading-6 text-purple-dark/75">Know where every patient is in the referral journey and what needs attention.</p></div>
-		<div class="rounded-3xl bg-purple-dark p-7 text-cream"><p class="font-heading text-3xl font-semibold">Close</p><p class="mt-3 leading-6 text-lilac/75">Turn overlooked gaps into better care, stronger relationships, and healthy growth.</p></div>
+<section class="bg-cream px-10 py-[120px]">
+	<div class="mx-auto flex max-w-[75rem] flex-col gap-20">
+		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
+			<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Put Operational AI to Work for Your Office</p>
+			<h2 class="text-5xl leading-[1.1]">You didn't build a specialty practice to manage inboxes.</h2>
+			<p class="text-lg leading-6">When referring dentists feel like it's hard to work with you, they don't complain. They just stop referring.</p>
+		</div>
+		<div class="grid grid-cols-4 gap-8">
+			<?php foreach ($different_points as $point): ?>
+				<?php
+    $point_icon_url = esc_url(get_theme_file_uri('assets/images/' . $point['icon']));
+    $point_title = esc_html($point['title']);
+    $point_quote = esc_html($point['quote']);
+    $point_description = esc_html($point['description']);
+    ?>
+				<article class="flex flex-col gap-8">
+					<img class="h-20 w-[7.875rem]" src="<?php echo $point_icon_url; ?>" width="126" height="80" alt="">
+					<div class="flex flex-col gap-4">
+						<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark/75"><?php echo $point_title; ?></p>
+						<p class="text-lg font-bold italic leading-6 text-purple-dark"><?php echo $point_quote; ?></p>
+						<img class="h-0.5 w-8" src="<?php echo $different_divider_url; ?>" width="32" height="2" alt="">
+						<p class="text-base leading-[1.375rem] text-[#524c45]"><?php echo $point_description; ?></p>
+					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
 	</div>
 </section>
 <?php get_template_part('template-parts/home', 'faq'); ?>
