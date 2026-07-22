@@ -1,6 +1,9 @@
 # Default deny: this Local WordPress copy contains production-derived data.
 *
 
+# Locally generated production archives.
+/build/
+
 # Repository documentation.
 !/.gitignore
 !/AGENTS.md
