@@ -230,6 +230,7 @@
       track.style.transform = `translate3d(${-activeIndex * 1040}px, 0, 0)`;
       cards.forEach((card, cardIndex) => {
         card.setAttribute("aria-hidden", cardIndex === activeIndex ? "false" : "true");
+        card.style.setProperty("--concerns-progress", 0);
       });
       dots.forEach((dot, dotIndex) => {
         dot.setAttribute("aria-selected", dotIndex === activeIndex ? "true" : "false");
@@ -250,11 +251,6 @@
     });
     dots.forEach((dot, dotIndex) => {
       dot.addEventListener("click", () => update2(dotIndex));
-    });
-    concernsRoot.addEventListener("mouseenter", () => cancelAnimationFrame(animationFrame));
-    concernsRoot.addEventListener("mouseleave", () => {
-      startTime = performance.now();
-      animationFrame = requestAnimationFrame(tick);
     });
     update2(0);
     animationFrame = requestAnimationFrame(tick);

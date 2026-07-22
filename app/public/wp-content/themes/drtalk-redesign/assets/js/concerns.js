@@ -16,6 +16,7 @@ if (concernsRoot) {
 
     cards.forEach((card, cardIndex) => {
       card.setAttribute('aria-hidden', cardIndex === activeIndex ? 'false' : 'true');
+      card.style.setProperty('--concerns-progress', 0);
     });
 
     dots.forEach((dot, dotIndex) => {
@@ -43,12 +44,6 @@ if (concernsRoot) {
 
   dots.forEach((dot, dotIndex) => {
     dot.addEventListener('click', () => update(dotIndex));
-  });
-
-  concernsRoot.addEventListener('mouseenter', () => cancelAnimationFrame(animationFrame));
-  concernsRoot.addEventListener('mouseleave', () => {
-    startTime = performance.now();
-    animationFrame = requestAnimationFrame(tick);
   });
 
   update(0);
