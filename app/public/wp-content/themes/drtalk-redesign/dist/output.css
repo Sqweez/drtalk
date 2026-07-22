@@ -915,6 +915,10 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
     }
+    .hero-art-float,
+    .hero-background-motion {
+      animation: none !important;
+    }
   }
 }
 @layer components {
@@ -960,6 +964,13 @@
       outline-color: var(--color-orange);
     }
   }
+  .hero-background-motion {
+    animation: hero-background-motion 12s ease-in-out infinite alternate;
+  }
+  .hero-art-float {
+    animation: hero-art-float 7s ease-in-out infinite;
+    transform-origin: center;
+  }
   .trusted-partner-logo {
     mask-position: center;
     mask-repeat: no-repeat;
@@ -997,6 +1008,23 @@
     height: 48px;
     mask-image: url('../assets/images/partner-logo-6.png');
     -webkit-mask-image: url('../assets/images/partner-logo-6.png');
+  }
+}
+@keyframes hero-art-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) scale(1.015);
+  }
+}
+@keyframes hero-background-motion {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(-1.5%, 1.5%, 0);
   }
 }
 @property --tw-translate-x {
