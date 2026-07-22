@@ -8,7 +8,9 @@ if (concernsRoot) {
   const duration = 7000;
   let activeIndex = 0;
   let startTime = performance.now();
+  let pausedElapsed = 0;
   let animationFrame;
+  let isPaused = false;
 
   const update = (index) => {
     activeIndex = (index + cards.length) % cards.length;
@@ -24,6 +26,7 @@ if (concernsRoot) {
     });
 
     startTime = performance.now();
+    pausedElapsed = 0;
   };
 
   const tick = (now) => {
@@ -44,6 +47,26 @@ if (concernsRoot) {
 
   dots.forEach((dot, dotIndex) => {
     dot.addEventListener('click', () => update(dotIndex));
+  });
+
+  concernsRoot.addEventListener('mouseenter', () => {
+    if (isPaused) {
+      return;
+    }
+
+    pausedElapsed = performance.now() - startTime;
+    isPaused = true;
+    cancelAnimationFrame(animationFrame);
+  });
+
+  concernsRoot.addEventListener('mouseleave', () => {
+    if (!isPaused) {
+      return;
+    }
+
+    startTime = performance.now() - pausedElapsed;
+    isPaused = false;
+    animationFrame = requestAnimationFrame(tick);
   });
 
   update(0);

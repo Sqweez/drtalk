@@ -224,7 +224,9 @@
     const duration = 7e3;
     let activeIndex = 0;
     let startTime = performance.now();
+    let pausedElapsed = 0;
     let animationFrame;
+    let isPaused = false;
     const update2 = (index) => {
       activeIndex = (index + cards.length) % cards.length;
       track.style.transform = `translate3d(${-activeIndex * 1040}px, 0, 0)`;
@@ -236,6 +238,7 @@
         dot.setAttribute("aria-selected", dotIndex === activeIndex ? "true" : "false");
       });
       startTime = performance.now();
+      pausedElapsed = 0;
     };
     const tick = (now2) => {
       const elapsed = now2 - startTime;
@@ -251,6 +254,22 @@
     });
     dots.forEach((dot, dotIndex) => {
       dot.addEventListener("click", () => update2(dotIndex));
+    });
+    concernsRoot.addEventListener("mouseenter", () => {
+      if (isPaused) {
+        return;
+      }
+      pausedElapsed = performance.now() - startTime;
+      isPaused = true;
+      cancelAnimationFrame(animationFrame);
+    });
+    concernsRoot.addEventListener("mouseleave", () => {
+      if (!isPaused) {
+        return;
+      }
+      startTime = performance.now() - pausedElapsed;
+      isPaused = false;
+      animationFrame = requestAnimationFrame(tick);
     });
     update2(0);
     animationFrame = requestAnimationFrame(tick);
