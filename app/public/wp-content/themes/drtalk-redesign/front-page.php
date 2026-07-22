@@ -92,6 +92,17 @@ $responsiveness_cards = [
 			'A web-based platform for your front desk. A native mobile app for dentists and specialists. Your whole team stays in control and securely connected, no matter where the work happens.'
 	]
 ];
+$results_stats = [
+	['value' => '$500M+', 'copy' => 'In referral-driven <strong>revenue</strong> tracked', 'image' => 'results-1.svg'],
+	[
+		'value' => 'Up to 20%',
+		'copy' => '<strong>Revenue growth</strong> for drtalk practices in year one',
+		'image' => 'results-2.svg'
+	],
+	['value' => '1,500+', 'copy' => '<strong>Practices</strong> using drtalk nationwide', 'image' => 'results-3.svg'],
+	['value' => '60%', 'copy' => '<strong>Reduction</strong> in administrative workload', 'image' => 'results-4.svg'],
+	['value' => '70%', 'copy' => '<strong>Faster</strong> time-to-scheduled appointment', 'image' => 'results-5.svg']
+];
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -258,6 +269,28 @@ get_header();
 						<h3 class="text-[2rem] font-medium leading-[1.1] tracking-[-0.02em] text-purple-dark"><?php echo $responsiveness_title; ?></h3>
 						<p class="text-base leading-[1.375rem] text-purple-dark"><?php echo $responsiveness_description; ?></p>
 					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<section class="bg-cream px-10 py-[120px]">
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-12">
+		<h2 class="text-center text-5xl leading-[1.1]">Real results. Proven at scale.</h2>
+		<div class="flex w-full flex-wrap gap-4">
+			<?php foreach ($results_stats as $results_stat): ?>
+				<?php
+    $results_value = esc_html($results_stat['value']);
+    $results_copy = wp_kses_post($results_stat['copy']);
+    $results_image = esc_url(get_theme_file_uri('assets/images/' . $results_stat['image']));
+    ?>
+				<article class="results-stat-card relative flex h-80 min-w-[22.5rem] flex-1 flex-col gap-8 overflow-hidden rounded-[2rem] bg-lilac px-12 py-14" tabindex="0">
+					<div class="relative z-10">
+						<p class="text-7xl font-semibold leading-[1.1] tracking-[-0.03em]"><?php echo $results_value; ?></p>
+						<p class="mt-2 max-w-60 text-lg leading-6 text-purple-dark/80"><?php echo $results_copy; ?></p>
+					</div>
+					<img class="results-stat-icon pointer-events-none absolute -bottom-20 -right-20 h-72 w-80 object-contain" src="<?php echo $results_image; ?>" alt="">
 				</article>
 			<?php endforeach; ?>
 		</div>
