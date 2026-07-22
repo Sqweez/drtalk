@@ -291,7 +291,7 @@ $trusted_partners = [
 
 get_header();
 ?>
-<section class="px-5 pb-[88px] pt-10 sm:px-8 lg:px-10">
+<section class="px-5 pb-[88px] pt-10 sm:px-8 lg:px-10" data-home-order="1">
 	<div class="mx-auto grid max-w-[75rem] gap-2 overflow-hidden rounded-lg lg:grid-cols-2">
 		<div class="relative flex min-h-[35rem] flex-col items-center justify-center overflow-hidden rounded-3xl bg-purple-dark px-8 py-12 text-center sm:px-12">
 			<div class="hero-background-motion absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(243,232,247,0.14),transparent_36%),radial-gradient(circle_at_80%_90%,rgba(135,59,183,0.32),transparent_46%)]"></div>
@@ -326,7 +326,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]">
+<section class="bg-cream px-10 py-[120px]" data-home-order="2">
 	<div class="mx-auto flex max-w-[75rem] flex-col gap-20">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
 			<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Put Operational AI to Work for Your Office</p>
@@ -355,7 +355,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-responsiveness>
+<section class="bg-cream px-10 py-[120px]" data-home-order="5" data-responsiveness>
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
 			<h2 class="text-5xl leading-[1.1]">Most specialists compete on reputation.<br>The best ones compete on responsiveness.</h2>
@@ -388,7 +388,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]">
+<section class="bg-cream px-10 py-[120px]" data-home-order="6">
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-12">
 		<h2 class="text-center text-5xl leading-[1.1]">Real results. Proven at scale.</h2>
 		<div class="flex w-full flex-wrap gap-4">
@@ -410,7 +410,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-how-it-works>
+<section class="bg-cream px-10 py-[120px]" data-home-order="4" data-how-it-works>
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
 			<h2 class="text-5xl leading-[1.1]">From chaos to clarity.<br>No disruption. No overhaul.</h2>
@@ -466,7 +466,7 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-calculator-root>
+<section class="bg-cream px-10 py-[120px]" data-home-order="3" data-calculator-root>
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
 		<h2 class="w-full text-center text-5xl leading-none">If you can't measure your referral leakage, you can't fix it.</h2>
 		<div class="relative flex w-full max-w-[64rem] gap-4 overflow-hidden rounded-3xl bg-lilac p-4">
@@ -543,7 +543,7 @@ get_header();
 		</div>
 	</div>
 </section>
-<section class="relative overflow-hidden bg-cream px-10 py-[120px]" data-testimonials>
+<section class="relative overflow-hidden bg-cream px-10 py-[120px]" data-home-order="8" data-testimonials>
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
 		<h2 class="text-center text-5xl leading-[1.1]">For the people who use it every day.</h2>
 		<div class="testimonials-swiper w-full" data-testimonials-swiper>
@@ -572,7 +572,7 @@ get_header();
 		<div class="flex gap-6"><button class="testimonial-control" type="button" data-testimonials-previous aria-label="Previous testimonial">←</button><button class="testimonial-control" type="button" data-testimonials-next aria-label="Next testimonial">→</button></div>
 	</div>
 </section>
-<section class="bg-cream px-10 py-[120px]" data-personalized>
+<section class="bg-cream px-10 py-[120px]" data-home-order="7" data-personalized>
 	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-12">
 		<h2 class="text-center text-5xl leading-[1.1]">The same platform, different relief for everyone it touches.</h2>
 		<div class="flex items-center justify-center gap-2 rounded-[1.75rem] border border-[#736962] p-2" role="tablist" aria-label="Audience">
@@ -608,7 +608,7 @@ get_header();
 		</div>
 	</div>
 </section>
-<section class="founder-section" aria-labelledby="founder-title">
+<section class="founder-section" data-home-order="9" aria-labelledby="founder-title">
 	<div class="founder-section-content">
 		<div class="founder-section-profile">
 			<img class="founder-section-image" src="<?php echo $founder_image_url; ?>" alt="Thomas L. Stone">
@@ -630,7 +630,7 @@ get_header();
 		</div>
 	</div>
 </section>
-<section class="concerns-section" data-concerns aria-labelledby="concerns-title">
+<section class="concerns-section" data-home-order="10" data-concerns aria-labelledby="concerns-title">
 	<div class="concerns-section-content">
 		<h2 id="concerns-title">Common concerns. Honest answers.</h2>
 		<div class="concerns-carousel" data-concerns-carousel>
@@ -665,7 +665,7 @@ get_header();
 		</div>
 	</div>
 </section>
-<section class="fomo-section" data-fomo data-fomo-baseline="194.33" data-fomo-hourly-rate="4640" aria-labelledby="fomo-title">
+<section class="fomo-section" data-home-order="11" data-fomo data-fomo-baseline="194.33" data-fomo-hourly-rate="4640" aria-labelledby="fomo-title">
 	<img class="fomo-noise" src="<?php echo $fomo_noise_url; ?>" alt="">
 	<div class="fomo-content">
 		<div class="fomo-copy">
@@ -679,7 +679,7 @@ get_header();
 		</div>
 	</div>
 </section>
-<section class="cta-section" aria-labelledby="cta-title">
+<section class="cta-section" data-home-order="12" aria-labelledby="cta-title">
 	<img class="cta-noise" src="<?php echo $cta_noise_url; ?>" alt="">
 	<div class="cta-content">
 		<h2 id="cta-title">Your referral workflow has gaps.<br>Give us 30 minutes and we’ll find them.</h2>

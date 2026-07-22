@@ -8,7 +8,6 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-white: #fff;
     --spacing: 0.25rem;
     --container-3xl: 48rem;
     --container-4xl: 56rem;
@@ -1081,6 +1080,49 @@
     color: var(--color-purple-dark);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  body.home #main-content {
+    display: flex;
+    flex-direction: column;
+  }
+  body.home #main-content [data-home-order='1'] {
+    order: 1;
+  }
+  body.home #main-content [data-home-order='2'] {
+    order: 2;
+  }
+  body.home #main-content [data-home-order='3'] {
+    order: 3;
+  }
+  body.home #main-content [data-home-order='4'] {
+    order: 4;
+  }
+  body.home #main-content [data-home-order='5'] {
+    order: 5;
+  }
+  body.home #main-content [data-home-order='6'] {
+    order: 6;
+  }
+  body.home #main-content [data-home-order='7'] {
+    order: 7;
+  }
+  body.home #main-content [data-home-order='8'] {
+    order: 8;
+  }
+  body.home #main-content [data-home-order='9'] {
+    order: 9;
+  }
+  body.home #main-content [data-home-order='10'] {
+    order: 10;
+  }
+  body.home #main-content [data-home-order='11'] {
+    order: 11;
+  }
+  body.home #main-content [data-home-order='12'] {
+    order: 12;
+  }
+  body.home #main-content [data-home-order='13'] {
+    order: 13;
   }
   h1,
   h2,

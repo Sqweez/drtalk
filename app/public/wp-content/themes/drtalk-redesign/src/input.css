@@ -24,6 +24,64 @@
     @apply bg-cream font-body text-purple-dark antialiased;
   }
 
+  body.home #main-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Keep the front-page sequence aligned with the approved Figma layout. */
+  body.home #main-content [data-home-order='1'] {
+    order: 1;
+  }
+
+  body.home #main-content [data-home-order='2'] {
+    order: 2;
+  }
+
+  body.home #main-content [data-home-order='3'] {
+    order: 3;
+  }
+
+  body.home #main-content [data-home-order='4'] {
+    order: 4;
+  }
+
+  body.home #main-content [data-home-order='5'] {
+    order: 5;
+  }
+
+  body.home #main-content [data-home-order='6'] {
+    order: 6;
+  }
+
+  body.home #main-content [data-home-order='7'] {
+    order: 7;
+  }
+
+  body.home #main-content [data-home-order='8'] {
+    order: 8;
+  }
+
+  body.home #main-content [data-home-order='9'] {
+    order: 9;
+  }
+
+  body.home #main-content [data-home-order='10'] {
+    order: 10;
+  }
+
+  body.home #main-content [data-home-order='11'] {
+    order: 11;
+  }
+
+  body.home #main-content [data-home-order='12'] {
+    order: 12;
+  }
+
+  body.home #main-content [data-home-order='13'] {
+    order: 13;
+  }
+
   h1,
   h2,
   h3,
