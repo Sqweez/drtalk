@@ -255,21 +255,25 @@
     dots.forEach((dot, dotIndex) => {
       dot.addEventListener("click", () => update2(dotIndex));
     });
-    concernsRoot.addEventListener("mouseenter", () => {
+    const pauseTimer = () => {
       if (isPaused) {
         return;
       }
       pausedElapsed = performance.now() - startTime;
       isPaused = true;
       cancelAnimationFrame(animationFrame);
-    });
-    concernsRoot.addEventListener("mouseleave", () => {
+    };
+    const resumeTimer = () => {
       if (!isPaused) {
         return;
       }
       startTime = performance.now() - pausedElapsed;
       isPaused = false;
       animationFrame = requestAnimationFrame(tick);
+    };
+    nextButtons.forEach((button) => {
+      button.addEventListener("mouseenter", pauseTimer);
+      button.addEventListener("mouseleave", resumeTimer);
     });
     update2(0);
     animationFrame = requestAnimationFrame(tick);

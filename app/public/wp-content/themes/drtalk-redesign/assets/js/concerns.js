@@ -49,7 +49,7 @@ if (concernsRoot) {
     dot.addEventListener('click', () => update(dotIndex));
   });
 
-  concernsRoot.addEventListener('mouseenter', () => {
+  const pauseTimer = () => {
     if (isPaused) {
       return;
     }
@@ -57,9 +57,9 @@ if (concernsRoot) {
     pausedElapsed = performance.now() - startTime;
     isPaused = true;
     cancelAnimationFrame(animationFrame);
-  });
+  };
 
-  concernsRoot.addEventListener('mouseleave', () => {
+  const resumeTimer = () => {
     if (!isPaused) {
       return;
     }
@@ -67,6 +67,11 @@ if (concernsRoot) {
     startTime = performance.now() - pausedElapsed;
     isPaused = false;
     animationFrame = requestAnimationFrame(tick);
+  };
+
+  nextButtons.forEach((button) => {
+    button.addEventListener('mouseenter', pauseTimer);
+    button.addEventListener('mouseleave', resumeTimer);
   });
 
   update(0);
