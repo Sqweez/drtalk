@@ -90,7 +90,7 @@
         answerWrapper.id = answerId;
         answerWrapper.className = "grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out";
         answer.className = "min-h-0 overflow-hidden px-6 text-lg leading-6 text-purple-dark/75";
-        answer.textContent = item.answer;
+        answer.innerHTML = item.answer;
         button.addEventListener("click", () => {
           const isExpanded = button.getAttribute("aria-expanded") === "true";
           button.setAttribute("aria-expanded", String(!isExpanded));
