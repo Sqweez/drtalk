@@ -7,7 +7,6 @@ $blog_url = esc_url(home_url('/blog/'));
 $pricing_url = esc_url(home_url('/pricing/'));
 $contact_url = esc_url(home_url('/contact-us/'));
 $support_email_url = 'mailto:support@drtalk.com';
-$copyright_url = esc_url(home_url('/copyright-policy/'));
 $baa_url = esc_url(home_url('/business-associates-agreement/'));
 $terms_url = esc_url(home_url('/terms-and-conditions/'));
 $privacy_url = esc_url(home_url('/privacy/'));
@@ -49,7 +48,6 @@ $company_navigation_label = esc_attr__('Company navigation', 'drtalk-redesign');
 			<nav class="flex flex-1 flex-col items-start gap-4 text-sm leading-[18px]" aria-label="<?php echo $company_navigation_label; ?>">
 				<p class="w-[120px] opacity-50">Company</p>
 				<ul class="flex w-full flex-col items-start gap-2">
-					<li><a class="transition hover:text-orange" href="<?php echo $copyright_url; ?>">Copyright Policy</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $baa_url; ?>">Business Associates Agreement</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $terms_url; ?>">Terms of Use</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $privacy_url; ?>">Privacy Policy</a></li>
