@@ -302,9 +302,9 @@ $trusted_partners = [
 
 get_header();
 ?>
-<section class="px-5 pb-[88px] pt-5 sm:px-8 lg:px-12" data-home-order="1">
+<section class="px-2 py-8 sm:px-8 lg:px-12 lg:pb-0 lg:pt-5" data-home-order="1">
 	<div class="mx-auto grid max-w-[90rem] gap-2 lg:grid-cols-2">
-		<div class="relative flex min-h-[34rem] flex-col items-center justify-center overflow-hidden rounded-3xl bg-purple-dark p-8 text-center sm:p-10 lg:h-[35rem]">
+		<div class="relative flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-purple-dark px-6 py-10 text-center sm:p-10 lg:h-[35rem] lg:min-h-[34rem]">
 			<div
 				class="hero-noise absolute inset-0"
 				style="<?php echo esc_attr('--hero-noise-image: url(\'' . $hero_noise_orange_url . '\');'); ?>"
@@ -313,8 +313,8 @@ get_header();
 			<div class="relative flex w-full max-w-[37rem] flex-col items-center gap-8">
 				<div class="flex w-full flex-col items-center gap-4 text-cream">
 					<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Built by Dentists for Dentists</p>
-					<h1 class="text-[2.5rem] leading-[1.1] tracking-[-0.01em] sm:text-5xl">Stop Losing Referrals You Never Knew You Missed</h1>
-					<p class="text-lg leading-6 text-cream/90">Invisible referral leaks cost your practice revenue. Plug the gaps with drtalk. Put AI to work for your office to seamlessly capture, track, and close every referral.</p>
+					<h1 class="text-4xl leading-none tracking-normal sm:text-5xl sm:leading-[1.1] sm:tracking-[-0.01em]">Stop Losing Referrals You Never Knew You Missed</h1>
+					<p class="text-lg leading-6 text-cream/90"><span class="hidden lg:inline">Invisible referral leaks cost your practice revenue. Plug the gaps with drtalk. </span>Put AI to work for your office to seamlessly capture, track, and close every referral.</p>
 				</div>
 				<div class="flex flex-col items-center gap-4">
 					<a class="inline-flex min-h-16 items-center justify-center rounded-full bg-orange px-8 py-5 text-center text-base font-bold leading-6 text-purple-dark transition-colors hover:bg-cream focus-visible:outline-orange" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
@@ -325,7 +325,7 @@ get_header();
 				</div>
 			</div>
 		</div>
-		<div class="hero-visual relative min-h-[28rem] overflow-hidden rounded-3xl bg-lilac lg:h-[35rem]">
+		<div class="hero-visual relative hidden min-h-[28rem] overflow-hidden rounded-3xl bg-lilac lg:block lg:h-[35rem]">
 			<div class="hero-visual-stage hero-decoration-stage" aria-hidden="true">
 				<img class="hero-decoration hero-decoration-referral" src="<?php echo $hero_referral_url; ?>" width="112" height="114" alt="">
 				<img class="hero-decoration hero-decoration-shield" src="<?php echo $hero_shield_url; ?>" width="141" height="140" alt="">
@@ -346,9 +346,12 @@ get_header();
    ); ?></p>
 		</div>
 	</div>
-	<div class="mx-auto mt-20 flex max-w-[75rem] flex-col items-center gap-8">
+</section>
+
+<section class="px-5 py-14 sm:px-8 lg:px-12 lg:pb-[88px] lg:pt-20" data-home-order="1">
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-8">
 		<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark">Trusted By Dentistry’s Top Leaders</p>
-		<div class="flex w-full items-start justify-center gap-12 overflow-hidden">
+		<div class="flex w-full items-start justify-start gap-12 overflow-hidden lg:justify-center">
 			<?php foreach ($trusted_partners as $partner): ?>
 				<span
 					class="trusted-partner-logo <?php echo esc_attr($partner['class']); ?> block shrink-0 bg-purple-dark"
@@ -360,11 +363,12 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-5 py-[104px] sm:px-8 lg:px-12" data-home-order="2" data-problem-section>
-	<div class="mx-auto flex max-w-[90rem] flex-col gap-20">
+<section class="bg-cream px-5 py-14 sm:px-8 lg:px-12 lg:py-[104px]" data-home-order="2" data-problem-section>
+	<div class="mx-auto flex max-w-[90rem] flex-col gap-10 lg:gap-20">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
 			<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Put Operational AI to Work</p>
-			<h2 class="text-[2.5rem] leading-[1.1] tracking-[-0.01em] sm:text-5xl">You didn't build a specialty practice to manage inboxes</h2>
+			<h2 class="text-4xl leading-none tracking-normal sm:text-5xl sm:leading-[1.1] sm:tracking-[-0.01em]">You didn't build a specialty practice to manage inboxes</h2>
+			<p class="text-base leading-6 lg:hidden">When referring dentists feel like it's hard to work with you, they don't complain. They just stop referring.</p>
 		</div>
 		<div class="problem-card-list">
 			<?php foreach ($different_points as $point): ?>
@@ -386,7 +390,7 @@ get_header();
 						<img class="problem-card-icon-static" src="<?php echo $point_icon_url; ?>" width="126" height="80" alt="">
 						<img class="problem-card-icon-animated" src="<?php echo $point_hover_icon_url; ?>" data-problem-icon-src="<?php echo $point_hover_icon_url; ?>" width="126" height="80" alt="">
 					</div>
-					<div class="relative flex flex-col gap-4">
+					<div class="relative flex flex-col items-center gap-4 lg:items-start">
 						<h3 class="font-body text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark"><?php echo $point_title; ?></h3>
 						<p class="text-lg font-bold italic leading-6 text-purple-dark"><?php echo $point_quote; ?></p>
 						<img class="h-0.5 w-8" src="<?php echo $different_divider_url; ?>" width="32" height="2" alt="">
