@@ -1,10 +1,17 @@
 <?php
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
-$hero_art_url = esc_url(get_theme_file_uri('assets/images/hero-art.png'));
+$hero_noise_orange_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$hero_noise_dark_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$hero_phone_url = esc_url(get_theme_file_uri('assets/images/hero-phone.png'));
+$hero_referral_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-referral.png'));
+$hero_shield_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-shield.png'));
+$hero_money_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-money.png'));
+$hero_connection_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-connection.png'));
 $different_points = [
 	[
 		'icon' => 'different-referral-friction.svg',
+		'hover_icon' => 'different-referral-friction-hover.gif',
 		'title' => 'Referral Friction',
 		'quote' => '“Our current system is primitive - half our referrals come through channels we can barely track.”',
 		'description' =>
@@ -12,6 +19,7 @@ $different_points = [
 	],
 	[
 		'icon' => 'different-relationship-risk.svg',
+		'hover_icon' => 'different-relationship-risk-hover.gif',
 		'title' => 'Relationship Risk',
 		'quote' => '“We got told we were hard to work with. By a dentist we thought was our friend.”',
 		'description' =>
@@ -19,6 +27,7 @@ $different_points = [
 	],
 	[
 		'icon' => 'different-staff-dependency.svg',
+		'hover_icon' => 'different-staff-dependency-hover.gif',
 		'title' => 'Staff Dependency',
 		'quote' => '“When she left, no one knew the status of any referral. We lost track of everything.”',
 		'description' =>
@@ -26,6 +35,7 @@ $different_points = [
 	],
 	[
 		'icon' => 'different-growth-risk.svg',
+		'hover_icon' => 'different-growth-risk-hover.gif',
 		'title' => 'Growth Risk',
 		'quote' => '“We thought we had a system. We just hadn’t grown into the point where it failed yet.”',
 		'description' =>
@@ -33,6 +43,7 @@ $different_points = [
 	]
 ];
 $different_divider_url = esc_url(get_theme_file_uri('assets/images/different-divider.svg'));
+$different_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
 $how_it_works_steps = [
 	[
 		'number' => '01',
@@ -291,25 +302,48 @@ $trusted_partners = [
 
 get_header();
 ?>
-<section class="px-5 pb-[88px] pt-10 sm:px-8 lg:px-10" data-home-order="1">
-	<div class="mx-auto grid max-w-[75rem] gap-2 overflow-hidden rounded-lg lg:grid-cols-2">
-		<div class="relative flex min-h-[35rem] flex-col items-center justify-center overflow-hidden rounded-3xl bg-purple-dark px-8 py-12 text-center sm:px-12">
-			<div class="hero-background-motion absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(243,232,247,0.14),transparent_36%),radial-gradient(circle_at_80%_90%,rgba(135,59,183,0.32),transparent_46%)]"></div>
-			<div class="relative max-w-[31rem]">
-				<p class="text-[0.8125rem] font-black uppercase tracking-[0.15em] text-lilac">Built by Dentists for Dentists</p>
-				<h1 class="mt-4 text-[2.75rem] leading-[1.1] text-cream sm:text-5xl">Stop Losing Referrals You Never Know You Missed</h1>
-				<p class="mt-4 text-lg leading-6 text-lilac/75">Invisible referral leaks cost your practice revenue. Plug the gaps with DrTalk. Put AI to work for your office to seamlessly capture, track, and close every referral.</p>
-				<div class="mt-8">
-					<a class="button-primary" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
-					<p class="mt-4 text-sm text-lilac/75">30 minutes. We do the work. You keep the report. No pitch, no obligation.</p>
+<section class="px-5 pb-[88px] pt-5 sm:px-8 lg:px-12" data-home-order="1">
+	<div class="mx-auto grid max-w-[90rem] gap-2 lg:grid-cols-2">
+		<div class="relative flex min-h-[34rem] flex-col items-center justify-center overflow-hidden rounded-3xl bg-purple-dark p-8 text-center sm:p-10 lg:h-[35rem]">
+			<div
+				class="hero-noise absolute inset-0"
+				style="<?php echo esc_attr('--hero-noise-image: url(\'' . $hero_noise_orange_url . '\');'); ?>"
+				aria-hidden="true"
+			></div>
+			<div class="relative flex w-full max-w-[37rem] flex-col items-center gap-8">
+				<div class="flex w-full flex-col items-center gap-4 text-cream">
+					<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Built by Dentists for Dentists</p>
+					<h1 class="text-[2.5rem] leading-[1.1] tracking-[-0.01em] sm:text-5xl">Stop Losing Referrals You Never Knew You Missed</h1>
+					<p class="text-lg leading-6 text-cream/90">Invisible referral leaks cost your practice revenue. Plug the gaps with drtalk. Put AI to work for your office to seamlessly capture, track, and close every referral.</p>
+				</div>
+				<div class="flex flex-col items-center gap-4">
+					<a class="inline-flex min-h-16 items-center justify-center rounded-full bg-orange px-8 py-5 text-center text-base font-bold leading-6 text-purple-dark transition-colors hover:bg-cream focus-visible:outline-orange" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+					<p class="text-sm leading-5 text-cream/75">
+						<span class="block">30 minutes. We do the work.</span>
+						<span class="block">You keep the report. No pitch, no obligation.</span>
+					</p>
 				</div>
 			</div>
 		</div>
-		<div class="min-h-[28rem] overflow-hidden rounded-3xl bg-lilac lg:min-h-[35rem]">
-			<img class="hero-art-float size-full object-cover" src="<?php echo $hero_art_url; ?>" width="596" height="560" alt="<?php esc_attr_e(
-	'A DrTalk referral dashboard and healthcare illustrations',
-	'drtalk-redesign'
-); ?>">
+		<div class="hero-visual relative min-h-[28rem] overflow-hidden rounded-3xl bg-lilac lg:h-[35rem]">
+			<div class="hero-visual-stage hero-decoration-stage" aria-hidden="true">
+				<img class="hero-decoration hero-decoration-referral" src="<?php echo $hero_referral_url; ?>" width="112" height="114" alt="">
+				<img class="hero-decoration hero-decoration-shield" src="<?php echo $hero_shield_url; ?>" width="141" height="140" alt="">
+				<img class="hero-decoration hero-decoration-money" src="<?php echo $hero_money_url; ?>" width="127" height="134" alt="">
+				<img class="hero-decoration hero-decoration-connection" src="<?php echo $hero_connection_url; ?>" width="149" height="146" alt="">
+			</div>
+			<div
+				class="hero-noise hero-visual-noise absolute inset-0"
+				style="<?php echo esc_attr('--hero-noise-image: url(\'' . $hero_noise_dark_url . '\');'); ?>"
+				aria-hidden="true"
+			></div>
+			<div class="hero-visual-stage hero-phone-stage" aria-hidden="true">
+				<img class="hero-phone" src="<?php echo $hero_phone_url; ?>" width="304" height="491" alt="">
+			</div>
+			<p class="sr-only"><?php esc_html_e(
+   	'drtalk referral dashboard with referral, security, revenue, and connection illustrations.',
+   	'drtalk-redesign'
+   ); ?></p>
 		</div>
 	</div>
 	<div class="mx-auto mt-20 flex max-w-[75rem] flex-col items-center gap-8">
@@ -326,28 +360,37 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-home-order="2">
-	<div class="mx-auto flex max-w-[75rem] flex-col gap-20">
+<section class="bg-cream px-5 py-[104px] sm:px-8 lg:px-12" data-home-order="2" data-problem-section>
+	<div class="mx-auto flex max-w-[90rem] flex-col gap-20">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
-			<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Put Operational AI to Work for Your Office</p>
-			<h2 class="text-5xl leading-[1.1]">You didn't build a specialty practice to manage inboxes.</h2>
-			<p class="text-lg leading-6">When referring dentists feel like it's hard to work with you, they don't complain. They just stop referring.</p>
+			<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em]">Put Operational AI to Work</p>
+			<h2 class="text-[2.5rem] leading-[1.1] tracking-[-0.01em] sm:text-5xl">You didn't build a specialty practice to manage inboxes</h2>
 		</div>
-		<div class="grid grid-cols-4 gap-8">
+		<div class="problem-card-list">
 			<?php foreach ($different_points as $point): ?>
 				<?php
     $point_icon_url = esc_url(get_theme_file_uri('assets/images/' . $point['icon']));
+    $point_hover_icon_url = esc_url(get_theme_file_uri('assets/images/' . $point['hover_icon']));
     $point_title = esc_html($point['title']);
     $point_quote = esc_html($point['quote']);
     $point_description = esc_html($point['description']);
     ?>
-				<article class="operational-ai-card flex flex-col gap-8" tabindex="0">
-					<img class="operational-ai-icon h-20 w-[7.875rem]" src="<?php echo $point_icon_url; ?>" width="126" height="80" alt="">
-					<div class="flex flex-col gap-4">
-						<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark/75"><?php echo $point_title; ?></p>
+				<article
+					class="problem-card"
+					style="<?php echo esc_attr('--problem-noise-image: url(\'' . $different_noise_url . '\');'); ?>"
+					data-problem-card
+					tabindex="0"
+				>
+					<div class="problem-card-noise" aria-hidden="true"></div>
+					<div class="problem-card-icon" aria-hidden="true">
+						<img class="problem-card-icon-static" src="<?php echo $point_icon_url; ?>" width="126" height="80" alt="">
+						<img class="problem-card-icon-animated" src="<?php echo $point_hover_icon_url; ?>" data-problem-icon-src="<?php echo $point_hover_icon_url; ?>" width="126" height="80" alt="">
+					</div>
+					<div class="relative flex flex-col gap-4">
+						<h3 class="font-body text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark"><?php echo $point_title; ?></h3>
 						<p class="text-lg font-bold italic leading-6 text-purple-dark"><?php echo $point_quote; ?></p>
 						<img class="h-0.5 w-8" src="<?php echo $different_divider_url; ?>" width="32" height="2" alt="">
-						<p class="text-base leading-[1.375rem] text-[#524c45]"><?php echo $point_description; ?></p>
+						<p class="text-base leading-6 text-purple-dark/75"><?php echo $point_description; ?></p>
 					</div>
 				</article>
 			<?php endforeach; ?>

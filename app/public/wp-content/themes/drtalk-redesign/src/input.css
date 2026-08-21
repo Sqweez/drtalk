@@ -111,8 +111,7 @@
       animation-iteration-count: 1 !important;
     }
 
-    .hero-art-float,
-    .hero-background-motion {
+    .hero-decoration {
       animation: none !important;
     }
   }
@@ -127,40 +126,190 @@
     @apply inline-flex min-h-12 items-center justify-center rounded-full bg-orange px-6 py-3 font-heading font-semibold text-purple-dark transition-colors hover:bg-cream hover:text-purple-dark focus-visible:outline-orange;
   }
 
-  .hero-background-motion {
-    animation: hero-background-motion 8s ease-in-out infinite alternate;
+  .hero-noise {
+    background-image: var(--hero-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 35rem 35rem;
   }
 
-  .hero-art-float {
-    animation: hero-art-float 4.8s ease-in-out infinite;
+  .hero-visual-stage {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 35rem;
+    height: 35rem;
+    transform: translateX(-50%);
+    transform-origin: top center;
+  }
+
+  .hero-decoration-stage {
+    z-index: 1;
+  }
+
+  .hero-visual-noise {
+    z-index: 2;
+  }
+
+  .hero-phone-stage {
+    z-index: 3;
+  }
+
+  .hero-phone,
+  .hero-decoration {
+    position: absolute;
+    display: block;
+    max-width: none;
+  }
+
+  .hero-phone {
+    z-index: 2;
+    top: 4.375rem;
+    left: 8rem;
+    width: 19rem;
+    height: auto;
+  }
+
+  .hero-decoration {
+    z-index: 1;
     transform-origin: center;
   }
 
-  .operational-ai-card {
-    border-radius: 1rem;
+  .hero-decoration-referral {
+    top: 8.71875rem;
+    left: 3.1875rem;
+    width: 7rem;
+    animation: hero-referral-motion 3s ease-in-out infinite;
+  }
+
+  .hero-decoration-shield {
+    top: 3.875rem;
+    left: 23.9375rem;
+    width: 8.8125rem;
+    animation: hero-shield-motion 3s ease-in-out infinite;
+  }
+
+  .hero-decoration-money {
+    top: 24.25rem;
+    left: 2.8125rem;
+    width: 7.9375rem;
+    animation: hero-money-motion 3s ease-in-out infinite;
+  }
+
+  .hero-decoration-connection {
+    top: 18.875rem;
+    left: 24.5625rem;
+    width: 9.3125rem;
+    animation: hero-connection-motion 3s ease-in-out infinite;
+  }
+
+  @media (max-width: 39.9375rem) {
+    .hero-visual-stage {
+      transform: translateX(-50%) scale(0.8);
+    }
+  }
+
+  .problem-card-list {
+    display: grid;
+    grid-auto-columns: min(20rem, calc(100vw - 2.5rem));
+    grid-auto-flow: column;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .problem-card-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .problem-card {
+    position: relative;
+    display: flex;
+    min-height: 25rem;
+    min-width: 17.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    overflow: hidden;
+    scroll-snap-align: start;
+    border: 1px solid var(--color-cream);
+    border-radius: 1.5rem;
+    background: var(--color-cream);
+    padding: 2rem 1.5rem 1.25rem;
     outline: none;
-    padding: 0.75rem;
-    transition:
-      transform 220ms ease,
-      box-shadow 220ms ease,
-      background-color 220ms ease;
   }
 
-  .operational-ai-icon {
-    transform-origin: center;
-    transition: transform 220ms ease;
+  .problem-card-noise {
+    position: absolute;
+    z-index: 0;
+    inset: -1px;
+    border-radius: inherit;
+    background-image: var(--problem-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 35rem 35rem;
+    opacity: 0;
+    transition: opacity 180ms ease-out;
   }
 
-  .operational-ai-card:hover,
-  .operational-ai-card:focus-visible {
-    background-color: rgba(243, 232, 247, 0.48);
-    box-shadow: 0 14px 28px rgba(74, 30, 79, 0.12);
-    transform: translateY(-0.5rem);
+  .problem-card-icon {
+    position: relative;
+    z-index: 1;
+    width: 7.875rem;
+    height: 5rem;
+    flex: 0 0 auto;
   }
 
-  .operational-ai-card:hover .operational-ai-icon,
-  .operational-ai-card:focus-visible .operational-ai-icon {
-    transform: scale(1.08) rotate(-3deg);
+  .problem-card-icon-static,
+  .problem-card-icon-animated {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+    transition: opacity 100ms ease-out;
+  }
+
+  .problem-card-icon-animated {
+    opacity: 0;
+  }
+
+  .problem-card:hover .problem-card-noise,
+  .problem-card:focus-visible .problem-card-noise,
+  .problem-card.is-active .problem-card-noise,
+  .problem-card:hover .problem-card-icon-animated,
+  .problem-card:focus-visible .problem-card-icon-animated,
+  .problem-card.is-active .problem-card-icon-animated {
+    opacity: 1;
+  }
+
+  .problem-card:hover .problem-card-icon-static,
+  .problem-card:focus-visible .problem-card-icon-static,
+  .problem-card.is-active .problem-card-icon-static {
+    opacity: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .problem-card-list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-columns: auto;
+      grid-auto-flow: row;
+      overflow: visible;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .problem-card-icon-animated {
+      display: none;
+    }
+
+    .problem-card:hover .problem-card-icon-static,
+    .problem-card:focus-visible .problem-card-icon-static,
+    .problem-card.is-active .problem-card-icon-static {
+      opacity: 1;
+    }
   }
 
   .results-stat-card {
@@ -877,23 +1026,46 @@
   }
 }
 
-@keyframes hero-art-float {
+@keyframes hero-referral-motion {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) rotate(0);
   }
 
   50% {
-    transform: translate3d(0, -18px, 0) scale(1.025);
+    transform: translate3d(-8px, -12px, 0) rotate(5deg);
   }
 }
 
-@keyframes hero-background-motion {
-  0% {
-    transform: scale(1) translate3d(0, 0, 0);
+@keyframes hero-shield-motion {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0);
   }
 
+  50% {
+    transform: translate3d(5px, 13px, 0) rotate(3deg);
+  }
+}
+
+@keyframes hero-money-motion {
+  0%,
   100% {
-    transform: scale(1.1) translate3d(-2%, 2%, 0);
+    transform: translate3d(0, 0, 0) rotate(0);
+  }
+
+  50% {
+    transform: translate3d(-5px, -16px, 0) rotate(-7deg);
+  }
+}
+
+@keyframes hero-connection-motion {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0);
+  }
+
+  50% {
+    transform: translate3d(4px, -8px, 0) rotate(6deg);
   }
 }

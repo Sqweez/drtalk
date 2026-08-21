@@ -1,4 +1,5 @@
 import './menu.js';
+import './problem-cards.js';
 import './faq.js';
 import './calculator.js';
 import './concerns.js';
