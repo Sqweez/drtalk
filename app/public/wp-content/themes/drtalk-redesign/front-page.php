@@ -100,15 +100,36 @@ $responsiveness_cards = [
 	]
 ];
 $results_stats = [
-	['value' => '$500M+', 'copy' => 'In referral-driven <strong>revenue</strong> tracked', 'image' => 'numbers-1.svg'],
+	[
+		'value' => '$500M+',
+		'copy' => 'In referral-driven <strong>revenue</strong> tracked',
+		'image' => 'numbers-1.svg',
+		'key' => 'revenue'
+	],
 	[
 		'value' => 'Up to 20%',
 		'copy' => '<strong>Revenue growth</strong> for drtalk practices in year one',
-		'image' => 'numbers-2.svg'
+		'image' => 'numbers-2.svg',
+		'key' => 'growth'
 	],
-	['value' => '60%', 'copy' => '<strong>Reduction</strong> in admin workload', 'image' => 'numbers-3.svg'],
-	['value' => '1,500+', 'copy' => '<strong>Practices</strong> on drtalk nationwide', 'image' => 'numbers-4.svg'],
-	['value' => '70%', 'copy' => '<strong>Faster</strong> time-to-scheduled appointment', 'image' => 'numbers-5.svg']
+	[
+		'value' => '60%',
+		'copy' => '<strong>Reduction</strong> in admin workload',
+		'image' => 'numbers-5.svg',
+		'key' => 'workload'
+	],
+	[
+		'value' => '1,500+',
+		'copy' => '<strong>Practices</strong> on drtalk nationwide',
+		'image' => 'numbers-3.svg',
+		'key' => 'practices'
+	],
+	[
+		'value' => '70%',
+		'copy' => '<strong>Faster</strong> time-to-scheduled appointment',
+		'image' => 'numbers-4.svg',
+		'key' => 'faster'
+	]
 ];
 $why_us_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
 $why_us_noise_style = esc_attr("--why-us-noise-image: url('{$why_us_noise_url}');");
@@ -443,22 +464,23 @@ get_header();
 </section>
 
 <section class="bg-cream px-5 py-14 sm:px-8 lg:px-10 lg:py-[120px]" data-home-order="6">
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-10 lg:gap-12">
-		<h2 class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Real results.<br>Proven at scale.</h2>
-		<div class="numbers-grid grid w-full grid-cols-1 gap-1 lg:grid-cols-6">
+	<div class="mx-auto flex max-w-[88.5rem] flex-col items-center gap-10 lg:gap-16">
+		<h2 class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Real results.<br class="lg:hidden"> Proven at scale.</h2>
+		<div class="numbers-grid grid w-full grid-cols-1 gap-1 lg:grid-cols-6 lg:gap-4">
 			<?php foreach ($results_stats as $results_stat): ?>
 				<?php
     $results_value = esc_html($results_stat['value']);
     $results_copy = wp_kses_post($results_stat['copy']);
     $results_image = esc_url(get_theme_file_uri('assets/images/' . $results_stat['image']));
+    $results_key = esc_attr($results_stat['key']);
     ?>
-				<article class="numbers-card relative flex h-[7.5rem] flex-col overflow-hidden rounded-2xl bg-lilac px-5 pb-8 pt-5 text-purple-dark lg:col-span-2 lg:h-80 lg:rounded-[2rem] lg:px-12 lg:py-14" style="<?php echo $numbers_noise_style; ?>">
+				<article class="numbers-card relative flex h-[7.5rem] flex-col overflow-hidden rounded-2xl bg-lilac px-5 pb-8 pt-5 text-purple-dark lg:h-[17.5rem] lg:rounded-3xl lg:px-12 lg:py-12" data-stat="<?php echo $results_key; ?>" style="<?php echo $numbers_noise_style; ?>" tabindex="0">
 					<div class="numbers-card-noise" aria-hidden="true"></div>
 					<div class="relative z-10">
 						<p class="text-[2.5rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-7xl lg:font-semibold lg:tracking-[-0.03em]"><?php echo $results_value; ?></p>
 						<p class="mt-1 max-w-[17rem] text-sm leading-5 text-purple-dark lg:mt-2 lg:max-w-60 lg:text-lg lg:leading-6"><?php echo $results_copy; ?></p>
 					</div>
-					<img class="pointer-events-none absolute -bottom-8 -right-6 hidden h-60 w-60 object-contain lg:block" src="<?php echo $results_image; ?>" width="240" height="240" alt="">
+					<img class="numbers-card-illustration pointer-events-none absolute -bottom-6 -right-4 hidden h-60 w-60 object-contain lg:block" src="<?php echo $results_image; ?>" width="240" height="240" alt="">
 				</article>
 			<?php endforeach; ?>
 		</div>

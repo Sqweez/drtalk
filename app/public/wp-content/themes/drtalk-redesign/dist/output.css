@@ -252,11 +252,11 @@
   .top-1\/2 {
     top: calc(1 / 2 * 100%);
   }
-  .-right-6 {
-    right: calc(var(--spacing) * -6);
+  .-right-4 {
+    right: calc(var(--spacing) * -4);
   }
-  .-bottom-8 {
-    bottom: calc(var(--spacing) * -8);
+  .-bottom-6 {
+    bottom: calc(var(--spacing) * -6);
   }
   .bottom-0 {
     bottom: 0px;
@@ -486,6 +486,9 @@
   }
   .max-w-\[75rem\] {
     max-width: 75rem;
+  }
+  .max-w-\[88\.5rem\] {
+    max-width: 88.5rem;
   }
   .max-w-\[90rem\] {
     max-width: 90rem;
@@ -1139,9 +1142,6 @@
     }
   }
   @media (width >= 64rem) {
-    .lg\:col-span-2 {
-      grid-column: span 2 / span 2;
-    }
     .lg\:mx-auto {
       margin-inline: auto;
     }
@@ -1160,8 +1160,8 @@
     .lg\:inline {
       display: inline;
     }
-    .lg\:h-80 {
-      height: calc(var(--spacing) * 80);
+    .lg\:h-\[17\.5rem\] {
+      height: 17.5rem;
     }
     .lg\:h-\[35rem\] {
       height: 35rem;
@@ -1190,8 +1190,8 @@
     .lg\:justify-center {
       justify-content: center;
     }
-    .lg\:gap-12 {
-      gap: calc(var(--spacing) * 12);
+    .lg\:gap-4 {
+      gap: calc(var(--spacing) * 4);
     }
     .lg\:gap-16 {
       gap: calc(var(--spacing) * 16);
@@ -1202,8 +1202,8 @@
     .lg\:gap-y-8 {
       row-gap: calc(var(--spacing) * 8);
     }
-    .lg\:rounded-\[2rem\] {
-      border-radius: 2rem;
+    .lg\:rounded-3xl {
+      border-radius: var(--radius-3xl);
     }
     .lg\:px-10 {
       padding-inline: calc(var(--spacing) * 10);
@@ -1214,8 +1214,8 @@
     .lg\:py-5 {
       padding-block: calc(var(--spacing) * 5);
     }
-    .lg\:py-14 {
-      padding-block: calc(var(--spacing) * 14);
+    .lg\:py-12 {
+      padding-block: calc(var(--spacing) * 12);
     }
     .lg\:py-20 {
       padding-block: calc(var(--spacing) * 20);
@@ -1708,12 +1708,67 @@
   .numbers-card-noise {
     background-image: var(--numbers-noise-image);
   }
+  .numbers-card {
+    cursor: pointer;
+    outline: none;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .numbers-card-illustration {
+    opacity: 0.15;
+    transform: rotate(-12deg);
+    transform-origin: center;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .numbers-card:hover,
+  .numbers-card:focus-visible {
+    z-index: 1;
+    box-shadow: 0 18px 36px rgb(74 30 79 / 16%);
+    transform: translateY(-0.5rem);
+  }
+  .numbers-card:focus-visible {
+    outline: 2px solid var(--color-purple-dark);
+    outline-offset: -2px;
+  }
+  .numbers-card:hover .numbers-card-illustration,
+  .numbers-card:focus-visible .numbers-card-illustration {
+    transform: rotate(-8deg) scale(1.06);
+  }
   @media (min-width: 64rem) {
-    .numbers-grid .numbers-card:nth-child(n + 4) {
+    .numbers-card {
+      grid-column: span 2 / span 2;
+    }
+    .numbers-card[data-stat='revenue'],
+    .numbers-card[data-stat='growth'] {
       grid-column: span 3 / span 3;
+    }
+    .numbers-card[data-stat='revenue'] {
+      order: 1;
+    }
+    .numbers-card[data-stat='growth'] {
+      order: 2;
+    }
+    .numbers-card[data-stat='practices'] {
+      order: 3;
+    }
+    .numbers-card[data-stat='faster'] {
+      order: 4;
+    }
+    .numbers-card[data-stat='workload'] {
+      order: 5;
     }
   }
   @media (prefers-reduced-motion: reduce) {
+    .numbers-card,
+    .numbers-card-illustration {
+      transition: none;
+    }
+    .numbers-card:hover,
+    .numbers-card:focus-visible,
+    .numbers-card:hover .numbers-card-illustration,
+    .numbers-card:focus-visible .numbers-card-illustration {
+      transform: none;
+    }
     .why-us-card-icon-animated {
       display: none;
     }
