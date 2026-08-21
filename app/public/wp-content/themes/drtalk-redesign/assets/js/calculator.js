@@ -13,6 +13,9 @@ if (calculatorRoot) {
     currency: 'USD',
     maximumFractionDigits: 0,
   });
+  const numberFormatter = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 0,
+  });
   const healthBands = [
     { minimum: 75, label: 'Healthy', color: '#237a57' },
     { minimum: 50, label: 'At risk', color: '#ed8f43' },
@@ -24,6 +27,7 @@ if (calculatorRoot) {
   const getNumberInput = (name) =>
     calculatorRoot.querySelector(`[data-calculator-number="${name}"]`);
   const getValue = (name) => Number(getInput(name).value);
+  const parseInputValue = (value) => Number(String(value).replace(/[^\d.-]/g, ''));
 
   const syncInput = (name, value) => {
     const rangeInput = getInput(name);
@@ -35,7 +39,7 @@ if (calculatorRoot) {
     const percentage = ((value - minimum) / (maximum - minimum)) * 100;
 
     rangeInput.value = String(value);
-    numberInput.value = String(value);
+    numberInput.value = name === 'case-value' ? numberFormatter.format(value) : String(value);
     fill.style.width = `${percentage}%`;
     thumb.style.left = `${percentage}%`;
   };
@@ -71,7 +75,7 @@ if (calculatorRoot) {
   };
 
   const clampInputValue = (input, minimum = Number(input.min), maximum = Number(input.max)) => {
-    const value = Number(input.value);
+    const value = parseInputValue(input.value);
 
     return Math.max(minimum, Math.min(maximum, Number.isFinite(value) ? value : minimum));
   };

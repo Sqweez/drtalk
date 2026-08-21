@@ -232,8 +232,11 @@ $calculator_inputs = [
 		'id' => 'referrals',
 		'label' => 'Referrals per month',
 		'value' => 80,
+		'display_value' => '80',
 		'minimum' => 10,
-		'maximum' => 1000,
+		'minimum_label' => '10',
+		'maximum' => 300,
+		'maximum_label' => '300',
 		'step' => 1,
 		'prefix' => '',
 		'suffix' => ''
@@ -242,26 +245,31 @@ $calculator_inputs = [
 		'id' => 'case-value',
 		'label' => 'Average case value',
 		'value' => 3000,
+		'display_value' => '3,000',
 		'minimum' => 100,
+		'minimum_label' => '100',
 		'maximum' => 10000,
+		'maximum_label' => '10,000',
 		'step' => 100,
 		'prefix' => '$',
 		'suffix' => ''
 	],
 	[
 		'id' => 'conversion-rate',
-		'label' => 'Current conversion rate',
+		'label' => 'Conversion rate',
 		'value' => 42,
+		'display_value' => '42',
 		'minimum' => 0,
+		'minimum_label' => '0',
 		'maximum' => 100,
+		'maximum_label' => '100',
 		'step' => 1,
 		'prefix' => '',
 		'suffix' => '%'
 	]
 ];
-$calculator_noise_url = esc_url(get_theme_file_uri('assets/images/calculator-noise.png'));
-$calculator_thumb_url = esc_url(get_theme_file_uri('assets/images/calculator-slider-thumb.svg'));
-$calculator_divider_url = esc_url(get_theme_file_uri('assets/images/calculator-divider.svg'));
+$calculator_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$calculator_noise_style = esc_attr("--calculator-noise-image: url('{$calculator_noise_url}');");
 $trusted_partners = [
 	[
 		'file' => 'partner-logo-1.png',
@@ -513,13 +521,13 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-home-order="3" data-calculator-root>
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
-		<h2 class="w-full text-center text-5xl leading-none">If you can't measure your referral leakage, you can't fix it.</h2>
-		<div class="relative flex w-full max-w-[64rem] gap-4 overflow-hidden rounded-3xl bg-lilac p-4">
-			<img class="pointer-events-none absolute inset-0 size-full object-cover opacity-10" src="<?php echo $calculator_noise_url; ?>" width="1024" height="1024" alt="">
-			<div class="relative flex w-[30rem] shrink-0 flex-col gap-8 rounded-2xl bg-cream p-8">
-				<p class="max-w-60 text-lg leading-6 text-[#524c45]">How much revenue is slipping through your fingers?</p>
+<section class="bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="3" data-calculator-root>
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-10 lg:gap-16">
+		<h2 class="w-full text-center text-4xl leading-none lg:text-5xl">If you can't measure your referral leakage, you can't fix it.</h2>
+		<div class="relative flex w-full max-w-[64rem] flex-wrap content-center items-center gap-x-4 gap-y-2 overflow-hidden rounded-3xl bg-lilac p-2">
+			<div class="calculator-noise pointer-events-none absolute inset-0" style="<?php echo $calculator_noise_style; ?>" aria-hidden="true"></div>
+			<div class="relative flex w-full min-w-0 flex-1 flex-col gap-5 rounded-[1.125rem] bg-cream p-5 sm:min-w-[20rem]">
+				<p class="w-full text-base leading-6 text-purple-dark">How much revenue is slipping through your fingers?</p>
 				<?php foreach ($calculator_inputs as $calculator_input): ?>
 					<?php
      $calculator_label = esc_html($calculator_input['label']);
@@ -530,13 +538,16 @@ get_header();
      $calculator_step = esc_attr($calculator_input['step']);
      $calculator_prefix = esc_html($calculator_input['prefix']);
      $calculator_suffix = esc_html($calculator_input['suffix']);
+     $calculator_display_value = esc_attr($calculator_input['display_value']);
+     $calculator_minimum_label = esc_html($calculator_prefix . $calculator_input['minimum_label'] . $calculator_suffix);
+     $calculator_maximum_label = esc_html($calculator_prefix . $calculator_input['maximum_label'] . $calculator_suffix);
      ?>
 					<div class="flex flex-col gap-4">
 						<div class="flex items-center gap-2">
-							<p class="flex-1 text-sm leading-[1.125rem] text-[#524c45]"><?php echo $calculator_label; ?></p>
-							<div class="flex w-30 items-center rounded-lg border border-[#d6d1cb] px-4 py-2 text-lg leading-6 text-purple-dark">
+							<p class="flex-1 text-sm leading-5 text-[#736962]"><?php echo $calculator_label; ?></p>
+							<div class="flex w-24 items-center rounded-[1.25rem] border border-[#d6d1cb] px-4 py-2 text-sm leading-5 text-purple-dark">
 								<span><?php echo $calculator_prefix; ?></span>
-								<input class="min-w-0 flex-1 bg-transparent text-lg leading-6 outline-none" type="number" min="<?php echo $calculator_minimum; ?>" max="<?php echo $calculator_maximum; ?>" step="<?php echo $calculator_step; ?>" value="<?php echo $calculator_value; ?>" data-calculator-number="<?php echo $calculator_id; ?>" aria-label="<?php echo $calculator_label; ?>">
+								<input class="min-w-0 flex-1 bg-transparent text-sm leading-5 outline-none" type="text" inputmode="numeric" value="<?php echo $calculator_display_value; ?>" data-calculator-number="<?php echo $calculator_id; ?>" aria-label="<?php echo $calculator_label; ?>">
 								<span><?php echo $calculator_suffix; ?></span>
 							</div>
 						</div>
@@ -544,47 +555,43 @@ get_header();
 							<div class="relative h-4">
 								<div class="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-lg bg-[#d6d1cb]"></div>
 								<div class="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-lg bg-purple" data-calculator-fill="<?php echo $calculator_id; ?>"></div>
-								<img class="pointer-events-none absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2" src="<?php echo $calculator_thumb_url; ?>" width="16" height="16" alt="" data-calculator-thumb="<?php echo $calculator_id; ?>">
+								<span class="pointer-events-none absolute top-1/2 h-5 w-2 -translate-x-1/2 -translate-y-1/2 rounded-lg border-[3px] border-purple bg-cream" data-calculator-thumb="<?php echo $calculator_id; ?>"></span>
 								<input class="absolute inset-0 h-4 w-full cursor-pointer opacity-0" type="range" min="<?php echo $calculator_minimum; ?>" max="<?php echo $calculator_maximum; ?>" step="<?php echo $calculator_step; ?>" value="<?php echo $calculator_value; ?>" data-calculator-input="<?php echo $calculator_id; ?>" aria-label="<?php echo $calculator_label; ?>">
 							</div>
-							<div class="flex justify-between text-sm leading-[1.125rem] text-[#736962]">
-								<span><?php echo $calculator_prefix . $calculator_minimum . $calculator_suffix; ?></span>
-								<span><?php echo $calculator_prefix . $calculator_maximum . $calculator_suffix; ?></span>
+							<div class="flex justify-between text-xs leading-4 text-[#736962]">
+								<span><?php echo $calculator_minimum_label; ?></span>
+								<span><?php echo $calculator_maximum_label; ?></span>
 							</div>
 						</div>
 					</div>
 				<?php endforeach; ?>
 			</div>
-			<div class="relative flex min-w-0 flex-1 flex-col gap-8 rounded-2xl p-8 text-purple-dark" data-calculator-results aria-live="polite">
-				<div class="flex flex-col gap-2">
-					<p class="text-sm leading-[1.125rem] text-purple-dark/75">Monthly revenue at risk:</p>
-					<p class="text-5xl leading-[1.1]" data-calculator-monthly>$139,200</p>
+			<div class="relative flex w-full min-w-0 flex-1 flex-col gap-5 rounded-[1.125rem] p-5 text-purple-dark sm:min-w-[20rem]" data-calculator-results aria-live="polite">
+				<div class="flex flex-col gap-3 border-b border-purple-dark/25 pb-3">
+					<p class="text-sm leading-5">Monthly revenue at risk</p>
+					<p class="text-[2.5rem] leading-none" data-calculator-monthly>$139,200</p>
 				</div>
-				<img class="h-px w-full" src="<?php echo $calculator_divider_url; ?>" width="432" height="1" alt="">
-				<div class="flex gap-8">
+				<div class="flex flex-wrap gap-5 border-b border-purple-dark/25 pb-3">
 					<div class="flex flex-1 flex-col gap-3">
-						<p class="text-sm leading-[1.125rem] text-purple-dark/75">Annual revenue at risk:</p>
-						<p class="text-[2rem] font-medium leading-[1.1]" data-calculator-annual>$1,670,400</p>
+						<p class="text-sm leading-5">Annual revenue at risk</p>
+						<p class="text-2xl leading-none" data-calculator-annual>$1,670,400</p>
 					</div>
 					<div class="flex flex-1 flex-col gap-3">
-						<p class="text-sm leading-[1.125rem] text-purple-dark/75">Health score:</p>
-						<div class="flex items-baseline gap-3">
-							<div>
-								<p class="text-[2rem] font-medium leading-[1.1] text-[#c9252d]" data-calculator-health>44%</p>
-								<p class="mt-1 text-sm leading-[1.125rem] text-[#c9252d]" data-calculator-health-band>Poor</p>
-							</div>
-							<div class="flex items-center gap-1" data-calculator-health-bars>
+						<p class="text-sm leading-5">Health score</p>
+						<div class="flex items-baseline gap-2.5">
+							<p class="text-2xl leading-none text-[#c9252d]" data-calculator-health>44%</p>
+							<span class="sr-only" data-calculator-health-band>Poor</span>
+							<div class="flex h-5 items-center gap-1" data-calculator-health-bars>
 								<?php for ($score_bar = 1; $score_bar <= 10; $score_bar++): ?>
-									<span class="h-6 w-1 rounded-sm bg-purple-dark/25" data-calculator-health-bar></span>
+									<span class="h-5 w-[3px] rounded-sm bg-purple-dark/25" data-calculator-health-bar></span>
 								<?php endfor; ?>
 							</div>
 						</div>
 					</div>
 				</div>
-				<img class="h-px w-full" src="<?php echo $calculator_divider_url; ?>" width="432" height="1" alt="">
-				<div class="flex flex-col items-start gap-6">
-					<p class="w-full text-center text-sm leading-[1.125rem]">Get the full report after the demo call with drtalk team.</p>
-					<a class="flex w-full items-end rounded-[3.5rem] bg-purple px-12 py-7 text-center text-lg font-bold leading-6 text-cream" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+				<div class="flex flex-col items-center gap-4">
+					<p class="w-full text-center text-sm leading-5 text-purple-dark/75">Get the full report after the demo call with drtalk team.</p>
+					<a class="inline-flex min-h-16 w-full items-center justify-center rounded-full bg-purple px-8 py-5 text-center text-base font-bold leading-6 text-cream" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
 				</div>
 			</div>
 		</div>

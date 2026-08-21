@@ -217,6 +217,13 @@
     background-size: 35rem 35rem;
   }
 
+  .calculator-noise {
+    background-image: var(--calculator-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 35rem 35rem;
+  }
+
   .hero-visual-stage {
     position: absolute;
     top: 0;
