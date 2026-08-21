@@ -5,6 +5,7 @@ if (howItWorksRoot) {
   const demo = howItWorksRoot.querySelector('[data-how-it-works-demo]');
   const demoStates = [...howItWorksRoot.querySelectorAll('[data-how-it-works-demo-state]')];
   const rotationInterval = 7000;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let activeStepIndex = 0;
   let rotationTimer;
 
@@ -20,7 +21,8 @@ if (howItWorksRoot) {
       const isActive = index === nextIndex;
 
       step.classList.toggle('is-active', isActive);
-      step.setAttribute('aria-pressed', String(isActive));
+      step.setAttribute('aria-selected', String(isActive));
+      step.setAttribute('tabindex', isActive ? '0' : '-1');
     });
 
     demoStates.forEach((state, index) => {
@@ -30,6 +32,11 @@ if (howItWorksRoot) {
 
   const restartRotation = () => {
     window.clearTimeout(rotationTimer);
+
+    if (reducedMotion.matches || steps.length < 2) {
+      return;
+    }
+
     rotationTimer = window.setTimeout(() => {
       setActiveStep((activeStepIndex + 1) % steps.length);
       restartRotation();
@@ -41,7 +48,43 @@ if (howItWorksRoot) {
       setActiveStep(index);
       restartRotation();
     });
+
+    step.addEventListener('keydown', (event) => {
+      const previousKeys = ['ArrowUp', 'ArrowLeft'];
+      const nextKeys = ['ArrowDown', 'ArrowRight'];
+      let nextIndex = null;
+
+      if (previousKeys.includes(event.key)) {
+        nextIndex = (index - 1 + steps.length) % steps.length;
+      } else if (nextKeys.includes(event.key)) {
+        nextIndex = (index + 1) % steps.length;
+      } else if (event.key === 'Home') {
+        nextIndex = 0;
+      } else if (event.key === 'End') {
+        nextIndex = steps.length - 1;
+      }
+
+      if (nextIndex === null) {
+        return;
+      }
+
+      event.preventDefault();
+      setActiveStep(nextIndex);
+      steps[nextIndex].focus();
+      restartRotation();
+    });
   });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      window.clearTimeout(rotationTimer);
+      return;
+    }
+
+    restartRotation();
+  });
+
+  reducedMotion.addEventListener('change', restartRotation);
 
   if (steps.length && demo) {
     setActiveStep(activeStepIndex);
