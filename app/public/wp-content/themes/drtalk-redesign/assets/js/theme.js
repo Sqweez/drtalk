@@ -5,6 +5,6 @@ import './calculator.js';
 import './concerns.js';
 import './fomo.js';
 import './how-it-works.js';
-import './responsiveness.js';
+import './why-us-cards.js';
 import './personalized.js';
 import './testimonials.js';

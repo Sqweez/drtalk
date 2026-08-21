@@ -454,45 +454,38 @@
     }
   }
 
-  // assets/js/responsiveness.js
-  var responsivenessRoot = document.querySelector("[data-responsiveness]");
-  if (responsivenessRoot) {
-    const counters = [...responsivenessRoot.querySelectorAll("[data-count-target]")];
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const setCounter = (counter, value) => {
-      const suffix = counter.dataset.countSuffix || "";
-      counter.textContent = `${Math.round(value).toLocaleString("en-US")}${suffix}`;
-    };
-    const animateCounters = () => {
-      counters.forEach((counter) => {
-        const target = Number(counter.dataset.countTarget);
-        const start = Math.floor(Math.random() * Math.max(1, target * 0.35));
-        if (reducedMotion) {
-          setCounter(counter, target);
-          return;
-        }
-        const startedAt = performance.now();
-        const duration = 900;
-        const tick = (now2) => {
-          const progress = Math.min((now2 - startedAt) / duration, 1);
-          setCounter(counter, start + (target - start) * (1 - (1 - progress) ** 3));
-          if (progress < 1) {
-            window.requestAnimationFrame(tick);
-          }
-        };
-        window.requestAnimationFrame(tick);
+  // assets/js/why-us-cards.js
+  var whyUsCards = [...document.querySelectorAll("[data-why-us-card]")];
+  if (whyUsCards.length) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarsePointer = window.matchMedia("(hover: none)");
+    const restartIcon = (card) => {
+      if (reduceMotion.matches) {
+        return;
+      }
+      const icon = card.querySelector("[data-why-us-icon-src]");
+      const source = icon == null ? void 0 : icon.dataset.whyUsIconSrc;
+      if (!icon || !source) {
+        return;
+      }
+      icon.removeAttribute("src");
+      window.requestAnimationFrame(() => {
+        icon.src = source;
       });
     };
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          animateCounters();
-          observer.disconnect();
+    whyUsCards.forEach((card) => {
+      card.addEventListener("pointerenter", () => restartIcon(card));
+      card.addEventListener("focusin", () => restartIcon(card));
+      card.addEventListener("click", () => {
+        if (!coarsePointer.matches) {
+          return;
         }
-      },
-      { threshold: 0.35 }
-    );
-    observer.observe(responsivenessRoot);
+        whyUsCards.forEach((otherCard) => {
+          otherCard.classList.toggle("is-active", otherCard === card);
+        });
+        restartIcon(card);
+      });
+    });
   }
 
   // assets/js/personalized.js

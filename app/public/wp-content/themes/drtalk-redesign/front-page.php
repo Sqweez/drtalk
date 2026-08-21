@@ -71,43 +71,50 @@ $how_it_works_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange
 $how_it_works_noise_style = esc_attr("--how-it-works-noise-image: url('{$how_it_works_noise_url}');");
 $responsiveness_cards = [
 	[
-		'image' => 'responsiveness-1.svg',
+		'image' => 'why-us-volume.svg',
+		'hover_image' => 'why-us-volume-hover.gif',
 		'title' => 'Handle referral volume with confidence',
 		'description' =>
-			'Our Smart Referral Inbox captures every inbound referral regardless of how it arrives and tracks it through to scheduling with clear visibility. No referral falls through because it came in via the wrong channel.',
-		'count' => 1300,
-		'suffix' => '+'
+			'Our Smart Referral Inbox captures every inbound referral regardless of how it arrives and tracks it through to scheduling with clear visibility. No referral falls through because it came in via the wrong channel.'
 	],
 	[
-		'image' => 'responsiveness-2.svg',
+		'image' => 'why-us-specialist.svg',
+		'hover_image' => 'why-us-specialist-hover.gif',
 		'title' => 'Become the easiest specialist to work with',
 		'description' =>
 			'Communicate instantly with referring dentists through HIPAA-compliant messaging. No scattered emails. No phone tag. Just fast responses that make GPs want to send their next case to you.'
 	],
 	[
-		'image' => 'responsiveness-3.svg',
+		'image' => 'why-us-workload.svg',
+		'hover_image' => 'why-us-workload-hover.gif',
 		'title' => 'Reduce your team’s workload',
 		'description' =>
 			'Eliminate repetitive admin tasks, close follow-up gaps, and free your staff to focus on patients instead of paperwork. Less back-and-forth means shorter handling time per referral and fewer things slipping through the cracks.'
 	],
 	[
-		'image' => 'responsiveness-4.svg',
+		'image' => 'why-us-anywhere.svg',
+		'hover_image' => 'why-us-anywhere-hover.gif',
 		'title' => 'Manage referrals from anywhere',
 		'description' =>
 			'A web-based platform for your front desk. A native mobile app for dentists and specialists. Your whole team stays in control and securely connected, no matter where the work happens.'
 	]
 ];
 $results_stats = [
-	['value' => '$500M+', 'copy' => 'In referral-driven <strong>revenue</strong> tracked', 'image' => 'results-1.svg'],
+	['value' => '$500M+', 'copy' => 'In referral-driven <strong>revenue</strong> tracked', 'image' => 'numbers-1.svg'],
 	[
 		'value' => 'Up to 20%',
 		'copy' => '<strong>Revenue growth</strong> for drtalk practices in year one',
-		'image' => 'results-2.svg'
+		'image' => 'numbers-2.svg'
 	],
-	['value' => '1,500+', 'copy' => '<strong>Practices</strong> using drtalk nationwide', 'image' => 'results-3.svg'],
-	['value' => '60%', 'copy' => '<strong>Reduction</strong> in administrative workload', 'image' => 'results-4.svg'],
-	['value' => '70%', 'copy' => '<strong>Faster</strong> time-to-scheduled appointment', 'image' => 'results-5.svg']
+	['value' => '60%', 'copy' => '<strong>Reduction</strong> in admin workload', 'image' => 'numbers-3.svg'],
+	['value' => '1,500+', 'copy' => '<strong>Practices</strong> on drtalk nationwide', 'image' => 'numbers-4.svg'],
+	['value' => '70%', 'copy' => '<strong>Faster</strong> time-to-scheduled appointment', 'image' => 'numbers-5.svg']
 ];
+$why_us_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$why_us_noise_style = esc_attr("--why-us-noise-image: url('{$why_us_noise_url}');");
+$why_us_icon_backdrop_url = esc_url(get_theme_file_uri('assets/images/why-us-icon-backdrop.svg'));
+$numbers_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$numbers_noise_style = esc_attr("--numbers-noise-image: url('{$numbers_noise_url}');");
 $personalized_audiences = [
 	[
 		'label' => 'Dental Specialists',
@@ -404,32 +411,30 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-home-order="5" data-responsiveness>
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
+<section class="bg-cream px-5 py-14 sm:px-8 lg:px-10 lg:py-[120px]" data-home-order="5">
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-10 lg:gap-16">
 		<div class="flex flex-col items-center gap-4 text-center text-purple-dark">
-			<h2 class="text-5xl leading-[1.1]">Most specialists compete on reputation.<br>The best ones compete on responsiveness.</h2>
-			<p class="max-w-[72rem] text-lg leading-6">drtalk is the only mobile-first platform built by practicing dentists that brings referrals, communication, and visibility into one place. So nothing gets missed, delayed, or lost again.</p>
+			<h2 class="text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Most compete on reputation.<br>The best compete on responsiveness.</h2>
+			<p class="max-w-[72rem] text-lg leading-6">drtalk is the only mobile-first platform built by practicing dentists that brings referrals, communication, and visibility into one place.<br class="hidden lg:block"> So nothing gets missed, delayed, or lost again.</p>
 		</div>
-		<div class="grid w-full grid-cols-2 gap-12">
+		<div class="grid w-full grid-cols-1 gap-0 lg:grid-cols-4">
 			<?php foreach ($responsiveness_cards as $responsiveness_card): ?>
 				<?php
     $responsiveness_image = esc_url(get_theme_file_uri('assets/images/' . $responsiveness_card['image']));
+    $responsiveness_hover_image = esc_url(get_theme_file_uri('assets/images/' . $responsiveness_card['hover_image']));
     $responsiveness_title = esc_html($responsiveness_card['title']);
     $responsiveness_description = esc_html($responsiveness_card['description']);
-    $responsiveness_count = $responsiveness_card['count'] ?? null;
-    $responsiveness_count_value = esc_attr($responsiveness_count ?? '');
-    $responsiveness_suffix = esc_attr($responsiveness_card['suffix'] ?? '');
     ?>
-				<article class="flex flex-col items-start gap-6 text-purple-dark">
-					<div class="relative h-40 w-[16.875rem]">
-						<img class="size-full" src="<?php echo $responsiveness_image; ?>" width="270" height="160" alt="">
-						<?php if ($responsiveness_count): ?>
-							<span class="absolute right-3 top-3 rounded-lg bg-cream/90 px-3 py-1 font-heading text-xl font-medium text-purple-dark" data-count-target="<?php echo $responsiveness_count_value; ?>" data-count-suffix="<?php echo $responsiveness_suffix; ?>">0<?php echo $responsiveness_suffix; ?></span>
-						<?php endif; ?>
+				<article class="why-us-card relative flex min-h-[19.75rem] flex-col items-center overflow-hidden rounded-2xl px-4 pb-4 pt-8 text-center text-purple-dark" tabindex="0" data-why-us-card style="<?php echo $why_us_noise_style; ?>">
+					<div class="why-us-card-noise" aria-hidden="true"></div>
+					<div class="why-us-card-icon relative z-10 h-[6.5625rem] w-[8.75rem] overflow-hidden" aria-hidden="true">
+						<img class="why-us-card-icon-backdrop absolute inset-x-0 bottom-0 h-[5.46875rem] w-full" src="<?php echo $why_us_icon_backdrop_url; ?>" width="140" height="88" alt="">
+						<img class="why-us-card-icon-static absolute inset-0 size-full object-contain" src="<?php echo $responsiveness_image; ?>" width="140" height="105" alt="">
+						<img class="why-us-card-icon-animated absolute inset-0 size-full object-contain" src="<?php echo $responsiveness_hover_image; ?>" data-why-us-icon-src="<?php echo $responsiveness_hover_image; ?>" width="140" height="105" alt="">
 					</div>
-					<div class="flex flex-col gap-2">
-						<h3 class="text-[2rem] font-medium leading-[1.1] tracking-[-0.02em] text-purple-dark"><?php echo $responsiveness_title; ?></h3>
-						<p class="text-base leading-[1.375rem] text-purple-dark"><?php echo $responsiveness_description; ?></p>
+					<div class="relative z-10 mt-6 flex flex-col gap-2">
+						<h3 class="text-[1.625rem] font-medium leading-none tracking-[-0.02em] text-purple-dark"><?php echo $responsiveness_title; ?></h3>
+						<p class="text-sm leading-5 text-purple-dark"><?php echo $responsiveness_description; ?></p>
 					</div>
 				</article>
 			<?php endforeach; ?>
@@ -437,22 +442,23 @@ get_header();
 	</div>
 </section>
 
-<section class="bg-cream px-10 py-[120px]" data-home-order="6">
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-12">
-		<h2 class="text-center text-5xl leading-[1.1]">Real results. Proven at scale.</h2>
-		<div class="flex w-full flex-wrap gap-4">
+<section class="bg-cream px-5 py-14 sm:px-8 lg:px-10 lg:py-[120px]" data-home-order="6">
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-10 lg:gap-12">
+		<h2 class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Real results.<br>Proven at scale.</h2>
+		<div class="numbers-grid grid w-full grid-cols-1 gap-1 lg:grid-cols-6">
 			<?php foreach ($results_stats as $results_stat): ?>
 				<?php
     $results_value = esc_html($results_stat['value']);
     $results_copy = wp_kses_post($results_stat['copy']);
     $results_image = esc_url(get_theme_file_uri('assets/images/' . $results_stat['image']));
     ?>
-				<article class="results-stat-card relative flex h-80 min-w-[22.5rem] flex-1 flex-col gap-8 overflow-hidden rounded-[2rem] bg-lilac px-12 py-14" tabindex="0">
+				<article class="numbers-card relative flex h-[7.5rem] flex-col overflow-hidden rounded-2xl bg-lilac px-5 pb-8 pt-5 text-purple-dark lg:col-span-2 lg:h-80 lg:rounded-[2rem] lg:px-12 lg:py-14" style="<?php echo $numbers_noise_style; ?>">
+					<div class="numbers-card-noise" aria-hidden="true"></div>
 					<div class="relative z-10">
-						<p class="text-7xl font-semibold leading-[1.1] tracking-[-0.03em]"><?php echo $results_value; ?></p>
-						<p class="mt-2 max-w-60 text-lg leading-6 text-purple-dark/80"><?php echo $results_copy; ?></p>
+						<p class="text-[2.5rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-7xl lg:font-semibold lg:tracking-[-0.03em]"><?php echo $results_value; ?></p>
+						<p class="mt-1 max-w-[17rem] text-sm leading-5 text-purple-dark lg:mt-2 lg:max-w-60 lg:text-lg lg:leading-6"><?php echo $results_copy; ?></p>
 					</div>
-					<img class="results-stat-icon pointer-events-none absolute -bottom-20 -right-20 h-72 w-80 object-contain" src="<?php echo $results_image; ?>" alt="">
+					<img class="pointer-events-none absolute -bottom-8 -right-6 hidden h-60 w-60 object-contain lg:block" src="<?php echo $results_image; ?>" width="240" height="240" alt="">
 				</article>
 			<?php endforeach; ?>
 		</div>
