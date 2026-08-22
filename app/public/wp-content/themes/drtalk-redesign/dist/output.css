@@ -2009,12 +2009,17 @@
   .testimonial-card::before {
     position: absolute;
     inset: 0;
-    background-image: var(--testimonials-noise-image);
     background-position: left top;
     background-repeat: repeat;
     background-size: 35rem 35rem;
     content: '';
     pointer-events: none;
+  }
+  .testimonial-card--lilac::before {
+    background-image: url('../assets/images/personalized-pattern-dark.png');
+  }
+  .testimonial-card--orange::before {
+    background-image: url('../assets/images/footer-pattern.png');
   }
   .testimonial-card > * {
     position: relative;
@@ -2177,18 +2182,34 @@
     background-color: #fce2cc;
     padding: 48px;
   }
+  .concerns-card::before,
   .concerns-card-noise {
     position: absolute;
+    pointer-events: none;
+  }
+  .concerns-card::before {
+    z-index: 0;
+    right: 0;
+    bottom: 0;
+    width: 452px;
+    height: 327px;
+    background-image: url('../assets/images/concerns-scribble.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    content: '';
+  }
+  .concerns-card-noise {
+    z-index: 1;
     inset: 0;
     background-image: var(--concerns-noise-image);
     background-position: left top;
     background-repeat: repeat;
     background-size: 560px 560px;
-    pointer-events: none;
   }
   .concerns-card-copy {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     text-align: center;
   }
@@ -2209,7 +2230,7 @@
   }
   .concerns-next {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     display: inline-flex;
     width: 56px;
     height: 56px;
@@ -2334,7 +2355,7 @@
     position: relative;
     overflow: hidden;
     background-color: var(--color-purple-dark);
-    padding: 120px 40px;
+    padding: 104px 48px;
   }
   .cta-noise {
     position: absolute;
@@ -2349,7 +2370,7 @@
     position: relative;
     display: flex;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1440px;
     flex-direction: column;
     align-items: center;
     gap: 64px;
@@ -2381,22 +2402,26 @@
     display: grid;
     width: 100%;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 48px;
+    gap: 24px;
   }
   .cta-step {
     display: flex;
     min-width: 0;
     flex-direction: column;
+    align-items: center;
     gap: 32px;
+    text-align: center;
   }
   .cta-step-icon {
-    width: 80px;
+    width: 136px;
     height: 80px;
     object-fit: contain;
   }
   .cta-step-copy {
     display: flex;
+    width: 100%;
     flex-direction: column;
+    align-items: center;
     gap: 8px;
   }
   .cta-step-copy h3,
@@ -2406,7 +2431,7 @@
   }
   .cta-step-copy h3 {
     color: var(--color-cream);
-    font-size: 32px;
+    font-size: 40px;
     font-weight: 500;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -2414,23 +2439,26 @@
   .cta-step-copy p {
     color: var(--color-cream);
     font-size: 16px;
-    line-height: 22px;
-    opacity: 0.9;
+    line-height: 24px;
+    opacity: 0.75;
   }
   .cta-action {
     display: flex;
+    width: 100%;
+    max-width: 360px;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
   }
   .cta-button {
     display: inline-flex;
+    width: 100%;
     min-height: 64px;
     align-items: center;
     justify-content: center;
     border-radius: 32px;
     background-color: var(--color-orange);
-    padding: 20px 40px;
+    padding: 20px 32px;
     color: var(--color-purple-dark);
     font-size: 16px;
     font-weight: 700;
@@ -2443,8 +2471,7 @@
   .cta-action p {
     color: var(--color-cream);
     font-size: 14px;
-    font-style: italic;
-    line-height: 18px;
+    line-height: 20px;
     opacity: 0.75;
     text-align: center;
   }

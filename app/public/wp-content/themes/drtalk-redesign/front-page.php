@@ -177,22 +177,22 @@ $cta_noise_url = $noise_orange_url;
 $cta_noise_style = esc_attr("--cta-noise-image: url('{$cta_noise_url}');");
 $cta_steps = [
 	[
-		'icon' => 'cta-process-1.svg',
+		'icon' => 'cta-process-1.png',
 		'title' => 'We learn your workflow',
 		'copy' => 'How referrals come in today, who handles them, and how it gets back to referring GPs.'
 	],
 	[
-		'icon' => 'cta-process-2.svg',
+		'icon' => 'cta-process-2.png',
 		'title' => 'We show you the breakpoints',
 		'copy' => 'We give you a score and highlight common pain points for practices with similar setups.'
 	],
 	[
-		'icon' => 'cta-process-3.svg',
+		'icon' => 'cta-process-3.png',
 		'title' => 'You keep the full findings',
 		'copy' => 'A written analysis summary is yours to keep, regardless of what you decide to do next.'
 	],
 	[
-		'icon' => 'cta-process-4.svg',
+		'icon' => 'cta-process-4.png',
 		'title' => 'No follow up pressure',
 		'copy' =>
 			"If drtalk isn't right for your practice, we'll tell you that. Our job is to be useful. Not to close you."
@@ -254,9 +254,10 @@ $testimonials = [
 		'tone' => 'orange'
 	]
 ];
-$testimonials_dark_noise_url = $noise_dark_url;
-$testimonials_orange_noise_url = $noise_orange_url;
-$testimonials_noise_urls = ['lilac' => $testimonials_dark_noise_url, 'orange' => $testimonials_orange_noise_url];
+$testimonial_tone_classes = [
+	'lilac' => 'testimonial-card--lilac bg-lilac border-purple',
+	'orange' => 'testimonial-card--orange bg-[#fce2cc] border-orange'
+];
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -648,17 +649,15 @@ get_header();
 					<?php
      $testimonial_avatar = esc_url(get_theme_file_uri('assets/images/' . $testimonial['avatar']));
      $testimonial_logo = esc_url(get_theme_file_uri('assets/images/' . $testimonial['logo']));
-     $testimonial_tone = $testimonial['tone'] === 'lilac' ? 'bg-lilac border-purple' : 'bg-[#fce2cc] border-orange';
+     $testimonial_tone = $testimonial_tone_classes[$testimonial['tone']];
      $testimonial_tone_class = esc_attr($testimonial_tone);
      $testimonial_eyebrow = esc_html($testimonial['eyebrow']);
      $testimonial_quote = esc_html($testimonial['quote']);
      $testimonial_border = $testimonial['tone'] === 'lilac' ? 'border-purple' : 'border-orange';
      $testimonial_name = esc_html($testimonial['name']);
      $testimonial_role = esc_html($testimonial['role']);
-     $testimonial_noise = $testimonials_noise_urls[$testimonial['tone']];
-     $testimonial_noise_style = esc_attr("--testimonials-noise-image: url('{$testimonial_noise}');");
      ?>
-					<article class="testimonial-card swiper-slide relative flex h-[30.5rem] w-full shrink-0 flex-col gap-10 overflow-hidden rounded-3xl <?php echo $testimonial_tone_class; ?> px-6 py-8 text-purple-dark lg:h-[34rem] lg:w-[30rem] lg:px-8 lg:py-12" style="<?php echo $testimonials_noise_style; ?>">
+					<article class="testimonial-card swiper-slide relative flex h-[30.5rem] w-full shrink-0 flex-col gap-10 overflow-hidden rounded-3xl <?php echo $testimonial_tone_class; ?> px-6 py-8 text-purple-dark lg:h-[34rem] lg:w-[30rem] lg:px-8 lg:py-12">
 						<div class="flex items-start justify-between"><img class="size-[4.5rem] rounded-full object-cover" src="<?php echo $testimonial_avatar; ?>" alt=""><img class="h-[4.5rem] w-[7.5rem] object-contain" src="<?php echo $testimonial_logo; ?>" alt=""></div>
 						<div class="flex flex-1 flex-col gap-4"><p class="text-[0.8125rem] font-black uppercase tracking-[0.15em] text-purple-dark/75"><?php echo $testimonial_eyebrow; ?></p><p class="text-2xl leading-8"><?php echo $testimonial_quote; ?></p></div>
 						<div class="border-l-4 pl-4 <?php echo $testimonial_border; ?>"><p class="font-bold"><?php echo $testimonial_name; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_role; ?></p></div>
