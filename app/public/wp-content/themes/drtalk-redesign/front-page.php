@@ -1,8 +1,10 @@
 <?php
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
-$hero_noise_orange_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
-$hero_noise_dark_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$noise_orange_url = esc_url(get_theme_file_uri('assets/images/footer-pattern.png'));
+$noise_dark_url = esc_url(get_theme_file_uri('assets/images/personalized-pattern-dark.png'));
+$hero_noise_orange_url = $noise_orange_url;
+$hero_noise_dark_url = $noise_dark_url;
 $hero_phone_url = esc_url(get_theme_file_uri('assets/images/hero-phone.png'));
 $hero_referral_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-referral.png'));
 $hero_shield_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-shield.png'));
@@ -43,7 +45,7 @@ $different_points = [
 	]
 ];
 $different_divider_url = esc_url(get_theme_file_uri('assets/images/different-divider.svg'));
-$different_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$different_noise_url = $noise_orange_url;
 $how_it_works_steps = [
 	[
 		'number' => '01',
@@ -67,7 +69,7 @@ $how_it_works_steps = [
 		'image' => 'how-it-works-03.png'
 	]
 ];
-$how_it_works_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$how_it_works_noise_url = $noise_orange_url;
 $how_it_works_noise_style = esc_attr("--how-it-works-noise-image: url('{$how_it_works_noise_url}');");
 $responsiveness_cards = [
 	[
@@ -131,10 +133,10 @@ $results_stats = [
 		'key' => 'faster'
 	]
 ];
-$why_us_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$why_us_noise_url = $noise_dark_url;
 $why_us_noise_style = esc_attr("--why-us-noise-image: url('{$why_us_noise_url}');");
 $why_us_icon_backdrop_url = esc_url(get_theme_file_uri('assets/images/why-us-icon-backdrop.svg'));
-$numbers_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$numbers_noise_url = $noise_dark_url;
 $numbers_noise_style = esc_attr("--numbers-noise-image: url('{$numbers_noise_url}');");
 $personalized_audiences = [
 	[
@@ -162,15 +164,17 @@ $personalized_audiences = [
 		'tone' => 'lilac'
 	]
 ];
-$personalized_dark_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
-$personalized_orange_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$personalized_dark_noise_url = $noise_dark_url;
+$personalized_orange_noise_url = $noise_orange_url;
 $personalized_noise_urls = ['lilac' => $personalized_dark_noise_url, 'orange' => $personalized_orange_noise_url];
 $founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone-figma.png'));
 $about_page_url = esc_url(home_url('/about-us/'));
-$concerns_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
-$concerns_scribble_url = esc_url(get_theme_file_uri('assets/images/concerns-scribble.svg'));
-$fomo_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
-$cta_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$concerns_noise_url = $noise_orange_url;
+$concerns_noise_style = esc_attr("--concerns-noise-image: url('{$concerns_noise_url}');");
+$fomo_noise_url = $noise_dark_url;
+$fomo_noise_style = esc_attr("--fomo-noise-image: url('{$fomo_noise_url}');");
+$cta_noise_url = $noise_orange_url;
+$cta_noise_style = esc_attr("--cta-noise-image: url('{$cta_noise_url}');");
 $cta_steps = [
 	[
 		'icon' => 'cta-process-1.svg',
@@ -250,8 +254,8 @@ $testimonials = [
 		'tone' => 'orange'
 	]
 ];
-$testimonials_dark_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
-$testimonials_orange_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$testimonials_dark_noise_url = $noise_dark_url;
+$testimonials_orange_noise_url = $noise_orange_url;
 $testimonials_noise_urls = ['lilac' => $testimonials_dark_noise_url, 'orange' => $testimonials_orange_noise_url];
 $calculator_inputs = [
 	[
@@ -294,7 +298,7 @@ $calculator_inputs = [
 		'suffix' => '%'
 	]
 ];
-$calculator_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$calculator_noise_url = $noise_dark_url;
 $calculator_noise_style = esc_attr("--calculator-noise-image: url('{$calculator_noise_url}');");
 $trusted_partners = [
 	[
@@ -372,7 +376,7 @@ get_header();
 				aria-hidden="true"
 			></div>
 			<div class="hero-visual-stage hero-phone-stage" aria-hidden="true">
-				<img class="hero-phone" src="<?php echo $hero_phone_url; ?>" width="304" height="491" alt="">
+				<img class="hero-phone" src="<?php echo $hero_phone_url; ?>" width="1319" height="2748" alt="">
 			</div>
 			<p class="sr-only"><?php esc_html_e(
    	'drtalk referral dashboard with referral, security, revenue, and connection illustrations.',
@@ -691,9 +695,10 @@ get_header();
     $personalized_tone = $audience['tone'] === 'orange' ? ' personalized-state--orange' : ' personalized-state--lilac';
     $personalized_tone_class = esc_attr($personalized_tone);
     $personalized_noise = $personalized_noise_urls[$audience['tone']];
+    $personalized_noise_style = esc_attr("--personalized-noise-image: url('{$personalized_noise}');");
     ?>
 				<div class="personalized-state<?php echo $personalized_tone_class; ?>" data-personalized-state="<?php echo $personalized_state_index; ?>" aria-hidden="<?php echo $personalized_state_hidden; ?>">
-					<img class="personalized-noise" src="<?php echo esc_url($personalized_noise); ?>" alt="">
+					<div class="personalized-noise" style="<?php echo $personalized_noise_style; ?>" aria-hidden="true"></div>
 					<div class="personalized-copy">
 						<div><h3><?php echo $personalized_title; ?></h3><p><?php echo $personalized_description; ?></p></div>
 						<div class="personalized-action"><a href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p>30 minutes. No pitch, no obligation.</p></div>
@@ -739,8 +744,7 @@ get_header();
      $concern_index_value = esc_attr($concern_index);
      ?>
 					<article class="concerns-card" data-concerns-card="<?php echo $concern_index_value; ?>">
-						<img class="concerns-card-noise" src="<?php echo $concerns_noise_url; ?>" alt="">
-						<img class="concerns-card-scribble" src="<?php echo $concerns_scribble_url; ?>" alt="">
+						<div class="concerns-card-noise" style="<?php echo $concerns_noise_style; ?>" aria-hidden="true"></div>
 						<div class="concerns-card-copy">
 							<h3><?php echo $concern_title; ?></h3>
 							<p><?php echo $concern_answer; ?></p>
@@ -763,7 +767,7 @@ get_header();
 	</div>
 </section>
 <section class="fomo-section" data-home-order="11" data-fomo data-fomo-baseline="194.33" data-fomo-hourly-rate="4640" aria-labelledby="fomo-title">
-	<img class="fomo-noise" src="<?php echo $fomo_noise_url; ?>" alt="">
+	<div class="fomo-noise" style="<?php echo $fomo_noise_style; ?>" aria-hidden="true"></div>
 	<div class="fomo-content">
 		<div class="fomo-copy">
 			<h2 id="fomo-title">What you lose without<br>a smart referral process.</h2>
@@ -777,7 +781,7 @@ get_header();
 	</div>
 </section>
 <section class="cta-section" data-home-order="12" aria-labelledby="cta-title">
-	<img class="cta-noise" src="<?php echo $cta_noise_url; ?>" alt="">
+	<div class="cta-noise" style="<?php echo $cta_noise_style; ?>" aria-hidden="true"></div>
 	<div class="cta-content">
 		<div class="cta-heading">
 			<h2 id="cta-title">Your referral workflow has gaps.</h2>

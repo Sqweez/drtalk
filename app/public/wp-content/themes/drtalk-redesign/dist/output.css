@@ -1866,9 +1866,10 @@
   .personalized-noise {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    background-image: var(--personalized-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 560px 560px;
     pointer-events: none;
   }
   .personalized-copy {
@@ -2176,24 +2177,14 @@
     background-color: #fce2cc;
     padding: 48px;
   }
-  .concerns-card-noise,
-  .concerns-card-scribble {
-    position: absolute;
-    pointer-events: none;
-  }
   .concerns-card-noise {
+    position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.1;
-  }
-  .concerns-card-scribble {
-    right: -114px;
-    bottom: -175px;
-    width: 640px;
-    opacity: 0.12;
-    transform: rotate(150deg);
+    background-image: var(--concerns-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 560px 560px;
+    pointer-events: none;
   }
   .concerns-card-copy {
     position: relative;
@@ -2269,10 +2260,10 @@
   .fomo-noise {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.1;
+    background-image: var(--fomo-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 560px 560px;
     pointer-events: none;
   }
   .fomo-content {
@@ -2348,10 +2339,10 @@
   .cta-noise {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.06;
+    background-image: var(--cta-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 560px 560px;
     pointer-events: none;
   }
   .cta-content {
