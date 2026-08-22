@@ -11,10 +11,18 @@ if (concernsRoot) {
   let pausedElapsed = 0;
   let animationFrame;
   let isPaused = false;
+  let pointerStartX = null;
+
+  const cardStep = () => {
+    const cardWidth = cards[0]?.getBoundingClientRect().width ?? 0;
+    const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
+
+    return cardWidth + gap;
+  };
 
   const update = (index) => {
     activeIndex = (index + cards.length) % cards.length;
-    track.style.transform = `translate3d(${-activeIndex * 1040}px, 0, 0)`;
+    track.style.transform = `translate3d(${-activeIndex * cardStep()}px, 0, 0)`;
 
     cards.forEach((card, cardIndex) => {
       card.setAttribute('aria-hidden', cardIndex === activeIndex ? 'false' : 'true');
@@ -48,6 +56,31 @@ if (concernsRoot) {
   dots.forEach((dot, dotIndex) => {
     dot.addEventListener('click', () => update(dotIndex));
   });
+
+  track.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse') return;
+    pointerStartX = event.clientX;
+    pauseTimer();
+  });
+
+  track.addEventListener('pointerup', (event) => {
+    if (pointerStartX === null) return;
+    const distance = event.clientX - pointerStartX;
+
+    if (Math.abs(distance) > 40) {
+      update(activeIndex + (distance < 0 ? 1 : -1));
+    }
+
+    pointerStartX = null;
+    resumeTimer();
+  });
+
+  track.addEventListener('pointercancel', () => {
+    pointerStartX = null;
+    resumeTimer();
+  });
+
+  window.addEventListener('resize', () => update(activeIndex));
 
   const pauseTimer = () => {
     if (isPaused) {

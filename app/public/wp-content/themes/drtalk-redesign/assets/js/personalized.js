@@ -4,6 +4,7 @@ if (personalizedRoot) {
   const tabs = [...personalizedRoot.querySelectorAll('[data-personalized-tab]')];
   const panel = personalizedRoot.querySelector('[data-personalized-panel]');
   const states = [...personalizedRoot.querySelectorAll('[data-personalized-state]')];
+  const desktop = window.matchMedia('(min-width: 64rem)');
   let activeIndex = 0;
   let scrollLocked = false;
 
@@ -16,12 +17,26 @@ if (personalizedRoot) {
       tab.classList.toggle('is-active', selected);
       tab.setAttribute('aria-selected', String(selected));
     });
-    states.forEach((state, stateIndex) =>
-      state.setAttribute('aria-hidden', String(stateIndex !== index)),
-    );
+    states.forEach((state, stateIndex) => {
+      state.setAttribute('aria-hidden', String(desktop.matches && stateIndex !== index));
+    });
   };
 
   tabs.forEach((tab, index) => tab.addEventListener('click', () => selectAudience(index)));
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const nextIndex =
+        event.key === 'Home'
+          ? 0
+          : event.key === 'End'
+            ? tabs.length - 1
+            : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      selectAudience(nextIndex);
+      tabs[nextIndex].focus();
+    });
+  });
   personalizedRoot.addEventListener(
     'wheel',
     (event) => {
@@ -34,4 +49,7 @@ if (personalizedRoot) {
     },
     { passive: true },
   );
+
+  desktop.addEventListener('change', () => selectAudience(activeIndex));
+  selectAudience(0);
 }

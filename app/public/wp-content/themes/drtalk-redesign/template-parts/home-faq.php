@@ -5,7 +5,7 @@ $demo_url = esc_url(drtalk_redesign_demo_url());
 $faq_categories = [
 	[
 		'id' => 'referrals',
-		'label' => 'Referrals & Workflows',
+		'label' => 'Referrals & Workflow',
 		'questions' => [
 			[
 				'question' => 'How does drtalk help reduce referral leakage?',
@@ -30,16 +30,16 @@ $faq_categories = [
 					'drtalk supports healthcare teams broadly, but it was purpose-built for dentistry and has the deepest functionality for dental specialists. The referral workflows, communication tools, and practice dashboard are all tuned for the realities of dental referrals. If you\'re a dental specialist looking to tighten your referral network and reduce patient drop-off, drtalk was built with your practice in mind.'
 			],
 			[
+				'question' => 'Will my team actually adopt this, or will it just add more steps?',
+				'answer' =>
+					'The teams that adopt drtalk fastest are the ones who\'ve been burned by referrals going quiet - staff who\'ve spent time chasing down faxes, fielding \'did you get our referral?\' calls, or finding out weeks later that a patient never scheduled. drtalk reduces that noise immediately. Most practices see their team self-motivated to use it once they realize they\'re not losing track of cases anymore. Onboarding is straightforward, and we work with your team directly to make sure adoption sticks.'
+			],
+			[
 				'question' => 'Does drtalk integrate with my existing EMR or practice management software?',
 				'answer' => sprintf(
 					'Yes, drtalk has EMR integration capability. The specifics depend on your current system - <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">book a working session</a> with our team and we\'ll walk through exactly how drtalk fits into your existing setup, including what\'s possible with your practice management software.',
 					$demo_url
 				)
-			],
-			[
-				'question' => 'Will my team actually adopt this, or will it just add more steps?',
-				'answer' =>
-					'The teams that adopt drtalk fastest are the ones who\'ve been burned by referrals going quiet - staff who\'ve spent time chasing down faxes, fielding \'did you get our referral?\' calls, or finding out weeks later that a patient never scheduled. drtalk reduces that noise immediately. Most practices see their team self-motivated to use it once they realize they\'re not losing track of cases anymore. Onboarding is straightforward, and we work with your team directly to make sure adoption sticks.'
 			]
 		]
 	],
@@ -61,7 +61,7 @@ $faq_categories = [
 	],
 	[
 		'id' => 'pricing',
-		'label' => 'Pricing & Getting started',
+		'label' => 'Pricing & Getting Started',
 		'questions' => [
 			[
 				'question' => 'How much does drtalk cost?',
@@ -101,11 +101,11 @@ $faq_categories = [
 $faq_data_json = wp_json_encode($faq_categories, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $plus_icon_url = get_theme_file_uri('assets/images/icon-plus.svg');
 ?>
-<section class="bg-cream px-10 py-[120px]" data-home-order="13" aria-labelledby="faq-title" data-faq
+<section class="bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="13" aria-labelledby="faq-title" data-faq
 				 data-faq-icon="<?php echo esc_url($plus_icon_url); ?>">
-	<div class="mx-auto flex w-full max-w-[75rem] flex-col items-center gap-12">
-		<h2 id="faq-title" class="text-center text-5xl leading-[1.1]">Frequently Asked Questions</h2>
-		<div class="flex items-center justify-center gap-2 rounded-[28px] border border-[#736962] p-2" role="tablist"
+	<div class="mx-auto flex w-full max-w-[75rem] flex-col items-center gap-10 lg:gap-12">
+		<h2 id="faq-title" class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Frequently Asked Questions</h2>
+		<div class="flex max-w-[42rem] flex-wrap items-center justify-center gap-2" role="tablist"
 				 aria-label="FAQ categories" data-faq-tabs></div>
 		<div class="w-full max-w-[45rem] transition-[opacity,transform] duration-200 ease-out" data-faq-content></div>
 	</div>

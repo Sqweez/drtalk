@@ -141,55 +141,57 @@ $personalized_audiences = [
 		'label' => 'Dental Specialists',
 		'title' => 'Be the First Choice for Referrals',
 		'description' =>
-			'Most specialists compete on reputation. The best ones compete on responsiveness. drtalk gives you the system to make sure every referral is handled - and every GP knows it.',
-		'image' => 'personalized-screen.png'
+			'Your reputation earns the referral. Your system keeps it. drtalk helps you ensure every referral is handled - and every GP knows it.',
+		'image' => 'personas-specialists.png',
+		'tone' => 'lilac'
 	],
 	[
 		'label' => 'Office Managers',
-		'title' => 'Keep the Whole Office in Sync',
+		'title' => 'Run the Office Like a Pro',
 		'description' =>
-			'Every referral, task, message, and next step lives in one clear workflow. Your team spends less time chasing updates and more time helping patients.',
-		'image' => 'personalized-screen.png'
+			'No more chasing faxes or hunting through email threads. Every referral is visible, assigned, and tracked in one place. Less chaos, clearer ownership, smoother days.',
+		'image' => 'personas-managers.png',
+		'tone' => 'orange'
 	],
 	[
 		'label' => 'Referring GPs',
-		'title' => 'Know What Happens Next',
+		'title' => 'Referring Shouldn’t Be a Hassle',
 		'description' =>
-			'Send a referral, see its progress, and get updates without a phone call. drtalk makes it simple to work with the specialists your patients trust.',
-		'image' => 'personalized-screen.png'
+			'No more patient handoffs that fall through the cracks. Send referrals the way you already work and get fast, clear communication back. Free for referring dentists, always.',
+		'image' => 'personas-gps.png',
+		'tone' => 'lilac'
 	]
 ];
-$personalized_noise_url = esc_url(get_theme_file_uri('assets/images/personalized-noise.png'));
-$founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone.jpeg'));
+$personalized_dark_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$personalized_orange_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$personalized_noise_urls = ['lilac' => $personalized_dark_noise_url, 'orange' => $personalized_orange_noise_url];
+$founder_image_url = esc_url(get_theme_file_uri('assets/images/thomas-stone-figma.png'));
 $about_page_url = esc_url(home_url('/about-us/'));
-$concerns_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
+$concerns_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
 $concerns_scribble_url = esc_url(get_theme_file_uri('assets/images/concerns-scribble.svg'));
-$fomo_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
-$cta_noise_url = esc_url(get_theme_file_uri('assets/images/concerns-noise.png'));
+$fomo_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$cta_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
 $cta_steps = [
 	[
-		'icon' => 'cta-step-2.svg',
+		'icon' => 'cta-process-1.svg',
 		'title' => 'We learn your workflow',
-		'emphasis' => 'How referrals come in',
-		'copy' => ' today, who handles them, and how it gets back to referring GPs.'
+		'copy' => 'How referrals come in today, who handles them, and how it gets back to referring GPs.'
 	],
 	[
-		'icon' => 'cta-step-3.svg',
+		'icon' => 'cta-process-2.svg',
 		'title' => 'We show you the breakpoints',
-		'emphasis' => 'We give you a score',
-		'copy' => ' and highlight common pain points for practices with similar setups.'
+		'copy' => 'We give you a score and highlight common pain points for practices with similar setups.'
 	],
 	[
-		'icon' => 'cta-step-4.svg',
+		'icon' => 'cta-process-3.svg',
 		'title' => 'You keep the full findings',
-		'emphasis' => 'A written analysis summary',
-		'copy' => ' is yours to keep, regardless of what you decide to do next.'
+		'copy' => 'A written analysis summary is yours to keep, regardless of what you decide to do next.'
 	],
 	[
-		'icon' => 'cta-step-1.svg',
+		'icon' => 'cta-process-4.svg',
 		'title' => 'No follow up pressure',
-		'emphasis' => "If drtalk isn't right",
-		'copy' => " for your practice, we'll tell you that. Our job is to be useful. Not to close you."
+		'copy' =>
+			"If drtalk isn't right for your practice, we'll tell you that. Our job is to be useful. Not to close you."
 	]
 ];
 $concerns = [
@@ -224,7 +226,7 @@ $testimonials = [
 		'company' => 'NorthShore Center for Oral & Facial Surgery and Implantology',
 		'avatar' => 'testimonial-6.png',
 		'logo' => 'testimonial-1.png',
-		'tone' => 'orange'
+		'tone' => 'lilac'
 	],
 	[
 		'eyebrow' => 'Stay Connected',
@@ -248,7 +250,9 @@ $testimonials = [
 		'tone' => 'orange'
 	]
 ];
-$testimonials_noise_url = esc_url(get_theme_file_uri('assets/images/testimonial-5.png'));
+$testimonials_dark_noise_url = esc_url(get_theme_file_uri('assets/images/noise-dark.png'));
+$testimonials_orange_noise_url = esc_url(get_theme_file_uri('assets/images/noise-orange.png'));
+$testimonials_noise_urls = ['lilac' => $testimonials_dark_noise_url, 'orange' => $testimonials_orange_noise_url];
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -560,7 +564,7 @@ get_header();
 		<h2 class="w-full text-center text-4xl leading-none lg:text-5xl">If you can't measure your referral leakage, you can't fix it.</h2>
 		<div class="relative flex w-full max-w-[64rem] flex-wrap content-center items-center gap-x-4 gap-y-2 overflow-hidden rounded-3xl bg-lilac p-2">
 			<div class="calculator-noise pointer-events-none absolute inset-0" style="<?php echo $calculator_noise_style; ?>" aria-hidden="true"></div>
-			<div class="relative flex w-full min-w-0 flex-1 flex-col gap-5 rounded-[1.125rem] bg-cream p-5 sm:min-w-[20rem]">
+			<div class="relative flex w-full min-w-0 basis-full flex-col gap-5 rounded-[1.125rem] bg-cream p-5 lg:min-w-[20rem] lg:flex-1 lg:basis-0">
 				<p class="w-full text-base leading-6 text-purple-dark">How much revenue is slipping through your fingers?</p>
 				<?php foreach ($calculator_inputs as $calculator_input): ?>
 					<?php
@@ -600,7 +604,7 @@ get_header();
 					</div>
 				<?php endforeach; ?>
 			</div>
-			<div class="relative flex w-full min-w-0 flex-1 flex-col gap-5 rounded-[1.125rem] p-5 text-purple-dark sm:min-w-[20rem]" data-calculator-results aria-live="polite">
+			<div class="relative flex w-full min-w-0 basis-full flex-col gap-5 rounded-[1.125rem] p-5 text-purple-dark lg:min-w-[20rem] lg:flex-1 lg:basis-0" data-calculator-results aria-live="polite">
 				<div class="flex flex-col gap-3 border-b border-purple-dark/25 pb-3">
 					<p class="text-sm leading-5">Monthly revenue at risk</p>
 					<p class="text-[2.5rem] leading-none" data-calculator-monthly>$139,200</p>
@@ -625,15 +629,15 @@ get_header();
 				</div>
 				<div class="flex flex-col items-center gap-4">
 					<p class="w-full text-center text-sm leading-5 text-purple-dark/75">Get the full report after the demo call with drtalk team.</p>
-					<a class="inline-flex min-h-16 w-full items-center justify-center rounded-full bg-purple px-8 py-5 text-center text-base font-bold leading-6 text-cream" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+					<a class="inline-flex min-h-16 w-full items-center justify-center whitespace-normal rounded-full bg-purple px-8 py-5 text-center text-base font-bold leading-6 text-cream min-[360px]:whitespace-nowrap" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<section class="relative overflow-hidden bg-cream px-10 py-[120px]" data-home-order="8" data-testimonials>
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-16">
-		<h2 class="text-center text-5xl leading-[1.1]">For the people who use it every day.</h2>
+<section class="relative overflow-hidden bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="8" data-testimonials>
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-10 lg:gap-16">
+		<h2 class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">For the people who use it every day.</h2>
 		<div class="testimonials-swiper w-full" data-testimonials-swiper>
 			<div class="swiper-wrapper">
 				<?php foreach ($testimonials as $testimonial): ?>
@@ -647,12 +651,13 @@ get_header();
      $testimonial_border = $testimonial['tone'] === 'lilac' ? 'border-purple' : 'border-orange';
      $testimonial_name = esc_html($testimonial['name']);
      $testimonial_role = esc_html($testimonial['role']);
-     $testimonial_company = esc_html($testimonial['company']);
+     $testimonial_noise = $testimonials_noise_urls[$testimonial['tone']];
+     $testimonial_noise_style = esc_attr("--testimonials-noise-image: url('{$testimonial_noise}');");
      ?>
-					<article class="testimonial-card swiper-slide flex h-[34rem] w-[30rem] shrink-0 flex-col gap-10 overflow-hidden rounded-3xl border-l-4 <?php echo $testimonial_tone_class; ?> px-8 py-12 text-purple-dark">
-						<div class="flex items-start justify-between"><img class="size-20 rounded-full object-cover" src="<?php echo $testimonial_avatar; ?>" alt=""><img class="h-20 w-30 object-contain" src="<?php echo $testimonial_logo; ?>" alt=""></div>
+					<article class="testimonial-card swiper-slide relative flex h-[30.5rem] w-full shrink-0 flex-col gap-10 overflow-hidden rounded-3xl <?php echo $testimonial_tone_class; ?> px-6 py-8 text-purple-dark lg:h-[34rem] lg:w-[30rem] lg:px-8 lg:py-12" style="<?php echo $testimonials_noise_style; ?>">
+						<div class="flex items-start justify-between"><img class="size-[4.5rem] rounded-full object-cover" src="<?php echo $testimonial_avatar; ?>" alt=""><img class="h-[4.5rem] w-[7.5rem] object-contain" src="<?php echo $testimonial_logo; ?>" alt=""></div>
 						<div class="flex flex-1 flex-col gap-4"><p class="text-[0.8125rem] font-black uppercase tracking-[0.15em] text-purple-dark/75"><?php echo $testimonial_eyebrow; ?></p><p class="text-2xl leading-8"><?php echo $testimonial_quote; ?></p></div>
-						<div class="border-l-4 pl-4 <?php echo $testimonial_border; ?>"><p class="font-bold"><?php echo $testimonial_name; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_role; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_company; ?></p></div>
+						<div class="border-l-4 pl-4 <?php echo $testimonial_border; ?>"><p class="font-bold"><?php echo $testimonial_name; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_role; ?></p></div>
 					</article>
 				<?php endforeach; ?>
 			</div>
@@ -660,10 +665,10 @@ get_header();
 		<div class="flex gap-6"><button class="testimonial-control" type="button" data-testimonials-previous aria-label="Previous testimonial">←</button><button class="testimonial-control" type="button" data-testimonials-next aria-label="Next testimonial">→</button></div>
 	</div>
 </section>
-<section class="bg-cream px-10 py-[120px]" data-home-order="7" data-personalized>
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-12">
-		<h2 class="text-center text-5xl leading-[1.1]">The same platform, different relief for everyone it touches.</h2>
-		<div class="flex items-center justify-center gap-2 rounded-[1.75rem] border border-[#736962] p-2" role="tablist" aria-label="Audience">
+<section class="bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="7" data-personalized>
+	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-8 lg:gap-12">
+		<h2 class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">The same platform, different relief for everyone it touches.</h2>
+		<div class="personalized-tabs" role="tablist" aria-label="Audience">
 			<?php foreach ($personalized_audiences as $audience_index => $audience): ?>
 				<?php
     $audience_active = $audience_index === 0;
@@ -675,8 +680,7 @@ get_header();
 				<button class="personalized-tab<?php echo $audience_class; ?>" type="button" role="tab" data-personalized-tab data-personalized-index="<?php echo $audience_index_value; ?>" aria-selected="<?php echo $audience_selected; ?>"><?php echo $audience_label; ?></button>
 			<?php endforeach; ?>
 		</div>
-		<div class="personalized-panel relative flex h-[32.5rem] w-full gap-16 overflow-hidden rounded-3xl bg-lilac p-16" data-personalized-panel data-active-index="0">
-			<img class="pointer-events-none absolute inset-0 size-full object-cover opacity-10" src="<?php echo $personalized_noise_url; ?>" alt="">
+		<div class="personalized-panel" data-personalized-panel data-active-index="0">
 			<?php foreach ($personalized_audiences as $audience_index => $audience): ?>
 				<?php
     $personalized_state_index = esc_attr($audience_index);
@@ -684,11 +688,15 @@ get_header();
     $personalized_title = esc_html($audience['title']);
     $personalized_description = esc_html($audience['description']);
     $personalized_screen = esc_url(get_theme_file_uri('assets/images/' . $audience['image']));
+    $personalized_tone = $audience['tone'] === 'orange' ? ' personalized-state--orange' : ' personalized-state--lilac';
+    $personalized_tone_class = esc_attr($personalized_tone);
+    $personalized_noise = $personalized_noise_urls[$audience['tone']];
     ?>
-				<div class="personalized-state" data-personalized-state="<?php echo $personalized_state_index; ?>" aria-hidden="<?php echo $personalized_state_hidden; ?>">
-					<div class="flex h-full w-[30rem] flex-col justify-between">
-						<div><h3 class="text-[2rem] font-medium leading-[1.1]"><?php echo $personalized_title; ?></h3><p class="mt-4 text-lg leading-6"><?php echo $personalized_description; ?></p></div>
-						<div><a class="inline-flex h-14 items-center justify-center rounded-[28px] bg-purple px-8 text-base font-bold text-cream transition-colors hover:bg-purple-dark" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p class="mt-4 text-base text-purple-dark/75">30 minutes. No pitch, no obligation.</p></div>
+				<div class="personalized-state<?php echo $personalized_tone_class; ?>" data-personalized-state="<?php echo $personalized_state_index; ?>" aria-hidden="<?php echo $personalized_state_hidden; ?>">
+					<img class="personalized-noise" src="<?php echo esc_url($personalized_noise); ?>" alt="">
+					<div class="personalized-copy">
+						<div><h3><?php echo $personalized_title; ?></h3><p><?php echo $personalized_description; ?></p></div>
+						<div class="personalized-action"><a href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p>30 minutes. No pitch, no obligation.</p></div>
 					</div>
 					<div class="personalized-screen"><img src="<?php echo $personalized_screen; ?>" alt="drtalk platform screen"></div>
 				</div>
@@ -698,6 +706,7 @@ get_header();
 </section>
 <section class="founder-section" data-home-order="9" aria-labelledby="founder-title">
 	<div class="founder-section-content">
+		<h2 class="founder-section-mobile-title">Built by specialists who lived the problem. Not developers who read about it.</h2>
 		<div class="founder-section-profile">
 			<img class="founder-section-image" src="<?php echo $founder_image_url; ?>" alt="Thomas L. Stone">
 			<div class="founder-section-profile-copy">
@@ -706,13 +715,13 @@ get_header();
 			</div>
 		</div>
 		<div class="founder-section-story">
-			<h2 id="founder-title">Built by specialists who lived the problem. Not developers who read about it.</h2>
+			<h2 id="founder-title" class="founder-section-desktop-title">Built by specialists who lived the problem. Not developers who read about it.</h2>
 			<p>Over more than 25 years in oral surgery, Dr. Stone watched referral workflows break under growth, GP relationships quietly cool when communication lagged, and talented staff spend hours on admin that a better system would have handled automatically.</p>
 			<p>He created drtalk because no existing tool was built for the way specialist practices actually work. Not as an outsider guessing at the problem, but as someone who lived it for decades.</p>
 			<a class="founder-section-link" href="<?php echo $about_page_url; ?>">
 				<span>Read Our Story</span>
 				<svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-					<path d="M14 4h6v6M20 4l-9 9M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" />
+					<path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" />
 				</svg>
 			</a>
 		</div>
@@ -757,7 +766,7 @@ get_header();
 	<img class="fomo-noise" src="<?php echo $fomo_noise_url; ?>" alt="">
 	<div class="fomo-content">
 		<div class="fomo-copy">
-			<h2 id="fomo-title">What you’re losing without<br>an intelligent digital referral process</h2>
+			<h2 id="fomo-title">What you lose without<br>a smart referral process.</h2>
 			<p>The average specialist practice loses $4,640 every hour to missed and unconverted referrals.<br>Here's what's slipped by since you landed on this page:</p>
 		</div>
 		<div class="fomo-counter">
@@ -770,20 +779,22 @@ get_header();
 <section class="cta-section" data-home-order="12" aria-labelledby="cta-title">
 	<img class="cta-noise" src="<?php echo $cta_noise_url; ?>" alt="">
 	<div class="cta-content">
-		<h2 id="cta-title">Your referral workflow has gaps.<br>Give us 30 minutes and we’ll find them.</h2>
+		<div class="cta-heading">
+			<h2 id="cta-title">Your referral workflow has gaps.</h2>
+			<p>Give us 30 minutes and we’ll find them.</p>
+		</div>
 		<div class="cta-steps">
 			<?php foreach ($cta_steps as $cta_step): ?>
 				<?php
     $cta_icon = esc_url(get_theme_file_uri('assets/images/' . $cta_step['icon']));
     $cta_title = esc_html($cta_step['title']);
-    $cta_emphasis = esc_html($cta_step['emphasis']);
     $cta_copy = esc_html($cta_step['copy']);
     ?>
 				<article class="cta-step">
 					<img class="cta-step-icon" src="<?php echo $cta_icon; ?>" alt="">
 					<div class="cta-step-copy">
 						<h3><?php echo $cta_title; ?></h3>
-						<p><strong><?php echo $cta_emphasis; ?></strong><?php echo $cta_copy; ?></p>
+						<p><?php echo $cta_copy; ?></p>
 					</div>
 				</article>
 			<?php endforeach; ?>

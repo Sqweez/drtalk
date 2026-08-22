@@ -17,7 +17,7 @@ if (testimonialsRoot) {
 
   const swiper = new Swiper(swiperElement, {
     centeredSlides: true,
-    initialSlide: 1,
+    initialSlide: 0,
     loop: true,
     slidesPerView: 'auto',
     spaceBetween: 16,

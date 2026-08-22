@@ -123,9 +123,10 @@
         tab.textContent = category.label;
         tab.setAttribute("aria-selected", String(isSelected));
         tab.setAttribute("aria-controls", `faq-panel-${category.id}`);
-        tab.className = "flex h-10 cursor-pointer items-center justify-center rounded-[20px] px-4 py-2 text-base font-bold leading-6 transition-colors duration-200";
+        tab.className = "flex h-10 cursor-pointer items-center justify-center rounded-[20px] bg-[#ede8e1] px-4 py-2 text-xs font-bold leading-4 transition-colors duration-200 lg:text-base lg:leading-6";
         tab.classList.toggle("bg-purple-dark", isSelected);
         tab.classList.toggle("text-cream", isSelected);
+        tab.classList.toggle("bg-[#ede8e1]", !isSelected);
         tab.classList.toggle("text-purple-dark", !isSelected);
         tab.addEventListener("click", () => changeCategory(category.id));
         faqTabs.append(tab);
@@ -146,7 +147,7 @@
         const answer = document.createElement("p");
         row.className = "border-b border-[#d6d1cb]";
         button.type = "button";
-        button.className = "flex w-full cursor-pointer items-center gap-4 p-6 text-left";
+        button.className = "flex w-full cursor-pointer items-center gap-4 px-2 py-6 text-left lg:px-6";
         button.setAttribute("aria-expanded", "false");
         button.setAttribute("aria-controls", answerId);
         question.className = "flex-1 text-lg font-bold leading-6 text-purple-dark";
@@ -176,6 +177,16 @@
       });
       faqContent.replaceChildren(panel);
     };
+    faqTabs.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      const tabs = [...faqTabs.querySelectorAll('[role="tab"]')];
+      const currentIndex = tabs.indexOf(document.activeElement);
+      if (currentIndex < 0) return;
+      event.preventDefault();
+      const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+      tabs[nextIndex].click();
+      tabs[nextIndex].focus();
+    });
     const changeCategory = (categoryId) => {
       if (categoryId === activeCategoryId) {
         return;
@@ -301,9 +312,16 @@
     let pausedElapsed = 0;
     let animationFrame;
     let isPaused = false;
+    let pointerStartX = null;
+    const cardStep = () => {
+      var _a2, _b;
+      const cardWidth = (_b = (_a2 = cards[0]) == null ? void 0 : _a2.getBoundingClientRect().width) != null ? _b : 0;
+      const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
+      return cardWidth + gap;
+    };
     const update2 = (index) => {
       activeIndex = (index + cards.length) % cards.length;
-      track.style.transform = `translate3d(${-activeIndex * 1040}px, 0, 0)`;
+      track.style.transform = `translate3d(${-activeIndex * cardStep()}px, 0, 0)`;
       cards.forEach((card, cardIndex) => {
         card.setAttribute("aria-hidden", cardIndex === activeIndex ? "false" : "true");
         card.style.setProperty("--concerns-progress", 0);
@@ -329,6 +347,25 @@
     dots.forEach((dot, dotIndex) => {
       dot.addEventListener("click", () => update2(dotIndex));
     });
+    track.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse") return;
+      pointerStartX = event.clientX;
+      pauseTimer();
+    });
+    track.addEventListener("pointerup", (event) => {
+      if (pointerStartX === null) return;
+      const distance = event.clientX - pointerStartX;
+      if (Math.abs(distance) > 40) {
+        update2(activeIndex + (distance < 0 ? 1 : -1));
+      }
+      pointerStartX = null;
+      resumeTimer();
+    });
+    track.addEventListener("pointercancel", () => {
+      pointerStartX = null;
+      resumeTimer();
+    });
+    window.addEventListener("resize", () => update2(activeIndex));
     const pauseTimer = () => {
       if (isPaused) {
         return;
@@ -494,6 +531,7 @@
     const tabs = [...personalizedRoot.querySelectorAll("[data-personalized-tab]")];
     const panel = personalizedRoot.querySelector("[data-personalized-panel]");
     const states = [...personalizedRoot.querySelectorAll("[data-personalized-state]")];
+    const desktop = window.matchMedia("(min-width: 64rem)");
     let activeIndex = 0;
     let scrollLocked = false;
     const selectAudience = (index) => {
@@ -505,11 +543,20 @@
         tab.classList.toggle("is-active", selected);
         tab.setAttribute("aria-selected", String(selected));
       });
-      states.forEach(
-        (state, stateIndex) => state.setAttribute("aria-hidden", String(stateIndex !== index))
-      );
+      states.forEach((state, stateIndex) => {
+        state.setAttribute("aria-hidden", String(desktop.matches && stateIndex !== index));
+      });
     };
     tabs.forEach((tab, index) => tab.addEventListener("click", () => selectAudience(index)));
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        selectAudience(nextIndex);
+        tabs[nextIndex].focus();
+      });
+    });
     personalizedRoot.addEventListener(
       "wheel",
       (event) => {
@@ -522,6 +569,8 @@
       },
       { passive: true }
     );
+    desktop.addEventListener("change", () => selectAudience(activeIndex));
+    selectAudience(0);
   }
 
   // node_modules/swiper/shared/utils.mjs
@@ -4321,7 +4370,7 @@
     });
     const swiper = new Swiper(swiperElement, {
       centeredSlides: true,
-      initialSlide: 1,
+      initialSlide: 0,
       loop: true,
       slidesPerView: "auto",
       spaceBetween: 16,
