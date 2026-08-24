@@ -14,7 +14,7 @@ $hero_money_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-mone
 $hero_connection_url = esc_url(get_theme_file_uri('assets/images/hero-decoration-connection.png'));
 $different_points = [
 	[
-		'icon' => 'different-referral-friction.svg',
+		'icon' => 'different-referral-friction-static.png',
 		'hover_icon' => 'different-referral-friction-hover.gif',
 		'title' => 'Referral Friction',
 		'quote' => '“Our current system is primitive - half our referrals come through channels we can barely track.”',
@@ -22,7 +22,7 @@ $different_points = [
 			'Faxes. Calls. Emails. Web Forms. Referrals slip through every gap. Stop relying on a workflow that can’t catch them all.'
 	],
 	[
-		'icon' => 'different-relationship-risk.svg',
+		'icon' => 'different-relationship-risk-static.png',
 		'hover_icon' => 'different-relationship-risk-hover.gif',
 		'title' => 'Relationship Risk',
 		'quote' => '“We got told we were hard to work with. By a dentist we thought was our friend.”',
@@ -30,7 +30,7 @@ $different_points = [
 			'GPs won’t call to complain about a slow response; they’ll just route the next case to your competitor.'
 	],
 	[
-		'icon' => 'different-staff-dependency.svg',
+		'icon' => 'different-staff-dependency-static.png',
 		'hover_icon' => 'different-staff-dependency-hover.gif',
 		'title' => 'Staff Dependency',
 		'quote' => '“When she left, no one knew the status of any referral. We lost track of everything.”',
@@ -38,7 +38,7 @@ $different_points = [
 			'Your growth shouldn’t live with one person. Build a system that moves referrals forward, no matter who is at the front desk.'
 	],
 	[
-		'icon' => 'different-growth-risk.svg',
+		'icon' => 'different-growth-risk-static.png',
 		'hover_icon' => 'different-growth-risk-hover.gif',
 		'title' => 'Growth Risk',
 		'quote' => '“We thought we had a system. We just hadn’t grown into the point where it failed yet.”',
@@ -47,6 +47,7 @@ $different_points = [
 	]
 ];
 $different_divider_url = esc_url(get_theme_file_uri('assets/images/different-divider.svg'));
+$different_icon_backdrop_url = esc_url(get_theme_file_uri('assets/images/problem-icon-backdrop-orange.svg'));
 $different_noise_url = $noise_orange_url;
 $how_it_works_steps = [
 	[
@@ -391,6 +392,7 @@ get_header();
 				>
 					<div class="problem-card-noise" aria-hidden="true"></div>
 					<div class="problem-card-icon" aria-hidden="true">
+						<img class="problem-card-icon-backdrop" src="<?php echo $different_icon_backdrop_url; ?>" width="126" height="80" alt="">
 						<img class="problem-card-icon-static" src="<?php echo $point_icon_url; ?>" width="126" height="80" alt="">
 						<img class="problem-card-icon-animated" src="<?php echo $point_hover_icon_url; ?>" data-problem-icon-src="<?php echo $point_hover_icon_url; ?>" width="126" height="80" alt="">
 					</div>

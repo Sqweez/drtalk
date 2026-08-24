@@ -341,11 +341,9 @@
     width: 7.875rem;
     height: 5rem;
     flex: 0 0 auto;
-    overflow: hidden;
-    border-radius: 50%;
-    background-color: #fce2cc;
   }
 
+  .problem-card-icon-backdrop,
   .problem-card-icon-static,
   .problem-card-icon-animated {
     position: absolute;
@@ -356,6 +354,15 @@
     object-fit: contain;
     object-position: left center;
     transition: opacity 100ms ease-out;
+  }
+
+  .problem-card-icon-backdrop {
+    z-index: 0;
+  }
+
+  .problem-card-icon-static,
+  .problem-card-icon-animated {
+    z-index: 1;
   }
 
   .problem-card-icon-animated {
