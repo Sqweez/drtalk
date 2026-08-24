@@ -1,6 +1,8 @@
 <?php
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
+$arrow_left_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-left.svg'));
+$arrow_right_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-right.svg'));
 $noise_orange_url = esc_url(get_theme_file_uri('assets/images/footer-pattern.png'));
 $noise_dark_url = esc_url(get_theme_file_uri('assets/images/personalized-pattern-dark.png'));
 $hero_noise_orange_url = $noise_orange_url;
@@ -665,7 +667,7 @@ get_header();
 				<?php endforeach; ?>
 			</div>
 		</div>
-		<div class="flex gap-6"><button class="testimonial-control" type="button" data-testimonials-previous aria-label="Previous testimonial">←</button><button class="testimonial-control" type="button" data-testimonials-next aria-label="Next testimonial">→</button></div>
+		<div class="flex gap-6"><button class="testimonial-control" type="button" data-testimonials-previous aria-label="Previous testimonial"><img src="<?php echo $arrow_left_url; ?>" width="16" height="16" alt=""></button><button class="testimonial-control" type="button" data-testimonials-next aria-label="Next testimonial"><img src="<?php echo $arrow_right_url; ?>" width="16" height="16" alt=""></button></div>
 	</div>
 </section>
 <section class="bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="7" data-personalized>
@@ -748,7 +750,7 @@ get_header();
 							<h3><?php echo $concern_title; ?></h3>
 							<p><?php echo $concern_answer; ?></p>
 						</div>
-						<button class="concerns-next" type="button" data-concerns-next aria-label="Show next concern"><span aria-hidden="true">→</span></button>
+						<button class="concerns-next" type="button" data-concerns-next aria-label="Show next concern"><img src="<?php echo $arrow_right_url; ?>" width="16" height="16" alt=""></button>
 					</article>
 				<?php endforeach; ?>
 			</div>
