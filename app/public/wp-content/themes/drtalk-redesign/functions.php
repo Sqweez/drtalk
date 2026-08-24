@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 require_once get_theme_file_path('inc/links.php');
+require_once get_theme_file_path('inc/testimonials.php');
 
 /**
  * Configures WordPress features used by the public-facing theme.

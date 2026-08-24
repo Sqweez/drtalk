@@ -808,6 +808,31 @@
     z-index: 1;
   }
 
+  .testimonial-avatar {
+    display: flex;
+    width: 72px;
+    height: 72px;
+    flex: none;
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+
+  .testimonial-avatar--fallback {
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(74 30 79 / 12%);
+    color: var(--color-purple-dark);
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .testimonial-company-logo {
+    width: 120px;
+    height: 72px;
+    object-fit: contain;
+  }
+
   .testimonial-control {
     display: inline-flex;
     width: 64px;

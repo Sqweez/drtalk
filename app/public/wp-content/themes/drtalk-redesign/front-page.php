@@ -222,44 +222,7 @@ $concerns = [
 			'Staff resistance comes from tools that add to their workload. During the review we\'ll show specifically how drtalk reduces the daily chaos your team already deals with, not pile on top of it.'
 	]
 ];
-$testimonials = [
-	[
-		'eyebrow' => 'Save Time',
-		'quote' =>
-			'“Every referral is captured, tracked, and converted into scheduled appointments without manual chasing or missed connections.”',
-		'name' => 'Yost Smith',
-		'role' => 'Oral & Maxillofacial Surgeon',
-		'company' => 'NorthShore Center for Oral & Facial Surgery and Implantology',
-		'avatar' => 'testimonial-6.png',
-		'logo' => 'testimonial-1.png',
-		'tone' => 'lilac'
-	],
-	[
-		'eyebrow' => 'Stay Connected',
-		'quote' =>
-			'“Our lab runs smoother than ever. We process cases securely and stay connected with every dentist we serve.”',
-		'name' => 'Ross Ballinger',
-		'role' => 'Full Arch Director',
-		'company' => 'Dental Designs',
-		'avatar' => 'testimonial-7.png',
-		'logo' => 'testimonial-3.png',
-		'tone' => 'lilac'
-	],
-	[
-		'eyebrow' => 'Eliminate Leakage',
-		'quote' => 'drtalk has eliminated referral leakage and increased our overall profitability.',
-		'name' => 'Ali Salehpour',
-		'role' => 'Oral & Maxillofacial Surgeon',
-		'company' => 'Oral, Facial, & Implant Surgery Center of Monterey',
-		'avatar' => 'testimonial-8.png',
-		'logo' => 'testimonial-4.png',
-		'tone' => 'orange'
-	]
-];
-$testimonial_tone_classes = [
-	'lilac' => 'testimonial-card--lilac bg-lilac border-purple',
-	'orange' => 'testimonial-card--orange bg-[#fce2cc] border-orange'
-];
+$testimonials = drtalk_redesign_get_testimonials();
 $calculator_inputs = [
 	[
 		'id' => 'referrals',
@@ -647,20 +610,33 @@ get_header();
 		<h2 class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">For the people who use it every day.</h2>
 		<div class="testimonials-swiper w-full" data-testimonials-swiper>
 			<div class="swiper-wrapper">
-				<?php foreach ($testimonials as $testimonial): ?>
+				<?php foreach ($testimonials as $testimonial_index => $testimonial): ?>
 					<?php
-     $testimonial_avatar = esc_url(get_theme_file_uri('assets/images/' . $testimonial['avatar']));
-     $testimonial_logo = esc_url(get_theme_file_uri('assets/images/' . $testimonial['logo']));
-     $testimonial_tone = $testimonial_tone_classes[$testimonial['tone']];
-     $testimonial_tone_class = esc_attr($testimonial_tone);
+     $testimonial_is_orange = $testimonial_index % 2 === 0;
+     $orange_tone_class = 'testimonial-card--orange bg-[#fce2cc] border-orange';
+     $lilac_tone_class = 'testimonial-card--lilac bg-lilac border-purple';
+     $testimonial_tone_class = esc_attr($testimonial_is_orange ? $orange_tone_class : $lilac_tone_class);
      $testimonial_eyebrow = esc_html($testimonial['eyebrow']);
      $testimonial_quote = esc_html($testimonial['quote']);
-     $testimonial_border = $testimonial['tone'] === 'lilac' ? 'border-purple' : 'border-orange';
+     $testimonial_border = $testimonial_is_orange ? 'border-orange' : 'border-purple';
      $testimonial_name = esc_html($testimonial['name']);
      $testimonial_role = esc_html($testimonial['role']);
+     $testimonial_company = esc_attr($testimonial['company']);
+     $testimonial_avatar = esc_url($testimonial['avatar_url']);
+     $testimonial_logo = esc_url($testimonial['logo_url']);
+     $testimonial_initials = esc_html(drtalk_redesign_testimonial_initials($testimonial['name']));
      ?>
 					<article class="testimonial-card swiper-slide relative flex h-[30.5rem] w-full shrink-0 flex-col gap-10 overflow-hidden rounded-3xl <?php echo $testimonial_tone_class; ?> px-6 py-8 text-purple-dark lg:h-[34rem] lg:w-[30rem] lg:px-8 lg:py-12">
-						<div class="flex items-start justify-between"><img class="size-[4.5rem] rounded-full object-cover" src="<?php echo $testimonial_avatar; ?>" alt=""><img class="h-[4.5rem] w-[7.5rem] object-contain" src="<?php echo $testimonial_logo; ?>" alt=""></div>
+						<div class="flex min-h-[4.5rem] items-start justify-between">
+							<?php if ($testimonial_avatar): ?>
+								<img class="testimonial-avatar" src="<?php echo $testimonial_avatar; ?>" alt="<?php echo $testimonial_name; ?>">
+							<?php else: ?>
+								<span class="testimonial-avatar testimonial-avatar--fallback" aria-hidden="true"><?php echo $testimonial_initials; ?></span>
+							<?php endif; ?>
+							<?php if ($testimonial_logo): ?>
+								<img class="testimonial-company-logo" src="<?php echo $testimonial_logo; ?>" alt="<?php echo $testimonial_company; ?>">
+							<?php endif; ?>
+						</div>
 						<div class="flex flex-1 flex-col gap-4"><p class="text-[0.8125rem] font-black uppercase tracking-[0.15em] text-purple-dark/75"><?php echo $testimonial_eyebrow; ?></p><p class="text-2xl leading-8"><?php echo $testimonial_quote; ?></p></div>
 						<div class="border-l-4 pl-4 <?php echo $testimonial_border; ?>"><p class="font-bold"><?php echo $testimonial_name; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_role; ?></p></div>
 					</article>
