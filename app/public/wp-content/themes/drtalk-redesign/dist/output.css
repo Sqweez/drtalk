@@ -1202,9 +1202,6 @@
     .lg\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .lg\:grid-cols-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
     .lg\:grid-cols-6 {
       grid-template-columns: repeat(6, minmax(0, 1fr));
     }
@@ -1855,6 +1852,24 @@
     background-color: var(--color-purple-dark);
     color: var(--color-cream);
   }
+  [data-personalized][data-persona-direction='next'] .personalized-tab.is-active {
+    animation: personalized-label-next 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-personalized][data-persona-direction='previous'] .personalized-tab.is-active {
+    animation: personalized-label-previous 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes personalized-label-next {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+  }
+  @keyframes personalized-label-previous {
+    from {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+  }
   .personalized-panel {
     display: flex;
     width: 100%;
@@ -1933,6 +1948,9 @@
       display: block;
       padding: 0.5rem 1rem;
     }
+    [data-personalized] .personalized-tab.is-active {
+      animation: none;
+    }
     .personalized-panel {
       position: relative;
       height: 32.5rem;
@@ -1998,6 +2016,14 @@
       flex: none;
       border-width: 8px;
       border-radius: 0.5rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-personalized] .personalized-tab.is-active {
+      animation: none;
+    }
+    .personalized-state {
+      transition: none;
     }
   }
   .testimonials-swiper {

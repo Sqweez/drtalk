@@ -412,7 +412,7 @@ get_header();
 			<h2 class="text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Most compete on reputation.<br>The best compete on responsiveness.</h2>
 			<p class="max-w-[72rem] text-lg leading-6">drtalk is the only mobile-first platform built by practicing dentists that brings referrals, communication, and visibility into one place.<br class="hidden lg:block"> So nothing gets missed, delayed, or lost again.</p>
 		</div>
-		<div class="grid w-full grid-cols-1 gap-0 lg:grid-cols-4">
+		<div class="grid w-full grid-cols-1 gap-0 lg:grid-cols-2">
 			<?php foreach ($responsiveness_cards as $responsiveness_card): ?>
 				<?php
     $responsiveness_image = esc_url(get_theme_file_uri('assets/images/' . $responsiveness_card['image']));

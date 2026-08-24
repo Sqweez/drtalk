@@ -6,10 +6,13 @@ if (personalizedRoot) {
   const states = [...personalizedRoot.querySelectorAll('[data-personalized-state]')];
   const desktop = window.matchMedia('(min-width: 64rem)');
   let activeIndex = 0;
-  let scrollLocked = false;
+  let scrollFrame = 0;
 
   const selectAudience = (index) => {
     if (!tabs[index]) return;
+    if (index !== activeIndex) {
+      personalizedRoot.dataset.personaDirection = index > activeIndex ? 'next' : 'previous';
+    }
     activeIndex = index;
     panel.dataset.activeIndex = String(index);
     tabs.forEach((tab, tabIndex) => {
@@ -37,19 +40,38 @@ if (personalizedRoot) {
       tabs[nextIndex].focus();
     });
   });
-  personalizedRoot.addEventListener(
-    'wheel',
-    (event) => {
-      if (scrollLocked || Math.abs(event.deltaY) < 30) return;
-      scrollLocked = true;
-      selectAudience((activeIndex + (event.deltaY > 0 ? 1 : -1) + tabs.length) % tabs.length);
-      window.setTimeout(() => {
-        scrollLocked = false;
-      }, 500);
-    },
-    { passive: true },
-  );
+  const syncAudienceToScroll = () => {
+    scrollFrame = 0;
+    if (desktop.matches) return;
 
-  desktop.addEventListener('change', () => selectAudience(activeIndex));
+    const focusLine = Math.min(window.innerHeight * 0.38, 320);
+    let closestIndex = activeIndex;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    states.forEach((state, index) => {
+      const bounds = state.getBoundingClientRect();
+      const distance = Math.abs(bounds.top + Math.min(bounds.height * 0.25, 140) - focusLine);
+
+      if (bounds.bottom > 0 && bounds.top < window.innerHeight && distance < closestDistance) {
+        closestIndex = index;
+        closestDistance = distance;
+      }
+    });
+
+    if (closestIndex !== activeIndex) selectAudience(closestIndex);
+  };
+
+  const queueScrollSync = () => {
+    if (!scrollFrame) scrollFrame = window.requestAnimationFrame(syncAudienceToScroll);
+  };
+
+  window.addEventListener('scroll', queueScrollSync, { passive: true });
+  window.addEventListener('resize', queueScrollSync, { passive: true });
+
+  desktop.addEventListener('change', () => {
+    selectAudience(activeIndex);
+    queueScrollSync();
+  });
   selectAudience(0);
+  queueScrollSync();
 }
