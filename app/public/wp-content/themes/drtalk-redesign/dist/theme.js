@@ -71,7 +71,7 @@
   if (problemSection) {
     const cards = [...problemSection.querySelectorAll("[data-problem-card]")];
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const coarsePointer = window.matchMedia("(hover: none)");
+    const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)");
     const restartIcon = (card) => {
       if (reduceMotion.matches) {
         return;
@@ -87,17 +87,10 @@
       });
     };
     cards.forEach((card) => {
-      card.addEventListener("pointerenter", () => restartIcon(card));
+      if (hoverCapable.matches) {
+        card.addEventListener("pointerenter", () => restartIcon(card));
+      }
       card.addEventListener("focusin", () => restartIcon(card));
-      card.addEventListener("click", () => {
-        if (!coarsePointer.matches) {
-          return;
-        }
-        cards.forEach((otherCard) => {
-          otherCard.classList.toggle("is-active", otherCard === card);
-        });
-        restartIcon(card);
-      });
     });
   }
 
@@ -349,7 +342,7 @@
       dot.addEventListener("click", () => update2(dotIndex));
     });
     track.addEventListener("pointerdown", (event) => {
-      if (event.pointerType === "mouse") return;
+      if (event.pointerType === "mouse" || event.target.closest("[data-concerns-next]")) return;
       pointerStartX = event.clientX;
       pauseTimer();
     });
@@ -383,10 +376,12 @@
       isPaused = false;
       animationFrame = requestAnimationFrame(tick);
     };
-    nextButtons.forEach((button) => {
-      button.addEventListener("mouseenter", pauseTimer);
-      button.addEventListener("mouseleave", resumeTimer);
-    });
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      nextButtons.forEach((button) => {
+        button.addEventListener("mouseenter", pauseTimer);
+        button.addEventListener("mouseleave", resumeTimer);
+      });
+    }
     update2(0);
     animationFrame = requestAnimationFrame(tick);
   }
@@ -496,7 +491,7 @@
   var whyUsCards = [...document.querySelectorAll("[data-why-us-card]")];
   if (whyUsCards.length) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const coarsePointer = window.matchMedia("(hover: none)");
+    const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)");
     const restartIcon = (card) => {
       if (reduceMotion.matches) {
         return;
@@ -512,17 +507,10 @@
       });
     };
     whyUsCards.forEach((card) => {
-      card.addEventListener("pointerenter", () => restartIcon(card));
+      if (hoverCapable.matches) {
+        card.addEventListener("pointerenter", () => restartIcon(card));
+      }
       card.addEventListener("focusin", () => restartIcon(card));
-      card.addEventListener("click", () => {
-        if (!coarsePointer.matches) {
-          return;
-        }
-        whyUsCards.forEach((otherCard) => {
-          otherCard.classList.toggle("is-active", otherCard === card);
-        });
-        restartIcon(card);
-      });
     });
   }
 

@@ -341,6 +341,9 @@
     width: 7.875rem;
     height: 5rem;
     flex: 0 0 auto;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: #fce2cc;
   }
 
   .problem-card-icon-static,
@@ -359,19 +362,24 @@
     opacity: 0;
   }
 
-  .problem-card:hover .problem-card-noise,
   .problem-card:focus-visible .problem-card-noise,
-  .problem-card.is-active .problem-card-noise,
-  .problem-card:hover .problem-card-icon-animated,
-  .problem-card:focus-visible .problem-card-icon-animated,
-  .problem-card.is-active .problem-card-icon-animated {
+  .problem-card:focus-visible .problem-card-icon-animated {
     opacity: 1;
   }
 
-  .problem-card:hover .problem-card-icon-static,
-  .problem-card:focus-visible .problem-card-icon-static,
-  .problem-card.is-active .problem-card-icon-static {
+  .problem-card:focus-visible .problem-card-icon-static {
     opacity: 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .problem-card:hover .problem-card-noise,
+    .problem-card:hover .problem-card-icon-animated {
+      opacity: 1;
+    }
+
+    .problem-card:hover .problem-card-icon-static {
+      opacity: 0;
+    }
   }
 
   @media (min-width: 64rem) {
@@ -397,8 +405,7 @@
     }
 
     .problem-card:hover .problem-card-icon-static,
-    .problem-card:focus-visible .problem-card-icon-static,
-    .problem-card.is-active .problem-card-icon-static {
+    .problem-card:focus-visible .problem-card-icon-static {
       opacity: 1;
     }
   }
@@ -426,15 +433,11 @@
     transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .why-us-card:hover,
-  .why-us-card:focus-visible,
-  .why-us-card.is-active {
+  .why-us-card:focus-visible {
     background-color: var(--color-lilac);
   }
 
-  .why-us-card:hover .why-us-card-noise,
-  .why-us-card:focus-visible .why-us-card-noise,
-  .why-us-card.is-active .why-us-card-noise {
+  .why-us-card:focus-visible .why-us-card-noise {
     opacity: 1;
   }
 
@@ -452,16 +455,27 @@
     opacity: 0;
   }
 
-  .why-us-card:hover .why-us-card-icon-static,
-  .why-us-card:focus-visible .why-us-card-icon-static,
-  .why-us-card.is-active .why-us-card-icon-static {
+  .why-us-card:focus-visible .why-us-card-icon-static {
     opacity: 0;
   }
 
-  .why-us-card:hover .why-us-card-icon-animated,
-  .why-us-card:focus-visible .why-us-card-icon-animated,
-  .why-us-card.is-active .why-us-card-icon-animated {
+  .why-us-card:focus-visible .why-us-card-icon-animated {
     opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .why-us-card:hover {
+      background-color: var(--color-lilac);
+    }
+
+    .why-us-card:hover .why-us-card-noise,
+    .why-us-card:hover .why-us-card-icon-animated {
+      opacity: 1;
+    }
+
+    .why-us-card:hover .why-us-card-icon-static {
+      opacity: 0;
+    }
   }
 
   .numbers-card-noise {
@@ -483,7 +497,6 @@
     transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .numbers-card:hover,
   .numbers-card:focus-visible {
     z-index: 1;
     box-shadow: 0 18px 36px rgb(74 30 79 / 16%);
@@ -495,9 +508,20 @@
     outline-offset: -2px;
   }
 
-  .numbers-card:hover .numbers-card-illustration,
   .numbers-card:focus-visible .numbers-card-illustration {
     transform: rotate(-8deg) scale(1.06);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .numbers-card:hover {
+      z-index: 1;
+      box-shadow: 0 18px 36px rgb(74 30 79 / 16%);
+      transform: translateY(-0.5rem);
+    }
+
+    .numbers-card:hover .numbers-card-illustration {
+      transform: rotate(-8deg) scale(1.06);
+    }
   }
 
   @media (min-width: 64rem) {
@@ -551,15 +575,14 @@
     }
 
     .why-us-card:hover .why-us-card-icon-static,
-    .why-us-card:focus-visible .why-us-card-icon-static,
-    .why-us-card.is-active .why-us-card-icon-static {
+    .why-us-card:focus-visible .why-us-card-icon-static {
       opacity: 1;
     }
   }
 
   .personalized-tabs {
     position: sticky;
-    top: 0;
+    top: calc(var(--wp-admin--admin-bar--height, 0px) + 5.5rem);
     z-index: 2;
     display: flex;
     height: 3rem;
@@ -569,6 +592,8 @@
     border: 1px solid var(--color-purple-dark);
     border-radius: 1.75rem;
     background: var(--color-cream);
+    margin-top: -1rem;
+    margin-bottom: -4rem;
   }
 
   .personalized-tab {
@@ -678,13 +703,15 @@
     width: 100%;
     height: 20rem;
     overflow: hidden;
-    border: 4px solid var(--color-purple-dark);
-    border-radius: 1rem;
+    padding: 1.25rem;
   }
 
   .personalized-screen img {
-    width: 100%;
-    height: 100%;
+    width: 42rem;
+    max-width: none;
+    height: 27.2778rem;
+    border: 4px solid var(--color-purple-dark);
+    border-radius: 1rem;
     object-fit: cover;
   }
 
@@ -694,6 +721,7 @@
       height: auto;
       flex-direction: row;
       gap: 0.5rem;
+      margin: 0;
       padding: 0.5rem;
     }
 
@@ -780,6 +808,14 @@
       flex: none;
       border-width: 8px;
       border-radius: 0.5rem;
+      padding: 0;
+    }
+
+    .personalized-screen img {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 0;
     }
   }
 

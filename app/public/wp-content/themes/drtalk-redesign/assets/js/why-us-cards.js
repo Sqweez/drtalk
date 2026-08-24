@@ -2,7 +2,7 @@ const whyUsCards = [...document.querySelectorAll('[data-why-us-card]')];
 
 if (whyUsCards.length) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const coarsePointer = window.matchMedia('(hover: none)');
+  const hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   const restartIcon = (card) => {
     if (reduceMotion.matches) {
@@ -23,18 +23,9 @@ if (whyUsCards.length) {
   };
 
   whyUsCards.forEach((card) => {
-    card.addEventListener('pointerenter', () => restartIcon(card));
+    if (hoverCapable.matches) {
+      card.addEventListener('pointerenter', () => restartIcon(card));
+    }
     card.addEventListener('focusin', () => restartIcon(card));
-
-    card.addEventListener('click', () => {
-      if (!coarsePointer.matches) {
-        return;
-      }
-
-      whyUsCards.forEach((otherCard) => {
-        otherCard.classList.toggle('is-active', otherCard === card);
-      });
-      restartIcon(card);
-    });
   });
 }

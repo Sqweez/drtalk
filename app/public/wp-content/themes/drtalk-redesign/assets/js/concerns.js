@@ -58,7 +58,7 @@ if (concernsRoot) {
   });
 
   track.addEventListener('pointerdown', (event) => {
-    if (event.pointerType === 'mouse') return;
+    if (event.pointerType === 'mouse' || event.target.closest('[data-concerns-next]')) return;
     pointerStartX = event.clientX;
     pauseTimer();
   });
@@ -102,10 +102,12 @@ if (concernsRoot) {
     animationFrame = requestAnimationFrame(tick);
   };
 
-  nextButtons.forEach((button) => {
-    button.addEventListener('mouseenter', pauseTimer);
-    button.addEventListener('mouseleave', resumeTimer);
-  });
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    nextButtons.forEach((button) => {
+      button.addEventListener('mouseenter', pauseTimer);
+      button.addEventListener('mouseleave', resumeTimer);
+    });
+  }
 
   update(0);
   animationFrame = requestAnimationFrame(tick);
