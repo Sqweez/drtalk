@@ -199,12 +199,12 @@
       activeCategoryId = categoryId;
       renderTabs();
       faqContent.setAttribute("aria-busy", "true");
-      faqContent.classList.add("translate-y-2", "opacity-0");
+      faqContent.classList.add("translate-y-3", "opacity-0");
       categoryTransitionTimer = window.setTimeout(() => {
         renderQuestions(nextCategory);
-        window.requestAnimationFrame(() => faqContent.classList.remove("translate-y-2", "opacity-0"));
+        window.requestAnimationFrame(() => faqContent.classList.remove("translate-y-3", "opacity-0"));
         faqContent.removeAttribute("aria-busy");
-      }, 200);
+      }, 220);
     };
     renderTabs();
     renderQuestions(categories[0]);

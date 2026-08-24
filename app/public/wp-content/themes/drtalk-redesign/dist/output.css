@@ -400,6 +400,12 @@
   .min-h-\[65vh\] {
     min-height: 65vh;
   }
+  .min-h-\[700px\] {
+    min-height: 700px;
+  }
+  .min-h-\[800px\] {
+    min-height: 800px;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -515,6 +521,10 @@
   }
   .translate-y-2 {
     --tw-translate-y: calc(var(--spacing) * 2);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .translate-y-3 {
+    --tw-translate-y: calc(var(--spacing) * 3);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .rotate-45 {
@@ -1029,8 +1039,8 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
-  .transition-\[opacity\,transform\] {
-    transition-property: opacity,transform;
+  .transition-\[opacity\,translate\] {
+    transition-property: opacity,translate;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
@@ -1051,6 +1061,14 @@
   .duration-300 {
     --tw-duration: 300ms;
     transition-duration: 300ms;
+  }
+  .duration-\[220ms\] {
+    --tw-duration: 220ms;
+    transition-duration: 220ms;
+  }
+  .ease-\[cubic-bezier\(0\.25\,1\,0\.5\,1\)\] {
+    --tw-ease: cubic-bezier(0.25,1,0.5,1);
+    transition-timing-function: cubic-bezier(0.25,1,0.5,1);
   }
   .ease-out {
     --tw-ease: var(--ease-out);
@@ -1087,6 +1105,15 @@
   }
   .focus-visible\:outline-orange:focus-visible {
     outline-color: var(--color-orange);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .motion-reduce\:translate-y-0 {
+      --tw-translate-y: 0px;
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+    .motion-reduce\:transition-none {
+      transition-property: none;
+    }
   }
   @media (width >= 360px) {
     .min-\[360px\]\:whitespace-nowrap {
@@ -1161,6 +1188,9 @@
     }
     .lg\:min-h-\[34rem\] {
       min-height: 34rem;
+    }
+    .lg\:min-h-\[456px\] {
+      min-height: 456px;
     }
     .lg\:w-\[30rem\] {
       width: 30rem;

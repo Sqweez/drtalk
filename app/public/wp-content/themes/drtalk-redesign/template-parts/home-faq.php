@@ -101,13 +101,13 @@ $faq_categories = [
 $faq_data_json = wp_json_encode($faq_categories, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $plus_icon_url = get_theme_file_uri('assets/images/icon-plus.svg');
 ?>
-<section class="bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="13" aria-labelledby="faq-title" data-faq
+<section class="min-h-[800px] bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="13" aria-labelledby="faq-title" data-faq
 				 data-faq-icon="<?php echo esc_url($plus_icon_url); ?>">
 	<div class="mx-auto flex w-full max-w-[75rem] flex-col items-center gap-10 lg:gap-12">
 		<h2 id="faq-title" class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Frequently Asked Questions</h2>
 		<div class="flex max-w-[42rem] flex-wrap items-center justify-center gap-2" role="tablist"
 				 aria-label="FAQ categories" data-faq-tabs></div>
-		<div class="w-full max-w-[45rem] transition-[opacity,transform] duration-200 ease-out" data-faq-content></div>
+		<div class="min-h-[700px] w-full max-w-[45rem] transition-[opacity,translate] duration-[220ms] ease-[cubic-bezier(0.25,1,0.5,1)] motion-reduce:translate-y-0 motion-reduce:transition-none lg:min-h-[456px]" data-faq-content></div>
 	</div>
 	<script type="application/json" data-faq-data><?php echo $faq_data_json; ?></script>
 </section>
