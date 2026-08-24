@@ -264,6 +264,7 @@
       const roundedHealthScore = Math.round(clampedHealthScore);
       const healthBand = healthBands.find((band) => roundedHealthScore >= band.minimum);
       const filledBars = Math.round(roundedHealthScore / 10);
+      const emptyBarColor = roundedHealthScore < 50 ? "rgba(201, 37, 45, 0.25)" : "rgba(74, 30, 79, 0.25)";
       monthlyOutput.textContent = currencyFormatter.format(lostRevenueMonthly);
       annualOutput.textContent = currencyFormatter.format(lostRevenueAnnual);
       healthOutput.textContent = `${roundedHealthScore}%`;
@@ -271,7 +272,7 @@
       healthOutput.style.color = healthBand.color;
       healthBandOutput.style.color = healthBand.color;
       healthBars.forEach((bar, index) => {
-        bar.style.backgroundColor = index < filledBars ? healthBand.color : "rgba(74, 30, 79, 0.25)";
+        bar.style.backgroundColor = index < filledBars ? healthBand.color : emptyBarColor;
       });
       calculatorInputs.forEach(
         (input) => syncInput(input.dataset.calculatorInput, Number(input.value))
