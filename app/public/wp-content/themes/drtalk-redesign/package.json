@@ -10,7 +10,8 @@
     "dev": "npm run watch",
     "format": "prettier --write \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
     "format:check": "prettier --check \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
-    "test:foundation": "sh tests/verify-foundation.sh"
+    "test:foundation": "sh tests/verify-foundation.sh",
+    "test:personalized-scroll": "node --test tests/personalized-scroll.test.mjs"
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.24.0",

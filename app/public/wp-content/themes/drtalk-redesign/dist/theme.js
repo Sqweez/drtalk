@@ -514,15 +514,33 @@
     });
   }
 
+  // assets/js/personalized-scroll.mjs
+  var clampProgress = (value) => Math.min(1, Math.max(0, value));
+  var getScrollProgress = (scrollY, scrollStart, scrollDistance) => scrollDistance > 0 ? clampProgress((scrollY - scrollStart) / scrollDistance) : 0;
+  var getTrackOffset = (progress, stateCount, trackStep) => -clampProgress(progress) * Math.max(0, stateCount - 1) * trackStep;
+  var getActiveIndex = (progress, stateCount) => Math.round(clampProgress(progress) * Math.max(0, stateCount - 1));
+  var getStickyOffset = (viewportHeight, stickyHeight, headerBottom) => Math.min(headerBottom, viewportHeight - stickyHeight);
+  var getScrollTarget = (index, stateCount, scrollStart, scrollDistance) => {
+    const lastIndex = Math.max(0, stateCount - 1);
+    const safeIndex = Math.min(lastIndex, Math.max(0, index));
+    return scrollStart + (lastIndex ? safeIndex / lastIndex : 0) * scrollDistance;
+  };
+
   // assets/js/personalized.js
   var personalizedRoot = document.querySelector("[data-personalized]");
   if (personalizedRoot) {
     const tabs = [...personalizedRoot.querySelectorAll("[data-personalized-tab]")];
     const panel = personalizedRoot.querySelector("[data-personalized-panel]");
     const states = [...personalizedRoot.querySelectorAll("[data-personalized-state]")];
+    const sticky = personalizedRoot.querySelector("[data-personalized-sticky]");
+    const track = personalizedRoot.querySelector(".personalized-track");
     const desktop = window.matchMedia("(min-width: 64rem)");
     let activeIndex = 0;
     let scrollFrame = 0;
+    let resizeFrame = 0;
+    let scrollStart = 0;
+    let scrollDistance = 0;
+    let trackStep = 0;
     const selectAudience = (index) => {
       if (!tabs[index]) return;
       if (index !== activeIndex) {
@@ -539,19 +557,47 @@
         state.setAttribute("aria-hidden", String(desktop.matches && stateIndex !== index));
       });
     };
-    tabs.forEach((tab, index) => tab.addEventListener("click", () => selectAudience(index)));
-    tabs.forEach((tab, index) => {
-      tab.addEventListener("keydown", (event) => {
-        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
-        event.preventDefault();
-        const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
-        selectAudience(nextIndex);
-        tabs[nextIndex].focus();
-      });
-    });
+    const clearDesktopLayout = () => {
+      personalizedRoot.removeAttribute("data-personalized-scroll-ready");
+      personalizedRoot.style.removeProperty("--personalized-scroll-distance");
+      personalizedRoot.style.removeProperty("--personalized-sticky-height");
+      personalizedRoot.style.removeProperty("--personalized-sticky-offset");
+      track.style.removeProperty("transform");
+      scrollStart = 0;
+      scrollDistance = 0;
+      trackStep = 0;
+    };
+    const measureDesktopLayout = () => {
+      var _a2;
+      const stickyHeight = sticky.offsetHeight;
+      const headerBottom = ((_a2 = document.querySelector("body > header")) == null ? void 0 : _a2.getBoundingClientRect().bottom) || 0;
+      const stickyOffset = getStickyOffset(window.innerHeight, stickyHeight, headerBottom);
+      const sectionStyles = window.getComputedStyle(personalizedRoot);
+      const trackStyles = window.getComputedStyle(track);
+      const trackGap = Number.parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+      trackStep = panel.getBoundingClientRect().width + trackGap;
+      scrollDistance = Math.max(window.innerHeight * 0.8, 600) * Math.max(0, states.length - 1);
+      personalizedRoot.style.setProperty("--personalized-sticky-height", `${stickyHeight}px`);
+      personalizedRoot.style.setProperty("--personalized-scroll-distance", `${scrollDistance}px`);
+      personalizedRoot.style.setProperty("--personalized-sticky-offset", `${stickyOffset}px`);
+      personalizedRoot.setAttribute("data-personalized-scroll-ready", "");
+      const sectionTop = personalizedRoot.getBoundingClientRect().top + window.scrollY;
+      const sectionPaddingTop = Number.parseFloat(sectionStyles.paddingTop) || 0;
+      scrollStart = sectionTop + sectionPaddingTop - stickyOffset;
+    };
     const syncAudienceToScroll = () => {
       scrollFrame = 0;
-      if (desktop.matches) return;
+      if (desktop.matches) {
+        if (!personalizedRoot.hasAttribute("data-personalized-scroll-ready")) {
+          measureDesktopLayout();
+        }
+        const progress = getScrollProgress(window.scrollY, scrollStart, scrollDistance);
+        const offset = getTrackOffset(progress, states.length, trackStep);
+        track.style.transform = `translate3d(${offset}px, 0, 0)`;
+        selectAudience(getActiveIndex(progress, states.length));
+        return;
+      }
+      track.style.removeProperty("transform");
       const focusLine = Math.min(window.innerHeight * 0.38, 320);
       let closestIndex = activeIndex;
       let closestDistance = Number.POSITIVE_INFINITY;
@@ -568,14 +614,44 @@
     const queueScrollSync = () => {
       if (!scrollFrame) scrollFrame = window.requestAnimationFrame(syncAudienceToScroll);
     };
-    window.addEventListener("scroll", queueScrollSync, { passive: true });
-    window.addEventListener("resize", queueScrollSync, { passive: true });
-    desktop.addEventListener("change", () => {
-      selectAudience(activeIndex);
-      queueScrollSync();
+    const refreshLayout = () => {
+      resizeFrame = 0;
+      if (desktop.matches) {
+        measureDesktopLayout();
+      } else {
+        clearDesktopLayout();
+      }
+      syncAudienceToScroll();
+    };
+    const queueLayoutRefresh = () => {
+      if (!resizeFrame) resizeFrame = window.requestAnimationFrame(refreshLayout);
+    };
+    const activateAudience = (index) => {
+      selectAudience(index);
+      if (!desktop.matches) return;
+      if (!personalizedRoot.hasAttribute("data-personalized-scroll-ready")) {
+        measureDesktopLayout();
+      }
+      window.scrollTo({
+        top: getScrollTarget(index, states.length, scrollStart, scrollDistance),
+        behavior: "smooth"
+      });
+    };
+    tabs.forEach((tab, index) => tab.addEventListener("click", () => activateAudience(index)));
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        activateAudience(nextIndex);
+        tabs[nextIndex].focus();
+      });
     });
+    window.addEventListener("scroll", queueScrollSync, { passive: true });
+    window.addEventListener("resize", queueLayoutRefresh, { passive: true });
+    desktop.addEventListener("change", queueLayoutRefresh);
     selectAudience(0);
-    queueScrollSync();
+    refreshLayout();
   }
 
   // node_modules/swiper/shared/utils.mjs

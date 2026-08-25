@@ -649,7 +649,7 @@ get_header();
 	</div>
 </section>
 <section class="bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="7" data-personalized>
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-8 lg:gap-12">
+	<div class="personalized-sticky mx-auto flex max-w-[75rem] flex-col items-center gap-8 lg:gap-12" data-personalized-sticky>
 		<h2 class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">The same platform, different relief for everyone it touches.</h2>
 		<div class="personalized-tabs" role="tablist" aria-label="Audience">
 			<?php foreach ($personalized_audiences as $audience_index => $audience): ?>
@@ -730,7 +730,13 @@ get_header();
 							<h3><?php echo $concern_title; ?></h3>
 							<p><?php echo $concern_answer; ?></p>
 						</div>
-						<button class="concerns-next" type="button" data-concerns-next aria-label="Show next concern"><img src="<?php echo $arrow_right_url; ?>" width="16" height="16" alt=""></button>
+						<button class="concerns-next" type="button" data-concerns-next aria-label="Show next concern">
+							<svg class="concerns-next-icon" viewBox="0 0 64 64" aria-hidden="true">
+								<circle class="concerns-next-track" cx="32" cy="32" r="31" pathLength="1" />
+								<circle class="concerns-next-progress" cx="32" cy="32" r="31" pathLength="1" />
+								<path class="concerns-next-arrow" d="M36.175 33L31.2875 37.8875C30.895 38.28 30.8979 38.9172 31.2938 39.3062C31.6848 39.6904 32.3124 39.6876 32.7 39.3L39.2929 32.7071C39.6834 32.3166 39.6834 31.6834 39.2929 31.2929L32.7 24.7C32.3124 24.3124 31.6848 24.3096 31.2938 24.6938C30.8979 25.0828 30.895 25.72 31.2875 26.1125L36.175 31H25C24.4477 31 24 31.4477 24 32C24 32.5523 24.4477 33 25 33H36.175Z" />
+							</svg>
+						</button>
 					</article>
 				<?php endforeach; ?>
 			</div>
