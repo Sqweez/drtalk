@@ -3,6 +3,7 @@
 $demo_url = esc_url(drtalk_redesign_demo_url());
 $arrow_left_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-left.svg'));
 $arrow_right_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-right.svg'));
+$testimonial_avatar_placeholder_url = esc_url(get_theme_file_uri('assets/images/testimonial-avatar-placeholder.svg'));
 $noise_orange_url = esc_url(get_theme_file_uri('assets/images/footer-pattern.png'));
 $noise_dark_url = esc_url(get_theme_file_uri('assets/images/personalized-pattern-dark.png'));
 $hero_noise_orange_url = $noise_orange_url;
@@ -626,20 +627,19 @@ get_header();
      $testimonial_company = esc_attr($testimonial['company']);
      $testimonial_avatar = esc_url($testimonial['avatar_url']);
      $testimonial_logo = esc_url($testimonial['logo_url']);
-     $testimonial_initials = esc_html(drtalk_redesign_testimonial_initials($testimonial['name']));
      ?>
 					<article class="testimonial-card swiper-slide relative flex h-[30.5rem] w-full shrink-0 flex-col gap-10 overflow-hidden rounded-3xl <?php echo $testimonial_tone_class; ?> px-6 py-8 text-purple-dark lg:h-[34rem] lg:w-[30rem] lg:px-8 lg:py-12">
 						<div class="flex min-h-[4.5rem] items-start justify-between">
 							<?php if ($testimonial_avatar): ?>
 								<img class="testimonial-avatar" src="<?php echo $testimonial_avatar; ?>" alt="<?php echo $testimonial_name; ?>">
 							<?php else: ?>
-								<span class="testimonial-avatar testimonial-avatar--fallback" aria-hidden="true"><?php echo $testimonial_initials; ?></span>
+								<img class="testimonial-avatar" src="<?php echo $testimonial_avatar_placeholder_url; ?>" width="72" height="72" alt="">
 							<?php endif; ?>
 							<?php if ($testimonial_logo): ?>
 								<img class="testimonial-company-logo" src="<?php echo $testimonial_logo; ?>" alt="<?php echo $testimonial_company; ?>">
 							<?php endif; ?>
 						</div>
-						<div class="flex flex-1 flex-col gap-4"><p class="text-[0.8125rem] font-black uppercase tracking-[0.15em] text-purple-dark/75"><?php echo $testimonial_eyebrow; ?></p><p class="text-2xl leading-8"><?php echo $testimonial_quote; ?></p></div>
+						<div class="flex flex-1 flex-col gap-4"><p class="text-[0.8125rem] font-black uppercase tracking-[0.15em] text-purple-dark/75"><?php echo $testimonial_eyebrow; ?></p><p class="text-lg leading-6 lg:text-2xl lg:leading-8"><?php echo $testimonial_quote; ?></p></div>
 						<div class="border-l-4 pl-4 <?php echo $testimonial_border; ?>"><p class="font-bold"><?php echo $testimonial_name; ?></p><p class="text-sm text-purple-dark/75"><?php echo $testimonial_role; ?></p></div>
 					</article>
 				<?php endforeach; ?>

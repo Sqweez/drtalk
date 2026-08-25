@@ -896,16 +896,6 @@
     object-fit: cover;
   }
 
-  .testimonial-avatar--fallback {
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(74 30 79 / 12%);
-    color: var(--color-purple-dark);
-    font-family: var(--font-heading);
-    font-size: 20px;
-    font-weight: 700;
-  }
-
   .testimonial-company-logo {
     width: 120px;
     height: 72px;

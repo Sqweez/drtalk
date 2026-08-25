@@ -332,24 +332,6 @@ function drtalk_redesign_get_testimonials()
 }
 
 /**
- * Builds a two-letter fallback for testimonials without a photo.
- */
-function drtalk_redesign_testimonial_initials($name)
-{
-	$words = preg_split('/\s+/', trim($name));
-	$words = array_values(array_filter($words));
-
-	if (!$words) {
-		return '';
-	}
-
-	$first = mb_substr($words[0], 0, 1);
-	$last = count($words) > 1 ? mb_substr($words[count($words) - 1], 0, 1) : '';
-
-	return mb_strtoupper($first . $last);
-}
-
-/**
  * Imports a bundled testimonial image into the media library.
  */
 function drtalk_redesign_import_testimonial_asset($filename, $post_id, $alt_text)
