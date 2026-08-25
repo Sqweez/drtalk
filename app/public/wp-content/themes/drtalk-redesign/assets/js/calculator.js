@@ -17,10 +17,10 @@ if (calculatorRoot) {
     maximumFractionDigits: 0,
   });
   const healthBands = [
-    { minimum: 75, label: 'Healthy', color: '#237a57' },
+    { minimum: 75, label: 'Healthy', color: '#15803d' },
     { minimum: 50, label: 'At risk', color: '#ed8f43' },
-    { minimum: 25, label: 'Poor', color: '#c9252d' },
-    { minimum: 5, label: 'Critical', color: '#7f1d1d' },
+    { minimum: 25, label: 'Poor', color: '#ed8f43' },
+    { minimum: 0, label: 'Critical', color: '#c9252d' },
   ];
 
   const getInput = (name) => calculatorRoot.querySelector(`[data-calculator-input="${name}"]`);
@@ -57,8 +57,7 @@ if (calculatorRoot) {
     const roundedHealthScore = Math.round(clampedHealthScore);
     const healthBand = healthBands.find((band) => roundedHealthScore >= band.minimum);
     const filledBars = Math.round(roundedHealthScore / 10);
-    const emptyBarColor =
-      roundedHealthScore < 50 ? 'rgba(201, 37, 45, 0.25)' : 'rgba(74, 30, 79, 0.25)';
+    const emptyBarColor = 'rgba(74, 30, 79, 0.4)';
 
     monthlyOutput.textContent = currencyFormatter.format(lostRevenueMonthly);
     annualOutput.textContent = currencyFormatter.format(lostRevenueAnnual);

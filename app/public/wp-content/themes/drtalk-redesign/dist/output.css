@@ -694,10 +694,10 @@
   .bg-purple-dark {
     background-color: var(--color-purple-dark);
   }
-  .bg-purple-dark\/25 {
-    background-color: color-mix(in srgb, #4a1e4f 25%, transparent);
+  .bg-purple-dark\/40 {
+    background-color: color-mix(in srgb, #4a1e4f 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-purple-dark) 25%, transparent);
+      background-color: color-mix(in oklab, var(--color-purple-dark) 40%, transparent);
     }
   }
   .bg-transparent {
@@ -949,9 +949,6 @@
   .text-\[\#736962\] {
     color: #736962;
   }
-  .text-\[\#c9252d\] {
-    color: #c9252d;
-  }
   .text-cream {
     color: var(--color-cream);
   }
@@ -969,6 +966,9 @@
   }
   .text-neutral-900 {
     color: var(--color-neutral-900);
+  }
+  .text-orange {
+    color: var(--color-orange);
   }
   .text-purple-500 {
     color: var(--color-purple-500);

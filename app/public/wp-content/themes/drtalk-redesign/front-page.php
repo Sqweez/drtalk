@@ -590,11 +590,11 @@ get_header();
 					<div class="flex flex-1 flex-col gap-3">
 						<p class="text-sm leading-5">Health score</p>
 						<div class="flex items-baseline gap-2.5">
-							<p class="text-2xl leading-none text-[#c9252d]" data-calculator-health>44%</p>
+							<p class="text-2xl leading-none text-orange" data-calculator-health>44%</p>
 							<span class="sr-only" data-calculator-health-band>Poor</span>
 							<div class="flex h-5 items-center gap-1" data-calculator-health-bars>
 								<?php for ($score_bar = 1; $score_bar <= 10; $score_bar++): ?>
-									<span class="h-5 w-[3px] rounded-sm bg-purple-dark/25" data-calculator-health-bar></span>
+									<span class="h-5 w-[3px] rounded-sm bg-purple-dark/40" data-calculator-health-bar></span>
 								<?php endfor; ?>
 							</div>
 						</div>
