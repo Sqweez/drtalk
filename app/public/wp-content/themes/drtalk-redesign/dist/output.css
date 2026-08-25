@@ -1893,8 +1893,10 @@
     }
   }
   .personalized-panel {
-    display: flex;
     width: 100%;
+  }
+  .personalized-track {
+    display: flex;
     flex-direction: column;
     gap: 1rem;
   }
@@ -1907,7 +1909,7 @@
     overflow: hidden;
     border: 1px solid #ede8e1;
     border-radius: 1rem;
-    padding: 1rem 0.5rem 0.5rem;
+    padding: 1rem 0 0 0.5rem;
     color: var(--color-purple-dark);
   }
   .personalized-state--lilac {
@@ -1963,54 +1965,59 @@
   @media (min-width: 64rem) {
     .personalized-tabs {
       position: static;
-      height: auto;
+      height: 3rem;
       flex-direction: row;
-      gap: 0.5rem;
+      gap: 0.75rem;
       margin: 0;
-      padding: 0.5rem;
+      padding: 0;
     }
     .personalized-tab {
       display: block;
-      padding: 0.5rem 1rem;
+      height: 3rem;
+      padding: 0 1.25rem;
     }
     [data-personalized] .personalized-tab.is-active {
       animation: none;
     }
     .personalized-panel {
       position: relative;
-      height: 32.5rem;
+      height: 37.5rem;
       overflow: hidden;
       border-radius: 1.5rem;
     }
-    .personalized-state {
-      position: absolute;
-      inset: 0;
-      flex-direction: row;
-      gap: 4rem;
-      border: 0;
-      border-radius: 1.5rem;
-      padding: 4rem;
-      opacity: 0;
-      pointer-events: none;
-      transform: translate3d(2rem, 0, 0);
-      transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    .personalized-track {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      grid-auto-columns: 100%;
+      grid-auto-flow: column;
+      gap: 1.5rem;
+      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
     }
-    .personalized-panel[data-active-index='0'] [data-personalized-state='0'],
-    .personalized-panel[data-active-index='1'] [data-personalized-state='1'],
-    .personalized-panel[data-active-index='2'] [data-personalized-state='2'] {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translate3d(0, 0, 0);
+    .personalized-panel[data-active-index='1'] .personalized-track {
+      transform: translate3d(calc(-100% - 1.5rem), 0, 0);
+    }
+    .personalized-panel[data-active-index='2'] .personalized-track {
+      transform: translate3d(calc(-200% - 3rem), 0, 0);
+    }
+    .personalized-state {
+      position: relative;
+      flex-direction: row;
+      gap: 0.5rem;
+      height: 37.5rem;
+      border: 1px solid #ede8e1;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
     }
     .personalized-copy {
       display: flex;
-      width: 30rem;
+      min-width: 0;
       height: 100%;
-      flex: none;
+      flex: 1 1 0;
       flex-direction: column;
       justify-content: space-between;
-      padding: 0;
+      padding: 2.5rem;
     }
     .personalized-copy h3 {
       font-size: 2rem;
@@ -2021,7 +2028,7 @@
     }
     .personalized-action a {
       display: inline-flex;
-      height: 3.5rem;
+      height: 4rem;
       align-items: center;
       justify-content: center;
       border-radius: 1.75rem;
@@ -2031,23 +2038,24 @@
       font-weight: 700;
     }
     .personalized-action p {
-      margin-top: 1rem;
-      font-size: 1rem;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
       opacity: 0.75;
     }
     .personalized-screen {
-      width: 62.5rem;
-      height: 40.5625rem;
-      flex: none;
-      border-width: 8px;
-      border-radius: 0.5rem;
-      padding: 0;
+      width: auto;
+      min-width: 0;
+      height: 32.5rem;
+      flex: 1 1 0;
+      padding: 2.5rem;
     }
     .personalized-screen img {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      border-radius: 0;
+      width: 62.5rem;
+      max-width: none;
+      height: 40.625rem;
+      border: 4px solid var(--color-purple-dark);
+      border-radius: 1rem;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -2055,6 +2063,9 @@
       animation: none;
     }
     .personalized-state {
+      transition: none;
+    }
+    .personalized-track {
       transition: none;
     }
   }

@@ -664,7 +664,8 @@ get_header();
 			<?php endforeach; ?>
 		</div>
 		<div class="personalized-panel" data-personalized-panel data-active-index="0">
-			<?php foreach ($personalized_audiences as $audience_index => $audience): ?>
+			<div class="personalized-track">
+				<?php foreach ($personalized_audiences as $audience_index => $audience): ?>
 				<?php
     $personalized_state_index = esc_attr($audience_index);
     $personalized_state_hidden = $audience_index === 0 ? 'false' : 'true';
@@ -676,15 +677,16 @@ get_header();
     $personalized_noise = $personalized_noise_urls[$audience['tone']];
     $personalized_noise_style = esc_attr("--personalized-noise-image: url('{$personalized_noise}');");
     ?>
-				<div class="personalized-state<?php echo $personalized_tone_class; ?>" data-personalized-state="<?php echo $personalized_state_index; ?>" aria-hidden="<?php echo $personalized_state_hidden; ?>">
-					<div class="personalized-noise" style="<?php echo $personalized_noise_style; ?>" aria-hidden="true"></div>
-					<div class="personalized-copy">
-						<div><h3><?php echo $personalized_title; ?></h3><p><?php echo $personalized_description; ?></p></div>
-						<div class="personalized-action"><a href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p>30 minutes. No pitch, no obligation.</p></div>
+					<div class="personalized-state<?php echo $personalized_tone_class; ?>" data-personalized-state="<?php echo $personalized_state_index; ?>" aria-hidden="<?php echo $personalized_state_hidden; ?>">
+						<div class="personalized-noise" style="<?php echo $personalized_noise_style; ?>" aria-hidden="true"></div>
+						<div class="personalized-copy">
+							<div><h3><?php echo $personalized_title; ?></h3><p><?php echo $personalized_description; ?></p></div>
+							<div class="personalized-action"><a href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p>30 minutes. No pitch, no obligation.</p></div>
+						</div>
+						<div class="personalized-screen"><img src="<?php echo $personalized_screen; ?>" alt="drtalk platform screen"></div>
 					</div>
-					<div class="personalized-screen"><img src="<?php echo $personalized_screen; ?>" alt="drtalk platform screen"></div>
-				</div>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
+			</div>
 		</div>
 	</div>
 </section>
