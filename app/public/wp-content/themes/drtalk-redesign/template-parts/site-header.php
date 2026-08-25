@@ -46,7 +46,7 @@ $primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
 	</div>
 
 	<div class="hidden h-10 w-full items-center justify-center gap-8 rounded-lg lg:flex">
-		<div class="flex flex-1 items-center gap-6">
+		<div class="flex flex-1 items-center gap-8">
 			<a class="shrink-0" href="<?php echo $home_url; ?>" rel="home">
 				<img src="<?php echo $logo_url; ?>" width="119" height="32" alt="<?php esc_attr_e('DrTalk', 'drtalk-redesign'); ?>">
 			</a>

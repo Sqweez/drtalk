@@ -101,7 +101,7 @@ $faq_categories = [
 $faq_data_json = wp_json_encode($faq_categories, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $plus_icon_url = get_theme_file_uri('assets/images/icon-plus.svg');
 ?>
-<section class="min-h-[800px] bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="13" aria-labelledby="faq-title" data-faq
+<section class="bg-cream px-5 py-14 lg:px-10 lg:py-[120px]" data-home-order="13" aria-labelledby="faq-title" data-faq
 				 data-faq-icon="<?php echo esc_url($plus_icon_url); ?>">
 	<div class="mx-auto flex w-full max-w-[75rem] flex-col items-center gap-10 lg:gap-12">
 		<h2 id="faq-title" class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Frequently Asked Questions</h2>
