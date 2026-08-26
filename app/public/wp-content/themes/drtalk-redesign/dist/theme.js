@@ -541,6 +541,8 @@
     let scrollStart = 0;
     let scrollDistance = 0;
     let trackStep = 0;
+    let isProgrammaticScrolling = false;
+    let programmaticScrollTimer = 0;
     const selectAudience = (index) => {
       if (!tabs[index]) return;
       if (index !== activeIndex) {
@@ -585,6 +587,10 @@
       const sectionPaddingTop = Number.parseFloat(sectionStyles.paddingTop) || 0;
       scrollStart = sectionTop + sectionPaddingTop - stickyOffset;
     };
+    const stopProgrammaticScroll = () => {
+      isProgrammaticScrolling = false;
+      clearTimeout(programmaticScrollTimer);
+    };
     const syncAudienceToScroll = () => {
       scrollFrame = 0;
       if (desktop.matches) {
@@ -594,7 +600,9 @@
         const progress = getScrollProgress(window.scrollY, scrollStart, scrollDistance);
         const offset = getTrackOffset(progress, states.length, trackStep);
         track.style.transform = `translate3d(${offset}px, 0, 0)`;
-        selectAudience(getActiveIndex(progress, states.length));
+        if (!isProgrammaticScrolling) {
+          selectAudience(getActiveIndex(progress, states.length));
+        }
         return;
       }
       track.style.removeProperty("transform");
@@ -632,10 +640,22 @@
       if (!personalizedRoot.hasAttribute("data-personalized-scroll-ready")) {
         measureDesktopLayout();
       }
+      const targetTop = getScrollTarget(index, states.length, scrollStart, scrollDistance);
+      if (Math.abs(window.scrollY - targetTop) < 2) return;
+      isProgrammaticScrolling = true;
+      clearTimeout(programmaticScrollTimer);
       window.scrollTo({
-        top: getScrollTarget(index, states.length, scrollStart, scrollDistance),
+        top: targetTop,
         behavior: "smooth"
       });
+      const checkScrollEnd = () => {
+        if (Math.abs(window.scrollY - targetTop) < 2) {
+          stopProgrammaticScroll();
+        } else {
+          programmaticScrollTimer = window.setTimeout(checkScrollEnd, 50);
+        }
+      };
+      programmaticScrollTimer = window.setTimeout(checkScrollEnd, 100);
     };
     tabs.forEach((tab, index) => tab.addEventListener("click", () => activateAudience(index)));
     tabs.forEach((tab, index) => {
@@ -648,6 +668,9 @@
       });
     });
     window.addEventListener("scroll", queueScrollSync, { passive: true });
+    window.addEventListener("wheel", stopProgrammaticScroll, { passive: true });
+    window.addEventListener("touchstart", stopProgrammaticScroll, { passive: true });
+    window.addEventListener("scrollend", stopProgrammaticScroll, { passive: true });
     window.addEventListener("resize", queueLayoutRefresh, { passive: true });
     desktop.addEventListener("change", queueLayoutRefresh);
     selectAudience(0);

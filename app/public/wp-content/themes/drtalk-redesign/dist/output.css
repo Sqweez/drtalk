@@ -1875,28 +1875,19 @@
     transition: background-color 200ms ease,
       color 200ms ease;
   }
+  .personalized-tab:hover {
+    background-color: color-mix(in srgb, #4a1e4f 8%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in srgb, var(--color-purple-dark) 8%, transparent);
+    }
+  }
   .personalized-tab.is-active {
     display: block;
     background-color: var(--color-purple-dark);
     color: var(--color-cream);
   }
-  [data-personalized][data-persona-direction='next'] .personalized-tab.is-active {
-    animation: personalized-label-next 280ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  [data-personalized][data-persona-direction='previous'] .personalized-tab.is-active {
-    animation: personalized-label-previous 280ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  @keyframes personalized-label-next {
-    from {
-      opacity: 0;
-      transform: translateY(0.5rem);
-    }
-  }
-  @keyframes personalized-label-previous {
-    from {
-      opacity: 0;
-      transform: translateY(-0.5rem);
-    }
+  .personalized-tab.is-active:hover {
+    background-color: var(--color-purple);
   }
   .personalized-panel {
     width: 100%;
@@ -1989,9 +1980,6 @@
       height: 3rem;
       padding: 0 1.25rem;
     }
-    [data-personalized] .personalized-tab.is-active {
-      animation: none;
-    }
     .personalized-panel {
       position: relative;
       height: 37.5rem;
@@ -2037,11 +2025,15 @@
       height: 4rem;
       align-items: center;
       justify-content: center;
-      border-radius: 1.75rem;
+      border-radius: 2rem;
       background: var(--color-purple);
       padding: 0 2rem;
       color: var(--color-cream);
       font-weight: 700;
+      transition: background-color 200ms ease;
+    }
+    .personalized-action a:hover {
+      background-color: var(--color-purple-dark);
     }
     .personalized-action p {
       margin-top: 0.75rem;
@@ -2066,9 +2058,6 @@
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    [data-personalized] .personalized-tab.is-active {
-      animation: none;
-    }
     .personalized-state {
       transition: none;
     }
