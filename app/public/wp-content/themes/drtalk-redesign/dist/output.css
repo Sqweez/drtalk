@@ -2054,6 +2054,7 @@
       min-width: 0;
       height: 32.5rem;
       flex: 1 1 0;
+      overflow: visible;
       padding: 2.5rem;
     }
     .personalized-screen img {
