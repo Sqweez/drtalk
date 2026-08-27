@@ -270,6 +270,13 @@ $calculator_noise_url = $noise_dark_url;
 $calculator_noise_style = esc_attr("--calculator-noise-image: url('{$calculator_noise_url}');");
 $trusted_partners = [
 	[
+		'file' => 'partner-logo-4.png',
+		'class' => 'trusted-partner-tarnow-chu',
+		'label' => 'Tarnow Chu Institute',
+		'width' => '207',
+		'height' => '48'
+	],
+	[
 		'file' => 'partner-logo-1.png',
 		'class' => 'trusted-partner-dental-designs',
 		'label' => 'Dental Designs',
@@ -288,13 +295,6 @@ $trusted_partners = [
 		'class' => 'trusted-partner-collective-health',
 		'label' => 'Collective Health Society',
 		'width' => '181.5',
-		'height' => '48'
-	],
-	[
-		'file' => 'partner-logo-4.png',
-		'class' => 'trusted-partner-tarnow-chu',
-		'label' => 'Tarnow Chu Institute',
-		'width' => '207',
 		'height' => '48'
 	],
 	[
@@ -354,10 +354,10 @@ get_header();
 	</div>
 </section>
 
-<section class="px-5 py-14 sm:px-8 lg:px-12 lg:pb-[88px] lg:pt-20" data-home-order="1">
-	<div class="mx-auto flex max-w-[75rem] flex-col items-center gap-8">
+<section class="bg-cream px-5 py-14 sm:px-8 lg:px-12" data-home-order="1">
+	<div class="mx-auto flex max-w-[90rem] flex-col items-center gap-8">
 		<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark">Trusted By Dentistry’s Top Leaders</p>
-		<div class="flex w-full items-start justify-start gap-12 overflow-hidden lg:justify-center">
+		<div class="flex w-full items-center justify-start gap-12 overflow-x-auto lg:justify-center">
 			<?php foreach ($trusted_partners as $partner): ?>
 				<span
 					class="trusted-partner-logo <?php echo esc_attr($partner['class']); ?> block shrink-0 bg-purple-dark"

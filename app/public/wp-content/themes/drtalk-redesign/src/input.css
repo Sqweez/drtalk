@@ -1872,6 +1872,13 @@
     pointer-events: none;
   }
 
+  .trusted-partner-tarnow-chu {
+    width: 207px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-4.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-4.png');
+  }
+
   .trusted-partner-dental-designs {
     width: 106.5px;
     height: 48px;
@@ -1891,13 +1898,6 @@
     height: 48px;
     mask-image: url('../assets/images/partner-logo-5.png');
     -webkit-mask-image: url('../assets/images/partner-logo-5.png');
-  }
-
-  .trusted-partner-tarnow-chu {
-    width: 207px;
-    height: 48px;
-    mask-image: url('../assets/images/partner-logo-4.png');
-    -webkit-mask-image: url('../assets/images/partner-logo-4.png');
   }
 
   .trusted-partner-hdl {
