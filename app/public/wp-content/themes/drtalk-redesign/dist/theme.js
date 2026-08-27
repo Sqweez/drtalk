@@ -584,7 +584,7 @@
         tab.setAttribute("aria-selected", String(selected));
       });
       states.forEach((state, stateIndex) => {
-        state.setAttribute("aria-hidden", String(desktop.matches && stateIndex !== index));
+        state.setAttribute("aria-hidden", String(stateIndex !== index));
       });
     };
     const clearDesktopLayout = () => {
@@ -634,18 +634,6 @@
         return;
       }
       track.style.removeProperty("transform");
-      const focusLine = Math.min(window.innerHeight * 0.38, 320);
-      let closestIndex = activeIndex;
-      let closestDistance = Number.POSITIVE_INFINITY;
-      states.forEach((state, index) => {
-        const bounds = state.getBoundingClientRect();
-        const distance = Math.abs(bounds.top + Math.min(bounds.height * 0.25, 140) - focusLine);
-        if (bounds.bottom > 0 && bounds.top < window.innerHeight && distance < closestDistance) {
-          closestIndex = index;
-          closestDistance = distance;
-        }
-      });
-      if (closestIndex !== activeIndex) selectAudience(closestIndex);
     };
     const queueScrollSync = () => {
       if (!scrollFrame) scrollFrame = window.requestAnimationFrame(syncAudienceToScroll);

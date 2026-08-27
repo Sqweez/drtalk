@@ -1,6 +1,8 @@
 <?php
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
+$baa_url = esc_url(home_url('/business-associates-agreement/'));
+$contact_url = esc_url('mailto:sales@drtalk.com');
 
 $faq_categories = [
 	[
@@ -49,8 +51,10 @@ $faq_categories = [
 		'questions' => [
 			[
 				'question' => 'Is drtalk HIPAA compliant and secure?',
-				'answer' =>
-					'Yes. drtalk uses AES-256 encryption - the standard trusted by the U.S. government for sensitive data - for all messages, files, and referrals, both in transit and at rest. Every user on the network has a signed Business Associate Agreement (BAA), role-based access controls are in place, and all Protected Health Information (PHI) is stored in a secure, encrypted cloud environment. drtalk was built for healthcare from the ground up, so compliance isn\'t an afterthought, it\'s the foundation.'
+				'answer' => sprintf(
+					'Yes. drtalk uses AES-256 encryption - the standard trusted by the U.S. government for sensitive data - for all messages, files, and referrals, both in transit and at rest. Every user on the network has a signed <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">Business Associate Agreement (BAA)</a>, role-based access controls are in place, and all Protected Health Information (PHI) is stored in a secure, encrypted cloud environment. drtalk was built for healthcare from the ground up, so compliance isn\'t an afterthought, it\'s the foundation.',
+					$baa_url
+				)
 			],
 			[
 				'question' => 'How is drtalk different from just using email or secure email?',
@@ -66,7 +70,7 @@ $faq_categories = [
 			[
 				'question' => 'How much does drtalk cost?',
 				'answer' => sprintf(
-					'drtalk offers a free trial so you can explore the platform and see how it fits your practice before committing to anything. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a working session</a> and for a free Referral Gap Analysis and help you figure out the right plan for your practice.',
+					'drtalk offers a free trial so you can explore the platform and see how it fits your practice before committing to anything. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a free Referral Gap Analysis</a> to help you figure out the right plan for your practice.',
 					$demo_url
 				)
 			],
@@ -77,8 +81,10 @@ $faq_categories = [
 			],
 			[
 				'question' => 'How many people from my practice can use drtalk?',
-				'answer' =>
-					'Plans include unlimited team members per location with front desk, assistants, coordinators, and providers all included. If you\'re evaluating drtalk as an enterprise solution, let us know and we\'ll walk you through what\'s available now and what\'s coming.'
+				'answer' => sprintf(
+					'Plans include unlimited team members per location with front desk, assistants, coordinators, and providers all included. If you\'re evaluating drtalk as an enterprise solution, <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">let us know</a> and we\'ll walk you through what\'s available now and what\'s coming.',
+					$contact_url
+				)
 			],
 			[
 				'question' => 'How quickly will we see results?',

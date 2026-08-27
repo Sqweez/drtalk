@@ -119,12 +119,6 @@ $results_stats = [
 		'key' => 'growth'
 	],
 	[
-		'value' => '60%',
-		'copy' => '<strong>Reduction</strong> in admin<span class="numbers-card-copy-break"><br></span> workload',
-		'image' => 'numbers-5.svg',
-		'key' => 'workload'
-	],
-	[
 		'value' => '1,500+',
 		'copy' => '<strong>Practices</strong> on drtalk nationwide',
 		'image' => 'numbers-3.svg',
@@ -135,6 +129,12 @@ $results_stats = [
 		'copy' => '<strong>Faster</strong> time-to-scheduled appointment',
 		'image' => 'numbers-4.svg',
 		'key' => 'faster'
+	],
+	[
+		'value' => '60%',
+		'copy' => '<strong>Reduction</strong> in admin<span class="numbers-card-copy-break"><br></span> workload',
+		'image' => 'numbers-5.svg',
+		'key' => 'workload'
 	]
 ];
 $why_us_noise_url = $noise_dark_url;

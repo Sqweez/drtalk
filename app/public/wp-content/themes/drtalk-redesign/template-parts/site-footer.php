@@ -5,7 +5,7 @@ $demo_url = esc_url(drtalk_redesign_demo_url());
 $login_url = esc_url(drtalk_redesign_login_url());
 $about_url = esc_url(home_url('/about-us/'));
 $blog_url = esc_url(home_url('/blog/'));
-$contact_url = esc_url(home_url('/contact-us/'));
+$contact_url = esc_url('mailto:sales@drtalk.com');
 $baa_url = esc_url(home_url('/business-associates-agreement/'));
 $terms_url = esc_url(home_url('/terms-and-conditions/'));
 $privacy_url = esc_url(home_url('/privacy/'));
@@ -52,15 +52,15 @@ $company_navigation_label = esc_attr__('Company navigation', 'drtalk-redesign');
 
 		<div class="flex w-full flex-col items-start gap-6 rounded-sm text-sm leading-5 lg:flex-row lg:items-center lg:gap-8">
 			<div class="flex gap-8 lg:order-2">
-			<a href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><img src="<?php echo $linkedin_icon_url; ?>" width="24" height="24" alt="<?php esc_attr_e(
+			<a href="https://www.linkedin.com/company/drtalk/" target="_blank" rel="noreferrer"><img src="<?php echo $linkedin_icon_url; ?>" width="24" height="24" alt="<?php esc_attr_e(
 	'LinkedIn',
 	'drtalk-redesign'
 ); ?>"></a>
-			<a href="https://www.facebook.com/" target="_blank" rel="noreferrer"><img src="<?php echo $facebook_icon_url; ?>" width="24" height="24" alt="<?php esc_attr_e(
+			<a href="https://www.facebook.com/DrTalk1" target="_blank" rel="noreferrer"><img src="<?php echo $facebook_icon_url; ?>" width="24" height="24" alt="<?php esc_attr_e(
 	'Facebook',
 	'drtalk-redesign'
 ); ?>"></a>
-			<a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><img src="<?php echo $instagram_icon_url; ?>" width="24" height="24" alt="<?php esc_attr_e(
+			<a href="https://www.instagram.com/drtalk_" target="_blank" rel="noreferrer"><img src="<?php echo $instagram_icon_url; ?>" width="24" height="24" alt="<?php esc_attr_e(
 	'Instagram',
 	'drtalk-redesign'
 ); ?>"></a>
