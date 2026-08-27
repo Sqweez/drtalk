@@ -120,7 +120,7 @@ $results_stats = [
 	],
 	[
 		'value' => '60%',
-		'copy' => '<strong>Reduction</strong> in admin workload',
+		'copy' => '<strong>Reduction</strong> in admin<span class="numbers-card-copy-break"><br></span> workload',
 		'image' => 'numbers-5.svg',
 		'key' => 'workload'
 	],
@@ -753,7 +753,7 @@ get_header();
 		</div>
 	</div>
 </section>
-<section class="fomo-section" data-home-order="11" data-fomo data-fomo-baseline="194.33" data-fomo-hourly-rate="4640" aria-labelledby="fomo-title">
+<section class="fomo-section" data-home-order="11" data-fomo data-fomo-baseline="0" data-fomo-hourly-rate="4640" aria-labelledby="fomo-title">
 	<div class="fomo-noise" style="<?php echo $fomo_noise_style; ?>" aria-hidden="true"></div>
 	<div class="fomo-content">
 		<div class="fomo-copy">
@@ -761,7 +761,7 @@ get_header();
 			<p>The average specialist practice loses $4,640 every hour to missed and unconverted referrals.<br>Here's what's slipped by since you landed on this page:</p>
 		</div>
 		<div class="fomo-counter">
-			<p class="fomo-amount" data-fomo-amount>$194.33</p>
+			<p class="fomo-amount" data-fomo-amount>$0.00</p>
 			<p class="fomo-time"><span aria-hidden="true"></span><span data-fomo-time>00m:00s on page</span></p>
 			<p class="fomo-disclaimer">Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.</p>
 		</div>
