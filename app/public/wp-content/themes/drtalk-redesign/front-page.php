@@ -357,7 +357,7 @@ get_header();
 <section class="bg-cream px-5 py-14 sm:px-8 lg:px-12" data-home-order="1">
 	<div class="mx-auto flex max-w-[90rem] flex-col items-center gap-8">
 		<p class="text-[0.8125rem] font-black uppercase leading-4 tracking-[0.15em] text-purple-dark">Trusted By Dentistry’s Top Leaders</p>
-		<div class="flex w-full items-center justify-start gap-12 overflow-x-auto lg:justify-center">
+		<div class="trusted-partners-scroll flex w-full items-center justify-start gap-12 overflow-x-auto lg:justify-center">
 			<?php foreach ($trusted_partners as $partner): ?>
 				<span
 					class="trusted-partner-logo <?php echo esc_attr($partner['class']); ?> block shrink-0 bg-purple-dark"

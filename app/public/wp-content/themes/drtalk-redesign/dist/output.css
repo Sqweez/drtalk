@@ -615,6 +615,9 @@
   .overflow-hidden {
     overflow: hidden;
   }
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
   }
@@ -1282,9 +1285,6 @@
     }
     .lg\:pb-0 {
       padding-bottom: 0px;
-    }
-    .lg\:pb-\[88px\] {
-      padding-bottom: 88px;
     }
     .lg\:text-2xl {
       font-size: var(--text-2xl);
@@ -2936,6 +2936,18 @@
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-size: contain;
   }
+  .trusted-partners-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    touch-action: pan-x;
+  }
+  .trusted-partners-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .trusted-partners-scroll .trusted-partner-logo {
+    scroll-snap-align: start;
+  }
   .site-footer-noise {
     position: absolute;
     inset: 0;
@@ -2944,6 +2956,12 @@
     background-repeat: repeat;
     background-size: 560px 560px;
     pointer-events: none;
+  }
+  .trusted-partner-tarnow-chu {
+    width: 207px;
+    height: 48px;
+    mask-image: url('../assets/images/partner-logo-4.png');
+    -webkit-mask-image: url('../assets/images/partner-logo-4.png');
   }
   .trusted-partner-dental-designs {
     width: 106.5px;
@@ -2962,12 +2980,6 @@
     height: 48px;
     mask-image: url('../assets/images/partner-logo-5.png');
     -webkit-mask-image: url('../assets/images/partner-logo-5.png');
-  }
-  .trusted-partner-tarnow-chu {
-    width: 207px;
-    height: 48px;
-    mask-image: url('../assets/images/partner-logo-4.png');
-    -webkit-mask-image: url('../assets/images/partner-logo-4.png');
   }
   .trusted-partner-hdl {
     width: 166px;
