@@ -1,3 +1,5 @@
+import { clampCalculatorInputValue, getTypedCalculatorValue } from './calculator-input.mjs';
+
 const calculatorRoot = document.querySelector('[data-calculator-root]');
 
 if (calculatorRoot) {
@@ -27,7 +29,6 @@ if (calculatorRoot) {
   const getNumberInput = (name) =>
     calculatorRoot.querySelector(`[data-calculator-number="${name}"]`);
   const getValue = (name) => Number(getInput(name).value);
-  const parseInputValue = (value) => Number(String(value).replace(/[^\d.-]/g, ''));
 
   const syncInput = (name, value) => {
     const rangeInput = getInput(name);
@@ -75,15 +76,12 @@ if (calculatorRoot) {
     );
   };
 
-  const clampInputValue = (input, minimum = Number(input.min), maximum = Number(input.max)) => {
-    const value = parseInputValue(input.value);
-
-    return Math.max(minimum, Math.min(maximum, Number.isFinite(value) ? value : minimum));
-  };
-
   calculatorInputs.forEach((input) => {
     input.addEventListener('input', () => {
-      syncInput(input.dataset.calculatorInput, clampInputValue(input));
+      syncInput(
+        input.dataset.calculatorInput,
+        clampCalculatorInputValue(input.value, Number(input.min), Number(input.max)),
+      );
       updateCalculator();
     });
   });
@@ -92,7 +90,26 @@ if (calculatorRoot) {
     input.addEventListener('input', () => {
       const name = input.dataset.calculatorNumber;
       const rangeInput = getInput(name);
-      const value = clampInputValue(input, Number(rangeInput.min), Number(rangeInput.max));
+      const value = getTypedCalculatorValue(
+        input.value,
+        Number(rangeInput.min),
+        Number(rangeInput.max),
+      );
+
+      if (value === null) return;
+
+      syncInput(name, value);
+      updateCalculator();
+    });
+
+    input.addEventListener('change', () => {
+      const name = input.dataset.calculatorNumber;
+      const rangeInput = getInput(name);
+      const value = clampCalculatorInputValue(
+        input.value,
+        Number(rangeInput.min),
+        Number(rangeInput.max),
+      );
 
       syncInput(name, value);
       updateCalculator();

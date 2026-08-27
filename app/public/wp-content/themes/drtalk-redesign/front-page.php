@@ -26,7 +26,7 @@ $different_points = [
 		'icon' => 'different-relationship-risk-static.png',
 		'hover_icon' => 'different-relationship-risk-hover.gif',
 		'title' => 'Relationship Risk',
-		'quote' => '“We got told we were hard to work with. By a dentist we thought was our friend.”',
+		'quote' => '“We got told that we were hard to work with. By a dentist who we thought was our friend.”',
 		'description' =>
 			'GPs won’t call to complain about a slow response; they’ll just route the next case to your competitor.'
 	],
@@ -62,14 +62,14 @@ $how_it_works_steps = [
 		'number' => '02',
 		'title' => 'Every referral lands in one place',
 		'description' =>
-			'Every fax, call, email, and web form becomes one clear referral record your whole office can see and move forward.',
+			'Our AI sorts, prioritizes, and tracks in real time. So your team always knows what needs attention and who owns it.',
 		'image' => 'how-it-works-02.png'
 	],
 	[
 		'number' => '03',
 		'title' => 'Collaborate and close the loop',
 		'description' =>
-			'Keep your team aligned, update referring dentists automatically, and give every patient a clear next step.',
+			'Chat securely, share images, and update case status in one place. No more "Did you get my fax?" Just faster care and a more professional practice.',
 		'image' => 'how-it-works-03.png'
 	]
 ];
