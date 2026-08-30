@@ -125,7 +125,7 @@ if (howItWorksRoot) {
         restartRotation();
       });
     },
-    { threshold: 0.35 }
+    { threshold: 0.35 },
   );
 
   observer.observe(howItWorksRoot);
