@@ -65,11 +65,11 @@ function drtalk_redesign_enqueue_scripts()
 add_action('wp_enqueue_scripts', 'drtalk_redesign_enqueue_scripts');
 
 /**
- * Disables sharing buttons (e.g. Jetpack Sharedaddy) on pages.
+ * Disables sharing buttons (e.g. Jetpack Sharedaddy) on pages and single posts.
  */
 function drtalk_redesign_disable_sharing_on_pages()
 {
-	if (is_page() || is_page_template('page-legal.php')) {
+	if (is_page() || is_page_template('page-legal.php') || is_single()) {
 		if (function_exists('sharing_display')) {
 			remove_filter('the_content', 'sharing_display', 19);
 			remove_filter('the_excerpt', 'sharing_display', 19);
