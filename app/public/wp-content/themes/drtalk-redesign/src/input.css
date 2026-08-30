@@ -2011,45 +2011,69 @@
   .legal-content h3,
   .legal-content h4,
   .legal-content h5,
-  .legal-content h6 {
+  .legal-content h6,
+  .legal-content p:has(> strong:only-child) {
     font-family: var(--font-heading);
-    font-weight: 600;
     color: var(--color-purple-dark);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   .legal-content h1 {
-    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 600;
     line-height: 1.15;
-    margin-top: 2.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .legal-content h2 {
-    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
-    line-height: 1.25;
-    margin-top: 2.5rem;
+    margin-top: 3rem;
     margin-bottom: 1rem;
   }
 
-  .legal-content h3 {
-    font-size: clamp(1.25rem, 2vw, 1.375rem);
-    line-height: 1.35;
+  .legal-content h2,
+  .legal-content h3,
+  .legal-content h4,
+  .legal-content p:has(> strong:only-child) {
+    font-size: 1.625rem;
+    font-weight: 500;
+    line-height: 1.625rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    opacity: 1;
+  }
+
+  .legal-content p:has(> strong:only-child) > strong {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+  .legal-content h5,
+  .legal-content h6 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
     margin-top: 2rem;
     margin-bottom: 0.75rem;
   }
 
-  .legal-content p {
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    line-height: 1.8;
+  .legal-content p:not(:has(> strong:only-child)) {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--color-purple-dark);
+    opacity: 0.9;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .legal-content > *:first-child {
+    margin-top: 0 !important;
   }
 
   .legal-content ul,
   .legal-content ol {
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    padding-left: 1.75rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
   }
 
   .legal-content ul {
@@ -2061,9 +2085,13 @@
   }
 
   .legal-content li {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--color-purple-dark);
+    opacity: 0.9;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    line-height: 1.75;
   }
 
   .legal-content li > ul,
@@ -2087,6 +2115,7 @@
   .legal-content b {
     font-weight: 700;
     color: var(--color-purple-dark);
+    opacity: 1;
   }
 
   .legal-content .has-text-align-center {
@@ -2107,6 +2136,10 @@
 
   .legal-content .wp-block-spacer {
     clear: both;
+  }
+
+  .legal-page .sharedaddy {
+    display: none !important;
   }
 }
 

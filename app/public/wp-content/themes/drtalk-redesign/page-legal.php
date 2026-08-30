@@ -8,15 +8,80 @@
 
 get_header(); ?>
 
-<article <?php post_class('legal-page min-h-[60vh] bg-cream px-5 py-12 lg:px-10 lg:py-20'); ?>>
-	<div class="mx-auto max-w-4xl">
-		<?php while (have_posts()): ?>
-			<?php the_post(); ?>
-			<div class="legal-content text-base leading-relaxed text-purple-dark/85 lg:text-lg lg:leading-8">
-				<?php the_content(); ?>
+<?php while (have_posts()): ?>
+	<?php the_post(); ?>
+	<?php
+ $published_date = get_the_date('M j, Y');
+ $modified_date = get_the_modified_date('M j, Y');
+
+ $content = get_the_content();
+ for ($i = 0; $i < 5; $i++) {
+ 	$prev = $content;
+ 	$content = preg_replace(
+ 		'/^\s*(<!--\s*wp:spacer.*?<!--\s*\/wp:spacer\s*-->|<div[^>]*class="[^"]*wp-block-spacer[^"]*"[^>]*><\/div>)\s*/si',
+ 		'',
+ 		$content
+ 	);
+ 	$content = preg_replace(
+ 		'/^\s*<!--\s*wp:paragraph\s*\{[^}]*"align":"center"[^}]*\}.*?<!--\s*\/wp:paragraph\s*-->\s*/si',
+ 		'',
+ 		$content
+ 	);
+ 	$content = preg_replace('/^\s*<p[^>]*class="[^"]*has-text-align-center[^"]*"[^>]*>.*?<\/p>\s*/si', '', $content);
+ 	$content = preg_replace(
+ 		'/^\s*<!--\s*wp:heading\s*\{[^}]*"textAlign":"center"[^}]*\}.*?<!--\s*\/wp:heading\s*-->\s*/si',
+ 		'',
+ 		$content
+ 	);
+ 	$content = preg_replace(
+ 		'/^\s*<h[1-6][^>]*class="[^"]*has-text-align-center[^"]*"[^>]*>.*?<\/h[1-6]>\s*/si',
+ 		'',
+ 		$content
+ 	);
+ 	$content = preg_replace(
+ 		'/^\s*<!--\s*wp:paragraph\s*-->\s*<p>\s*(?:&nbsp;|\s)*<\/p>\s*<!--\s*\/wp:paragraph\s*-->\s*/si',
+ 		'',
+ 		$content
+ 	);
+ 	$content = preg_replace('/^\s*<p>\s*(?:&nbsp;|\s)*<\/p>\s*/si', '', $content);
+ 	if ($content === $prev) {
+ 		break;
+ 	}
+ }
+ if (function_exists('sharing_display')) {
+ 	remove_filter('the_content', 'sharing_display', 19);
+ 	remove_filter('the_excerpt', 'sharing_display', 19);
+ }
+ $content = apply_filters('the_content', $content);
+ $content = preg_replace('/^\s*<p class="wp-block-paragraph">\s*(?:&nbsp;|\s)*<\/p>\s*/si', '', $content);
+ $content = preg_replace('/<div[^>]*class="[^"]*sharedaddy[^"]*"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>/si', '', $content);
+ ?>
+	<article <?php post_class('legal-page bg-cream overflow-clip px-5 py-12 lg:px-12 lg:pb-20 lg:pt-12'); ?>>
+		<div class="mx-auto flex w-full max-w-[840px] flex-col gap-12">
+			<header class="flex w-full flex-col gap-4">
+				<h1 class="font-heading text-[36px] font-semibold leading-none text-purple-dark sm:text-[48px] sm:leading-[1.1] sm:tracking-[-0.48px]">
+					<?php the_title(); ?>
+				</h1>
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-body text-base leading-6 text-purple-dark">
+					<div class="flex items-center gap-1">
+						<span class="opacity-50"><?php esc_html_e('Published:', 'drtalk-redesign'); ?></span>
+						<span><?php echo esc_html($published_date); ?></span>
+					</div>
+					<span class="size-1 shrink-0 rounded-full bg-purple-dark" aria-hidden="true"></span>
+					<div class="flex items-center gap-1">
+						<span class="opacity-50"><?php esc_html_e('Last Update:', 'drtalk-redesign'); ?></span>
+						<span><?php echo esc_html($modified_date); ?></span>
+					</div>
+				</div>
+			</header>
+
+			<div class="legal-content w-full">
+				<?php echo $content;
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
 			</div>
-		<?php endwhile; ?>
-	</div>
-</article>
+		</div>
+	</article>
+<?php endwhile; ?>
 
 <?php get_footer(); ?>
