@@ -459,10 +459,10 @@ get_header();
     $results_image = esc_url(get_theme_file_uri('assets/images/' . $results_stat['image']));
     $results_key = esc_attr($results_stat['key']);
     ?>
-				<article class="numbers-card relative flex h-[7.5rem] flex-col overflow-hidden rounded-2xl bg-lilac px-5 pb-8 pt-5 text-purple-dark lg:h-[17.5rem] lg:rounded-3xl lg:px-12 lg:py-12" data-stat="<?php echo $results_key; ?>" style="<?php echo $numbers_noise_style; ?>" tabindex="0">
+				<article class="numbers-card relative flex min-h-[7.5rem] flex-col overflow-hidden rounded-2xl bg-lilac px-5 pb-8 pt-5 text-purple-dark lg:h-[17.5rem] lg:rounded-3xl lg:px-12 lg:py-14" data-stat="<?php echo $results_key; ?>" style="<?php echo $numbers_noise_style; ?>" tabindex="0">
 					<div class="numbers-card-noise" aria-hidden="true"></div>
 					<div class="relative z-10">
-						<p class="text-[2.5rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-7xl lg:font-semibold lg:tracking-[-0.03em]"><?php echo $results_value; ?></p>
+						<p class="font-heading text-[2.5rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-7xl lg:leading-[normal]"><?php echo $results_value; ?></p>
 						<p class="mt-1 max-w-[17rem] text-sm leading-5 text-purple-dark lg:mt-2 lg:max-w-60 lg:text-lg lg:leading-6"><?php echo $results_copy; ?></p>
 					</div>
 					<img class="numbers-card-illustration pointer-events-none absolute -bottom-6 -right-4 hidden h-60 w-60 object-contain lg:block" src="<?php echo $results_image; ?>" width="240" height="240" alt="">

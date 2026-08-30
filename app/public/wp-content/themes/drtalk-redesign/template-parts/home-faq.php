@@ -2,7 +2,7 @@
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
 $baa_url = esc_url(home_url('/business-associates-agreement/'));
-$contact_url = esc_url('mailto:sales@drtalk.com');
+$contact_url = esc_url(drtalk_redesign_contact_url());
 
 $faq_categories = [
 	[

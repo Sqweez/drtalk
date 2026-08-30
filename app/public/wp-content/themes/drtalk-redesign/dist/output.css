@@ -366,9 +366,6 @@
   .h-\[6\.5625rem\] {
     height: 6.5625rem;
   }
-  .h-\[7\.5rem\] {
-    height: 7.5rem;
-  }
   .h-\[30\.5rem\] {
     height: 30.5rem;
   }
@@ -383,6 +380,9 @@
   }
   .min-h-\[4\.5rem\] {
     min-height: 4.5rem;
+  }
+  .min-h-\[7\.5rem\] {
+    min-height: 7.5rem;
   }
   .min-h-\[19\.75rem\] {
     min-height: 19.75rem;
@@ -1247,6 +1247,9 @@
     .lg\:py-12 {
       padding-block: calc(var(--spacing) * 12);
     }
+    .lg\:py-14 {
+      padding-block: calc(var(--spacing) * 14);
+    }
     .lg\:py-20 {
       padding-block: calc(var(--spacing) * 20);
     }
@@ -1314,13 +1317,9 @@
       --tw-leading: 1.1;
       line-height: 1.1;
     }
-    .lg\:font-semibold {
-      --tw-font-weight: var(--font-weight-semibold);
-      font-weight: var(--font-weight-semibold);
-    }
-    .lg\:tracking-\[-0\.03em\] {
-      --tw-tracking: -0.03em;
-      letter-spacing: -0.03em;
+    .lg\:leading-\[normal\] {
+      --tw-leading: normal;
+      line-height: normal;
     }
   }
 }
