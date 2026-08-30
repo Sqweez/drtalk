@@ -8,7 +8,12 @@ import {
 
 const personalizedRoot = document.querySelector('[data-personalized]');
 
+// Set to true to restore the original scroll-driven desktop experience.
+const ENABLE_SCROLL_DRIVEN_PERSONAS = false;
+
 if (personalizedRoot) {
+  personalizedRoot.toggleAttribute('data-personalized-toggle-only', !ENABLE_SCROLL_DRIVEN_PERSONAS);
+
   const tabs = [...personalizedRoot.querySelectorAll('[data-personalized-tab]')];
   const panel = personalizedRoot.querySelector('[data-personalized-panel]');
   const states = [...personalizedRoot.querySelectorAll('[data-personalized-state]')];
@@ -24,6 +29,13 @@ if (personalizedRoot) {
   let isProgrammaticScrolling = false;
   let programmaticScrollTimer = 0;
 
+  const measureTrackStep = () => {
+    const trackStyles = window.getComputedStyle(track);
+    const trackGap = Number.parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+
+    trackStep = panel.getBoundingClientRect().width + trackGap;
+  };
+
   const selectAudience = (index) => {
     if (!tabs[index]) return;
     if (index !== activeIndex) {
@@ -37,7 +49,10 @@ if (personalizedRoot) {
       tab.setAttribute('aria-selected', String(selected));
     });
     states.forEach((state, stateIndex) => {
-      state.setAttribute('aria-hidden', String(stateIndex !== index));
+      const hidden = stateIndex !== index;
+
+      state.setAttribute('aria-hidden', String(hidden));
+      state.toggleAttribute('inert', !ENABLE_SCROLL_DRIVEN_PERSONAS && hidden);
     });
   };
 
@@ -58,10 +73,8 @@ if (personalizedRoot) {
       document.querySelector('body > header')?.getBoundingClientRect().bottom || 0;
     const stickyOffset = getStickyOffset(window.innerHeight, stickyHeight, headerBottom);
     const sectionStyles = window.getComputedStyle(personalizedRoot);
-    const trackStyles = window.getComputedStyle(track);
-    const trackGap = Number.parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
 
-    trackStep = panel.getBoundingClientRect().width + trackGap;
+    measureTrackStep();
     scrollDistance = Math.max(window.innerHeight * 0.8, 600) * Math.max(0, states.length - 1);
 
     personalizedRoot.style.setProperty('--personalized-sticky-height', `${stickyHeight}px`);
@@ -81,6 +94,11 @@ if (personalizedRoot) {
 
   const syncAudienceToScroll = () => {
     scrollFrame = 0;
+
+    if (!ENABLE_SCROLL_DRIVEN_PERSONAS) {
+      track.style.removeProperty('transform');
+      return;
+    }
 
     if (desktop.matches) {
       if (!personalizedRoot.hasAttribute('data-personalized-scroll-ready')) {
@@ -106,7 +124,11 @@ if (personalizedRoot) {
   const refreshLayout = () => {
     resizeFrame = 0;
     if (desktop.matches) {
-      measureDesktopLayout();
+      if (ENABLE_SCROLL_DRIVEN_PERSONAS) {
+        measureDesktopLayout();
+      } else {
+        clearDesktopLayout();
+      }
     } else {
       clearDesktopLayout();
     }
@@ -120,6 +142,7 @@ if (personalizedRoot) {
   const activateAudience = (index) => {
     selectAudience(index);
 
+    if (!ENABLE_SCROLL_DRIVEN_PERSONAS) return;
     if (!desktop.matches) return;
     if (!personalizedRoot.hasAttribute('data-personalized-scroll-ready')) {
       measureDesktopLayout();
@@ -162,10 +185,12 @@ if (personalizedRoot) {
     });
   });
 
-  window.addEventListener('scroll', queueScrollSync, { passive: true });
-  window.addEventListener('wheel', stopProgrammaticScroll, { passive: true });
-  window.addEventListener('touchstart', stopProgrammaticScroll, { passive: true });
-  window.addEventListener('scrollend', stopProgrammaticScroll, { passive: true });
+  if (ENABLE_SCROLL_DRIVEN_PERSONAS) {
+    window.addEventListener('scroll', queueScrollSync, { passive: true });
+    window.addEventListener('wheel', stopProgrammaticScroll, { passive: true });
+    window.addEventListener('touchstart', stopProgrammaticScroll, { passive: true });
+    window.addEventListener('scrollend', stopProgrammaticScroll, { passive: true });
+  }
   window.addEventListener('resize', queueLayoutRefresh, { passive: true });
   desktop.addEventListener('change', queueLayoutRefresh);
 

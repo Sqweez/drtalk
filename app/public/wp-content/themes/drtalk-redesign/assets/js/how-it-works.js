@@ -8,6 +8,20 @@ if (howItWorksRoot) {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let activeStepIndex = 0;
   let rotationTimer;
+  let isInView = false;
+
+  const restartProgress = () => {
+    const fill = steps[activeStepIndex]?.querySelector('.how-it-works-progress-fill');
+
+    if (!fill) {
+      return;
+    }
+
+    // Force the CSS progress animation to replay from zero.
+    fill.style.animation = 'none';
+    void fill.offsetWidth;
+    fill.style.animation = '';
+  };
 
   const setActiveStep = (nextIndex) => {
     if (!steps[nextIndex] || !demo) {
@@ -28,12 +42,18 @@ if (howItWorksRoot) {
     demoStates.forEach((state, index) => {
       state.setAttribute('aria-hidden', String(index !== nextIndex));
     });
+
+    restartProgress();
+  };
+
+  const stopRotation = () => {
+    window.clearTimeout(rotationTimer);
   };
 
   const restartRotation = () => {
-    window.clearTimeout(rotationTimer);
+    stopRotation();
 
-    if (reducedMotion.matches || steps.length < 2) {
+    if (reducedMotion.matches || steps.length < 2 || !isInView || document.hidden) {
       return;
     }
 
@@ -77,12 +97,38 @@ if (howItWorksRoot) {
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-      window.clearTimeout(rotationTimer);
+      stopRotation();
       return;
     }
 
+    restartProgress();
     restartRotation();
   });
+
+  const observer = new window.IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting === isInView) {
+          return;
+        }
+
+        isInView = entry.isIntersecting;
+        howItWorksRoot.classList.toggle('is-in-view', isInView);
+
+        if (!isInView) {
+          stopRotation();
+          return;
+        }
+
+        // Restart the step timer and its progress bar together once the section is on screen.
+        restartProgress();
+        restartRotation();
+      });
+    },
+    { threshold: 0.35 }
+  );
+
+  observer.observe(howItWorksRoot);
 
   reducedMotion.addEventListener('change', restartRotation);
 

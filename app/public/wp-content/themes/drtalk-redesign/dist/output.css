@@ -567,9 +567,6 @@
   .justify-end {
     justify-content: flex-end;
   }
-  .justify-start {
-    justify-content: flex-start;
-  }
   .gap-0 {
     gap: 0px;
   }
@@ -600,9 +597,6 @@
   .gap-10 {
     gap: calc(var(--spacing) * 10);
   }
-  .gap-12 {
-    gap: calc(var(--spacing) * 12);
-  }
   .gap-16 {
     gap: calc(var(--spacing) * 16);
   }
@@ -614,9 +608,6 @@
   }
   .overflow-hidden {
     overflow: hidden;
-  }
-  .overflow-x-auto {
-    overflow-x: auto;
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
@@ -1216,9 +1207,6 @@
     }
     .lg\:items-start {
       align-items: flex-start;
-    }
-    .lg\:justify-center {
-      justify-content: center;
     }
     .lg\:gap-4 {
       gap: calc(var(--spacing) * 4);
@@ -1996,6 +1984,10 @@
       gap: 1.5rem;
       will-change: transform;
     }
+    [data-personalized-toggle-only] .personalized-track {
+      position: relative;
+      display: block;
+    }
     .personalized-state {
       display: flex;
       position: relative;
@@ -2005,6 +1997,20 @@
       border: 1px solid #ede8e1;
       border-radius: 1.5rem;
       padding: 1.5rem;
+    }
+    [data-personalized-toggle-only] .personalized-state {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate3d(1rem, 0, 0);
+      transition: opacity 280ms cubic-bezier(0.25, 1, 0.5, 1),
+        transform 280ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    [data-personalized-toggle-only] .personalized-state[aria-hidden='false'] {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate3d(0, 0, 0);
     }
     .personalized-copy {
       display: flex;
@@ -2873,6 +2879,10 @@
   }
   .how-it-works-step.is-active .how-it-works-progress-fill {
     animation: how-it-works-progress 7s linear forwards;
+    animation-play-state: paused;
+  }
+  [data-how-it-works].is-in-view .how-it-works-step.is-active .how-it-works-progress-fill {
+    animation-play-state: running;
   }
   .how-it-works-demo {
     position: relative;
@@ -2931,6 +2941,9 @@
     }
   }
   .trusted-partner-logo {
+    display: block;
+    flex-shrink: 0;
+    background-color: var(--color-purple-dark);
     mask-position: center;
     mask-repeat: no-repeat;
     mask-size: contain;
@@ -2938,17 +2951,55 @@
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-size: contain;
   }
-  .trusted-partners-scroll {
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x proximity;
-    touch-action: pan-x;
+  .trusted-partners-marquee {
+    --trusted-partners-gap: 3rem;
+    --trusted-partners-duration: 26s;
+    width: 100%;
+    overflow: hidden;
   }
-  .trusted-partners-scroll::-webkit-scrollbar {
-    display: none;
+  .trusted-partners-track {
+    display: flex;
+    align-items: center;
+    gap: var(--trusted-partners-gap);
+    width: max-content;
   }
-  .trusted-partners-scroll .trusted-partner-logo {
-    scroll-snap-align: start;
+  @media (max-width: 63.9375rem) {
+    .trusted-partners-marquee {
+      --trusted-partners-bleed: 1.25rem;
+      width: calc(100% + var(--trusted-partners-bleed) * 2);
+      margin-inline: calc(var(--trusted-partners-bleed) * -1);
+    }
+    .trusted-partners-track {
+      animation: trusted-partners-marquee var(--trusted-partners-duration) linear infinite;
+      will-change: transform;
+    }
+  }
+  @media (min-width: 40rem) and (max-width: 63.9375rem) {
+    .trusted-partners-marquee {
+      --trusted-partners-bleed: 2rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .trusted-partners-track {
+      width: 100%;
+      justify-content: center;
+    }
+    .trusted-partner-logo-clone {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .trusted-partners-track {
+      animation: none;
+    }
+  }
+  @keyframes trusted-partners-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(calc(-50% - var(--trusted-partners-gap) / 2), 0, 0);
+    }
   }
   .site-footer-noise {
     position: absolute;

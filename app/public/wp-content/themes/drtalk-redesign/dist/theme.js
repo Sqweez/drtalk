@@ -467,6 +467,17 @@
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let activeStepIndex = 0;
     let rotationTimer;
+    let isInView = false;
+    const restartProgress = () => {
+      var _a2;
+      const fill = (_a2 = steps[activeStepIndex]) == null ? void 0 : _a2.querySelector(".how-it-works-progress-fill");
+      if (!fill) {
+        return;
+      }
+      fill.style.animation = "none";
+      void fill.offsetWidth;
+      fill.style.animation = "";
+    };
     const setActiveStep = (nextIndex) => {
       if (!steps[nextIndex] || !demo) {
         return;
@@ -482,10 +493,14 @@
       demoStates.forEach((state, index) => {
         state.setAttribute("aria-hidden", String(index !== nextIndex));
       });
+      restartProgress();
+    };
+    const stopRotation = () => {
+      window.clearTimeout(rotationTimer);
     };
     const restartRotation = () => {
-      window.clearTimeout(rotationTimer);
-      if (reducedMotion.matches || steps.length < 2) {
+      stopRotation();
+      if (reducedMotion.matches || steps.length < 2 || !isInView || document.hidden) {
         return;
       }
       rotationTimer = window.setTimeout(() => {
@@ -522,11 +537,31 @@
     });
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
-        window.clearTimeout(rotationTimer);
+        stopRotation();
         return;
       }
+      restartProgress();
       restartRotation();
     });
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting === isInView) {
+            return;
+          }
+          isInView = entry.isIntersecting;
+          howItWorksRoot.classList.toggle("is-in-view", isInView);
+          if (!isInView) {
+            stopRotation();
+            return;
+          }
+          restartProgress();
+          restartRotation();
+        });
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(howItWorksRoot);
     reducedMotion.addEventListener("change", restartRotation);
     if (steps.length && demo) {
       setActiveStep(activeStepIndex);
@@ -575,7 +610,9 @@
 
   // assets/js/personalized.js
   var personalizedRoot = document.querySelector("[data-personalized]");
+  var ENABLE_SCROLL_DRIVEN_PERSONAS = false;
   if (personalizedRoot) {
+    personalizedRoot.toggleAttribute("data-personalized-toggle-only", !ENABLE_SCROLL_DRIVEN_PERSONAS);
     const tabs = [...personalizedRoot.querySelectorAll("[data-personalized-tab]")];
     const panel = personalizedRoot.querySelector("[data-personalized-panel]");
     const states = [...personalizedRoot.querySelectorAll("[data-personalized-state]")];
@@ -590,6 +627,11 @@
     let trackStep = 0;
     let isProgrammaticScrolling = false;
     let programmaticScrollTimer = 0;
+    const measureTrackStep = () => {
+      const trackStyles = window.getComputedStyle(track);
+      const trackGap = Number.parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+      trackStep = panel.getBoundingClientRect().width + trackGap;
+    };
     const selectAudience = (index) => {
       if (!tabs[index]) return;
       if (index !== activeIndex) {
@@ -603,7 +645,9 @@
         tab.setAttribute("aria-selected", String(selected));
       });
       states.forEach((state, stateIndex) => {
-        state.setAttribute("aria-hidden", String(stateIndex !== index));
+        const hidden = stateIndex !== index;
+        state.setAttribute("aria-hidden", String(hidden));
+        state.toggleAttribute("inert", !ENABLE_SCROLL_DRIVEN_PERSONAS && hidden);
       });
     };
     const clearDesktopLayout = () => {
@@ -622,9 +666,7 @@
       const headerBottom = ((_a2 = document.querySelector("body > header")) == null ? void 0 : _a2.getBoundingClientRect().bottom) || 0;
       const stickyOffset = getStickyOffset(window.innerHeight, stickyHeight, headerBottom);
       const sectionStyles = window.getComputedStyle(personalizedRoot);
-      const trackStyles = window.getComputedStyle(track);
-      const trackGap = Number.parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
-      trackStep = panel.getBoundingClientRect().width + trackGap;
+      measureTrackStep();
       scrollDistance = Math.max(window.innerHeight * 0.8, 600) * Math.max(0, states.length - 1);
       personalizedRoot.style.setProperty("--personalized-sticky-height", `${stickyHeight}px`);
       personalizedRoot.style.setProperty("--personalized-scroll-distance", `${scrollDistance}px`);
@@ -640,6 +682,10 @@
     };
     const syncAudienceToScroll = () => {
       scrollFrame = 0;
+      if (!ENABLE_SCROLL_DRIVEN_PERSONAS) {
+        track.style.removeProperty("transform");
+        return;
+      }
       if (desktop.matches) {
         if (!personalizedRoot.hasAttribute("data-personalized-scroll-ready")) {
           measureDesktopLayout();
@@ -660,7 +706,11 @@
     const refreshLayout = () => {
       resizeFrame = 0;
       if (desktop.matches) {
-        measureDesktopLayout();
+        if (ENABLE_SCROLL_DRIVEN_PERSONAS) {
+          measureDesktopLayout();
+        } else {
+          clearDesktopLayout();
+        }
       } else {
         clearDesktopLayout();
       }
@@ -671,6 +721,7 @@
     };
     const activateAudience = (index) => {
       selectAudience(index);
+      if (!ENABLE_SCROLL_DRIVEN_PERSONAS) return;
       if (!desktop.matches) return;
       if (!personalizedRoot.hasAttribute("data-personalized-scroll-ready")) {
         measureDesktopLayout();
@@ -702,10 +753,12 @@
         tabs[nextIndex].focus();
       });
     });
-    window.addEventListener("scroll", queueScrollSync, { passive: true });
-    window.addEventListener("wheel", stopProgrammaticScroll, { passive: true });
-    window.addEventListener("touchstart", stopProgrammaticScroll, { passive: true });
-    window.addEventListener("scrollend", stopProgrammaticScroll, { passive: true });
+    if (ENABLE_SCROLL_DRIVEN_PERSONAS) {
+      window.addEventListener("scroll", queueScrollSync, { passive: true });
+      window.addEventListener("wheel", stopProgrammaticScroll, { passive: true });
+      window.addEventListener("touchstart", stopProgrammaticScroll, { passive: true });
+      window.addEventListener("scrollend", stopProgrammaticScroll, { passive: true });
+    }
     window.addEventListener("resize", queueLayoutRefresh, { passive: true });
     desktop.addEventListener("change", queueLayoutRefresh);
     selectAudience(0);
