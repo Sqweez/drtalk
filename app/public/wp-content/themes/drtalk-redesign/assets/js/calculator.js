@@ -1,4 +1,8 @@
-import { clampCalculatorInputValue, getTypedCalculatorValue } from './calculator-input.mjs';
+import {
+  clampCalculatorInputValue,
+  getTypedCalculatorState,
+  getTypedCalculatorValue,
+} from './calculator-input.mjs';
 
 const calculatorRoot = document.querySelector('[data-calculator-root]');
 
@@ -24,15 +28,17 @@ if (calculatorRoot) {
     { minimum: 25, label: 'Poor', color: '#ed8f43' },
     { minimum: 0, label: 'Critical', color: '#c9252d' },
   ];
+  let calculatorValues = Object.fromEntries(
+    Array.from(calculatorInputs, (input) => [input.dataset.calculatorInput, Number(input.value)]),
+  );
 
   const getInput = (name) => calculatorRoot.querySelector(`[data-calculator-input="${name}"]`);
   const getNumberInput = (name) =>
     calculatorRoot.querySelector(`[data-calculator-number="${name}"]`);
-  const getValue = (name) => Number(getInput(name).value);
+  const getValue = (name) => calculatorValues[name];
 
-  const syncInput = (name, value) => {
+  const syncRangeInput = (name, value) => {
     const rangeInput = getInput(name);
-    const numberInput = getNumberInput(name);
     const fill = calculatorRoot.querySelector(`[data-calculator-fill="${name}"]`);
     const thumb = calculatorRoot.querySelector(`[data-calculator-thumb="${name}"]`);
     const minimum = Number(rangeInput.min);
@@ -40,9 +46,14 @@ if (calculatorRoot) {
     const percentage = ((value - minimum) / (maximum - minimum)) * 100;
 
     rangeInput.value = String(value);
-    numberInput.value = name === 'case-value' ? numberFormatter.format(value) : String(value);
     fill.style.width = `${percentage}%`;
     thumb.style.left = `${percentage}%`;
+  };
+
+  const syncNumberInput = (name, value) => {
+    const numberInput = getNumberInput(name);
+
+    numberInput.value = name === 'case-value' ? numberFormatter.format(value) : String(value);
   };
 
   const updateCalculator = () => {
@@ -71,17 +82,22 @@ if (calculatorRoot) {
       bar.style.backgroundColor = index < filledBars ? healthBand.color : emptyBarColor;
     });
 
-    calculatorInputs.forEach((input) =>
-      syncInput(input.dataset.calculatorInput, Number(input.value)),
-    );
+    calculatorInputs.forEach((input) => {
+      const name = input.dataset.calculatorInput;
+
+      syncRangeInput(name, getValue(name));
+    });
   };
 
   calculatorInputs.forEach((input) => {
     input.addEventListener('input', () => {
-      syncInput(
-        input.dataset.calculatorInput,
-        clampCalculatorInputValue(input.value, Number(input.min), Number(input.max)),
-      );
+      const name = input.dataset.calculatorInput;
+
+      calculatorValues = {
+        ...calculatorValues,
+        [name]: clampCalculatorInputValue(input.value, Number(input.min), Number(input.max)),
+      };
+      syncNumberInput(name, getValue(name));
       updateCalculator();
     });
   });
@@ -98,20 +114,30 @@ if (calculatorRoot) {
 
       if (value === null) return;
 
-      syncInput(name, value);
+      calculatorValues = getTypedCalculatorState(
+        calculatorValues,
+        name,
+        input.value,
+        Number(rangeInput.min),
+        Number(rangeInput.max),
+      );
+
       updateCalculator();
     });
 
     input.addEventListener('change', () => {
       const name = input.dataset.calculatorNumber;
       const rangeInput = getInput(name);
-      const value = clampCalculatorInputValue(
-        input.value,
-        Number(rangeInput.min),
-        Number(rangeInput.max),
-      );
+      calculatorValues = {
+        ...calculatorValues,
+        [name]: clampCalculatorInputValue(
+          input.value,
+          Number(rangeInput.min),
+          Number(rangeInput.max),
+        ),
+      };
 
-      syncInput(name, value);
+      syncNumberInput(name, getValue(name));
       updateCalculator();
     });
   });
