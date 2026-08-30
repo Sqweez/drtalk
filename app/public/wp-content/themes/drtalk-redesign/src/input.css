@@ -1353,6 +1353,26 @@
     pointer-events: none;
   }
 
+  .news-hero-noise {
+    position: absolute;
+    inset: 0;
+    background-image: var(--news-hero-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 560px 560px;
+    pointer-events: none;
+  }
+
+  .news-cta-noise {
+    position: absolute;
+    inset: 0;
+    background-image: var(--news-cta-noise-image);
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 560px 560px;
+    pointer-events: none;
+  }
+
   .cta-content {
     position: relative;
     display: flex;

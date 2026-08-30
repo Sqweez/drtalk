@@ -34,7 +34,7 @@ $company_navigation_label = esc_attr__('Company navigation', 'drtalk-redesign');
 					<li><a class="transition hover:text-orange" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $login_url; ?>" target="_blank" rel="noreferrer">Log In</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $about_url; ?>">About</a></li>
-					<li><a class="transition hover:text-orange" href="<?php echo $blog_url; ?>">Blog</a></li>
+					<li><a class="transition hover:text-orange" href="<?php echo $blog_url; ?>">News</a></li>
 				</ul>
 			</nav>
 

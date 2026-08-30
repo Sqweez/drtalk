@@ -36,7 +36,7 @@ $primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
 		<nav id="mobile-primary-navigation" class="mobile-menu-panel hidden" data-primary-navigation aria-label="<?php echo $primary_navigation_label; ?>" aria-hidden="true">
 			<div class="flex min-h-0 flex-1 flex-col items-start gap-8 text-lg leading-6 text-purple-dark">
 				<a class="w-full" href="<?php echo $about_url; ?>">About</a>
-				<a class="w-full" href="<?php echo $blog_url; ?>">Blog</a>
+				<a class="w-full" href="<?php echo $blog_url; ?>">News</a>
 			</div>
 			<div class="flex w-full flex-col gap-4">
 				<a class="inline-flex min-h-16 w-full items-center justify-center rounded-full bg-purple-dark px-8 py-5 text-center text-base font-bold leading-6 text-cream" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Get a Free Referral Analysis</a>
@@ -51,7 +51,7 @@ $primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
 				<img src="<?php echo $logo_url; ?>" width="119" height="32" alt="<?php esc_attr_e('DrTalk', 'drtalk-redesign'); ?>">
 			</a>
 			<a class="text-sm leading-[18px] text-purple-dark transition hover:text-purple" href="<?php echo $about_url; ?>">About</a>
-			<a class="text-sm leading-[18px] text-purple-dark transition hover:text-purple" href="<?php echo $blog_url; ?>">Blog</a>
+			<a class="text-sm leading-[18px] text-purple-dark transition hover:text-purple" href="<?php echo $blog_url; ?>">News</a>
 		</div>
 
 		<div class="flex shrink-0 items-center gap-4">

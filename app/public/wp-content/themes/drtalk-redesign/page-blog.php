@@ -1,6 +1,7 @@
 <?php
 /**
- * The main template file.
+ * Template Name: Blog / News
+ * Template Post Type: page
  *
  * @package drtalk-redesign
  */
