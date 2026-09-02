@@ -1,6 +1,7 @@
 <?php
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
+$referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
 $baa_url = esc_url(home_url('/business-associates-agreement/'));
 $contact_url = esc_url(drtalk_redesign_contact_url());
 
@@ -13,7 +14,7 @@ $faq_categories = [
 				'question' => 'How does drtalk help reduce referral leakage?',
 				'answer' => sprintf(
 					'Referral leakage, patients who are referred but never schedule or complete treatment, is one of the biggest sources of lost revenue in specialty practice. drtalk gives your team a shared dashboard where every referral is tracked in real time, from the moment it\'s sent to the moment the patient is seen. Nothing gets lost in a fax pile, a missed call, or an unread email. Practices using drtalk consistently recover a significant portion of referrals that would otherwise fall through the cracks. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book your free Referral Gap Analysis</a> now to see how referral leakage is affecting your practice.',
-					$demo_url
+					$referral_gap_analysis_url
 				)
 			],
 			[
@@ -71,7 +72,7 @@ $faq_categories = [
 				'question' => 'How much does drtalk cost?',
 				'answer' => sprintf(
 					'drtalk offers a free trial so you can explore the platform and see how it fits your practice before committing to anything. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a free Referral Gap Analysis</a> to help you figure out the right plan for your practice.',
-					$demo_url
+					$referral_gap_analysis_url
 				)
 			],
 			[
@@ -90,7 +91,7 @@ $faq_categories = [
 				'question' => 'How quickly will we see results?',
 				'answer' => sprintf(
 					'Most practices start seeing a difference within the first few weeks - referrals that would have gone quiet get followed up, patients who would have slipped through get scheduled, and staff spend less time chasing. The longer-term impact is a tighter referral network and a measurable reduction in leakage. The best way to see what\'s possible for your practice specifically is by <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">booking a Referral Gap Analysis working session</a> - we\'ll show you exactly where the gaps are and what closing them is worth.',
-					$demo_url
+					$referral_gap_analysis_url
 				)
 			],
 			[

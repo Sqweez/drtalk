@@ -24,6 +24,12 @@ add_action('admin_menu', 'drtalk_redesign_add_settings_page');
  */
 function drtalk_redesign_register_settings()
 {
+	register_setting('drtalk_redesign_settings', 'drtalk_referral_gap_analysis_url', [
+		'type' => 'string',
+		'default' => drtalk_redesign_default_referral_gap_analysis_url(),
+		'sanitize_callback' => 'drtalk_redesign_sanitize_referral_gap_analysis_url'
+	]);
+
 	register_setting('drtalk_redesign_settings', 'drtalk_contact_email', [
 		'type' => 'string',
 		'default' => drtalk_redesign_default_contact_email(),
@@ -38,6 +44,14 @@ function drtalk_redesign_register_settings()
 	);
 
 	add_settings_field(
+		'drtalk_referral_gap_analysis_url',
+		__('Referral Gap Analysis URL', 'drtalk-redesign'),
+		'drtalk_redesign_render_referral_gap_analysis_url_field',
+		'drtalk-settings',
+		'drtalk_redesign_contact'
+	);
+
+	add_settings_field(
 		'drtalk_contact_email',
 		__('Contact email', 'drtalk-redesign'),
 		'drtalk_redesign_render_contact_email_field',
@@ -46,6 +60,16 @@ function drtalk_redesign_register_settings()
 	);
 }
 add_action('admin_init', 'drtalk_redesign_register_settings');
+
+function drtalk_redesign_render_referral_gap_analysis_url_field()
+{
+	printf(
+		'<input type="url" class="regular-text" name="drtalk_referral_gap_analysis_url" value="%1$s" placeholder="%2$s"><p class="description">%3$s</p>',
+		esc_attr(drtalk_redesign_referral_gap_analysis_url()),
+		esc_attr(drtalk_redesign_default_referral_gap_analysis_url()),
+		esc_html__('Used by all Referral Gap Analysis links across the site.', 'drtalk-redesign')
+	);
+}
 
 function drtalk_redesign_render_contact_email_field()
 {
@@ -82,4 +106,14 @@ function drtalk_redesign_sanitize_contact_email($value)
 	$email = sanitize_email($value);
 
 	return is_email($email) ? $email : drtalk_redesign_default_contact_email();
+}
+
+/**
+ * Keeps the stored Referral Gap Analysis destination a valid HTTP(S) URL.
+ */
+function drtalk_redesign_sanitize_referral_gap_analysis_url($value)
+{
+	$url = esc_url_raw($value, ['http', 'https']);
+
+	return wp_http_validate_url($url) ? $url : drtalk_redesign_default_referral_gap_analysis_url();
 }

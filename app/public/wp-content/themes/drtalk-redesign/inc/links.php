@@ -27,6 +27,18 @@ function drtalk_redesign_demo_url()
 	return 'https://calendly.com/drtalksupport/demonstration';
 }
 
+function drtalk_redesign_default_referral_gap_analysis_url()
+{
+	return 'https://calendly.com/drtalksupport/free-referral-gap-analysis';
+}
+
+function drtalk_redesign_referral_gap_analysis_url()
+{
+	$url = get_option('drtalk_referral_gap_analysis_url', drtalk_redesign_default_referral_gap_analysis_url());
+
+	return wp_http_validate_url($url) ? $url : drtalk_redesign_default_referral_gap_analysis_url();
+}
+
 function drtalk_redesign_default_contact_email()
 {
 	return 'info@drtalk.com';

@@ -1,6 +1,7 @@
 <?php
 
 $demo_url = esc_url(drtalk_redesign_demo_url());
+$referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
 $arrow_left_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-left.svg'));
 $arrow_right_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-right.svg'));
 $testimonial_avatar_placeholder_url = esc_url(get_theme_file_uri('assets/images/testimonial-avatar-placeholder.svg'));
@@ -323,7 +324,7 @@ get_header();
 					<p class="text-lg leading-6 text-cream/90"><span class="hidden lg:inline">Invisible referral leaks cost your practice revenue. Plug the gaps with drtalk. </span>Put AI to work for your office to seamlessly capture, track, and close every referral.</p>
 				</div>
 				<div class="flex flex-col items-center gap-4">
-					<a class="inline-flex min-h-16 items-center justify-center rounded-full bg-orange px-8 py-5 text-center text-base font-bold leading-6 text-purple-dark transition-colors hover:bg-cream focus-visible:outline-orange" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+					<a class="inline-flex min-h-16 items-center justify-center rounded-full bg-orange px-8 py-5 text-center text-base font-bold leading-6 text-purple-dark transition-colors hover:bg-cream focus-visible:outline-orange" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
 					<p class="text-sm leading-5 text-cream/75">
 						<span class="block">30 minutes. We do the work.</span>
 						<span class="block">You keep the report. No pitch, no obligation.</span>
@@ -610,7 +611,7 @@ get_header();
 				</div>
 				<div class="flex flex-col items-center gap-4">
 					<p class="w-full text-center text-sm leading-5 text-purple-dark/75">Get the full report after the demo call with drtalk team.</p>
-					<a class="inline-flex min-h-16 w-full items-center justify-center whitespace-normal rounded-full bg-purple px-8 py-5 text-center text-base font-bold leading-6 text-cream min-[360px]:whitespace-nowrap" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+					<a class="inline-flex min-h-16 w-full items-center justify-center whitespace-normal rounded-full bg-purple px-8 py-5 text-center text-base font-bold leading-6 text-cream min-[360px]:whitespace-nowrap" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
 				</div>
 			</div>
 		</div>
@@ -799,7 +800,7 @@ get_header();
 			<?php endforeach; ?>
 		</div>
 		<div class="cta-action">
-			<a class="cta-button" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
+			<a class="cta-button" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">Claim Your Free Referral Gap Analysis</a>
 			<p>30 minutes. No obligation<br>Best with practice owner + office manager.</p>
 		</div>
 	</div>

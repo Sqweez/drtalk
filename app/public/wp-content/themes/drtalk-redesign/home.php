@@ -20,7 +20,7 @@ $noise_dark_url = esc_url(get_theme_file_uri('assets/images/personalized-pattern
 $hero_noise_style = esc_attr("--news-hero-noise-image: url('{$noise_orange_url}');");
 $cta_noise_style = esc_attr("--news-cta-noise-image: url('{$noise_dark_url}');");
 $footer_logo_url = esc_url(get_theme_file_uri('assets/images/footer-logo.svg'));
-$demo_url = drtalk_redesign_demo_url();
+$referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
 ?>
 
 <!-- Hero Section -->
@@ -199,9 +199,7 @@ $demo_url = drtalk_redesign_demo_url();
 			</p>
 		</div>
 		<div class="flex w-full flex-col items-center gap-4" data-name="actions">
-			<a class="inline-flex min-h-16 items-center justify-center rounded-[32px] bg-purple px-8 py-5 text-center font-body text-[16px] font-bold leading-6 text-cream transition hover:bg-purple-dark focus-visible:outline-orange" href="<?php echo esc_url(
-   	$demo_url
-   ); ?>" target="_blank" rel="noreferrer" data-name="button">
+			<a class="inline-flex min-h-16 items-center justify-center rounded-[32px] bg-purple px-8 py-5 text-center font-body text-[16px] font-bold leading-6 text-cream transition hover:bg-purple-dark focus-visible:outline-orange" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer" data-name="button">
 				<?php esc_html_e('Book your free Referral Gap Analysis', 'drtalk-redesign'); ?>
 			</a>
 			<p class="text-center font-body text-[14px] font-normal leading-5 text-purple-dark opacity-75">
