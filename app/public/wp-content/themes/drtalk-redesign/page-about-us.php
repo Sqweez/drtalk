@@ -64,7 +64,7 @@ $deliberate_choices = [
 get_header();
 ?>
 <section class="relative min-h-[52.5625rem] overflow-hidden bg-[#fce2cc] px-5 py-16 sm:px-8 lg:min-h-0 lg:px-12 lg:py-20" style="--about-pattern: url('<?php echo $pattern_url; ?>');">
-	<div class="pointer-events-none absolute inset-0 bg-[image:var(--about-pattern)] bg-[length:35rem_35rem] bg-left-top opacity-45" aria-hidden="true"></div>
+	<div class="pointer-events-none absolute inset-0 bg-[image:var(--about-pattern)] bg-[length:35rem_35rem] bg-left-top" aria-hidden="true"></div>
 	<div class="relative mx-auto grid max-w-[75rem] items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-16">
 		<div class="flex flex-col items-start gap-10">
 			<div class="text-purple-dark">
@@ -86,8 +86,8 @@ get_header();
 				<span class="text-2xl leading-none" aria-hidden="true">→</span>
 			</a>
 		</div>
-		<div class="aspect-[300/200] overflow-hidden rounded-2xl border-4 border-purple-dark">
-			<img class="size-full object-cover" src="<?php echo $hero_image_url; ?>" width="3024" height="1964" alt="<?php esc_attr_e(
+		<div class="relative aspect-[300/200]">
+			<img class="absolute top-0 left-0 h-[40.59rem] w-[62.5rem] max-w-none rounded-2xl border-4 border-purple-dark object-cover" src="<?php echo $hero_image_url; ?>" width="3024" height="1964" alt="<?php esc_attr_e(
 	'drtalk referral management dashboard',
 	'drtalk-redesign'
 ); ?>">
@@ -114,7 +114,7 @@ get_header();
    ); ?></p>
 			<p><?php esc_html_e("That's what we built drtalk to solve.", 'drtalk-redesign'); ?></p>
 		</div>
-		<div class="h-[12.5rem] overflow-hidden">
+		<div class="flex h-[12.5rem] flex-col items-end">
 			<img class="h-[20.3125rem] w-[31.25rem] max-w-none object-cover" src="<?php echo $mobile_growth_image_url; ?>" width="2000" height="1300" alt="<?php esc_attr_e(
 	'drtalk referral dashboard with tracked practice activity',
 	'drtalk-redesign'
@@ -253,7 +253,7 @@ get_header();
   	'What Tom actually built.',
   	'drtalk-redesign'
   ); ?></h2><p class="mx-auto mt-4 max-w-5xl text-lg leading-6 opacity-90"><?php esc_html_e(
-	'drtalk replaces the workarounds most specialty practices are still stitching together: fax, phone, email, paper, with',
+	'drtalk replaces the workarounds most specialty practices are still stitching together - fax, phone, email, paper - with',
 	'drtalk-redesign'
 ); ?> <strong><?php esc_html_e('one connected platform', 'drtalk-redesign'); ?></strong>.</p></div>
 		<div class="mt-16 grid gap-16 lg:grid-cols-3 lg:gap-8">

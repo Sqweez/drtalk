@@ -245,6 +245,9 @@
   .inset-x-0 {
     inset-inline: 0px;
   }
+  .top-0 {
+    top: 0px;
+  }
   .top-1\/2 {
     top: calc(1 / 2 * 100%);
   }
@@ -425,6 +428,9 @@
   .h-\[30\.5rem\] {
     height: 30.5rem;
   }
+  .h-\[40\.59rem\] {
+    height: 40.59rem;
+  }
   .h-full {
     height: 100%;
   }
@@ -490,6 +496,9 @@
   }
   .w-\[31\.25rem\] {
     width: 31.25rem;
+  }
+  .w-\[62\.5rem\] {
+    width: 62.5rem;
   }
   .w-\[120px\] {
     width: 120px;
@@ -613,6 +622,9 @@
   }
   .items-center {
     align-items: center;
+  }
+  .items-end {
+    align-items: flex-end;
   }
   .items-start {
     align-items: flex-start;
@@ -1154,9 +1166,6 @@
   }
   .opacity-30 {
     opacity: 30%;
-  }
-  .opacity-45 {
-    opacity: 45%;
   }
   .opacity-50 {
     opacity: 50%;
