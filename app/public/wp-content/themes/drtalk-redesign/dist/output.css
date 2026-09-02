@@ -1277,9 +1277,6 @@
       font-size: var(--text-5xl);
       line-height: var(--tw-leading, var(--text-5xl--line-height));
     }
-    .sm\:text-\[18px\] {
-      font-size: 18px;
-    }
     .sm\:text-\[48px\] {
       font-size: 48px;
     }

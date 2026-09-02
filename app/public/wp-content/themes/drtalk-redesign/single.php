@@ -126,7 +126,7 @@ $blog_url = esc_url(home_url('/blog/'));
 				<div class="news-cta-noise" style="<?php echo $cta_noise_style; ?>" aria-hidden="true"></div>
 				<div class="relative mx-auto flex w-full max-w-[1024px] flex-col items-center gap-8 text-center" data-name="left">
 					<div class="flex w-full flex-col items-center gap-4 text-purple-dark" data-name="textblock">
-						<div class="flex w-full flex-col justify-end font-body text-[13px] font-black uppercase leading-4 tracking-[1.95px] text-purple-dark">
+						<div class="flex w-full flex-col justify-end pb-4 font-body text-[13px] font-black uppercase leading-4 tracking-[1.95px] text-purple-dark">
 							<p class="mb-0 leading-4"><?php esc_html_e('FREE 30-MINUTE SESSION', 'drtalk-redesign'); ?></p>
 						</div>
 						<h2 id="cta-article-title" class="font-heading text-[36px] font-semibold leading-none tracking-normal text-purple-dark sm:text-[48px] sm:leading-[1.1] sm:tracking-[-0.48px]">
