@@ -746,7 +746,7 @@
 
     .personalized-panel {
       position: relative;
-      height: 37.5rem;
+      height: 488px;
       overflow: hidden;
       border-radius: 1.5rem;
     }
@@ -771,7 +771,7 @@
       position: relative;
       flex-direction: row;
       gap: 0.5rem;
-      height: 37.5rem;
+      height: 488px;
       border: 1px solid #ede8e1;
       border-radius: 1.5rem;
       padding: 1.5rem;
