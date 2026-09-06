@@ -4,7 +4,6 @@ $referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url()
 $pattern_url = esc_url(get_theme_file_uri('assets/images/personalized-pattern-dark.png'));
 $orange_pattern_url = esc_url(get_theme_file_uri('assets/images/footer-pattern.png'));
 $hero_image_url = esc_url(get_theme_file_uri('assets/images/about-dashboard.png'));
-$mobile_growth_image_url = esc_url(get_theme_file_uri('assets/images/about-dashboard-mobile.png'));
 $founder_image_url = esc_url(get_theme_file_uri('assets/images/about-thomas.png'));
 $testimonial_image_url = esc_url(get_theme_file_uri('assets/images/about-albert.png'));
 $outdated_methods_icon_url = esc_url(get_theme_file_uri('assets/images/different-referral-friction-hover.gif'));
@@ -95,42 +94,20 @@ get_header();
 	</div>
 </section>
 
-<section class="relative overflow-hidden px-5 py-16 lg:hidden" style="--about-pattern: url('<?php echo $orange_pattern_url; ?>');" aria-labelledby="growth-title-mobile">
-	<div class="pointer-events-none absolute inset-0 bg-[image:var(--about-pattern)] bg-[length:35rem_35rem] bg-left-top" aria-hidden="true"></div>
-	<div class="relative flex flex-col gap-8">
-		<h2 id="growth-title-mobile" class="text-[2.5rem] font-medium leading-[1.1] tracking-[-0.01em]"><?php esc_html_e(
-  	"Your growth shouldn't depend on luck and lunches.",
-  	'drtalk-redesign'
-  ); ?></h2>
-		<div class="space-y-6 text-lg leading-6 opacity-90">
-			<p><?php esc_html_e('Referral relationships are the lifeblood of a specialty practice.', 'drtalk-redesign'); ?></p>
-			<p><?php esc_html_e(
-   	'But most specialists are still managing them the way they did a decade ago…a call here, a lunch there. Hoping the GP down the street remembers you the next time a patient needs work.',
-   	'drtalk-redesign'
-   ); ?></p>
-			<p><?php esc_html_e(
-   	"Referrals arrive missing details. Relationships go quiet without warning. And there's no reliable way to know if what you're investing in referring offices is actually paying off.",
-   	'drtalk-redesign'
-   ); ?></p>
-			<p><?php esc_html_e("That's what we built drtalk to solve.", 'drtalk-redesign'); ?></p>
-		</div>
-		<div class="flex h-[12.5rem] flex-col items-end">
-			<img class="h-[20.3125rem] w-[31.25rem] max-w-none object-cover" src="<?php echo $mobile_growth_image_url; ?>" width="2000" height="1300" alt="<?php esc_attr_e(
-	'drtalk referral dashboard with tracked practice activity',
-	'drtalk-redesign'
-); ?>">
-		</div>
-	</div>
-</section>
-
-<section class="hidden px-5 py-16 sm:px-8 lg:block lg:px-12 lg:py-[6.5rem]" aria-labelledby="growth-title">
+<section class="px-5 py-16 sm:px-8 lg:px-12 lg:py-[6.5rem]" aria-labelledby="growth-title">
 	<div class="mx-auto max-w-[75rem]">
-		<h2 id="growth-title" class="text-center text-[2.5rem] font-medium leading-[1.1] tracking-[-0.01em]"><?php esc_html_e(
-  	"Your growth shouldn't depend on luck and lunches.",
-  	'drtalk-redesign'
-  ); ?></h2>
+		<div class="text-center">
+			<p class="text-[0.8125rem] font-black leading-4 tracking-[0.15em] uppercase"><?php esc_html_e(
+   	'What we built drtalk to solve',
+   	'drtalk-redesign'
+   ); ?></p>
+			<h2 id="growth-title" class="mt-4 text-[2rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-[2.5rem]"><?php esc_html_e(
+   	"Your growth shouldn't depend on luck and lunches.",
+   	'drtalk-redesign'
+   ); ?></h2>
+		</div>
 		<div class="mt-12 grid gap-2 lg:grid-cols-2">
-			<article class="flex flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl p-8 text-center" style="background-image: url('<?php echo $pattern_url; ?>'); background-size: 35rem 35rem;">
+			<article class="flex flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl p-8 text-center" style="background-image: url('<?php echo $orange_pattern_url; ?>'); background-size: 35rem 35rem;">
 				<img class="h-20 w-[7.875rem] object-contain motion-reduce:hidden" src="<?php echo $outdated_methods_icon_url; ?>" width="2268" height="1440" alt="">
 				<img class="hidden h-20 w-[7.875rem] object-contain motion-reduce:block" src="<?php echo esc_url(
     	get_theme_file_uri('assets/images/different-referral-friction-static.png')
@@ -143,7 +120,7 @@ get_header();
 	'drtalk-redesign'
 ); ?></p></div>
 			</article>
-			<article class="flex flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl p-8 text-center" style="background-image: url('<?php echo $pattern_url; ?>'); background-size: 35rem 35rem;">
+			<article class="flex flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl p-8 text-center" style="background-image: url('<?php echo $orange_pattern_url; ?>'); background-size: 35rem 35rem;">
 				<img class="h-20 w-[7.875rem] object-contain" src="<?php echo $incomplete_insights_icon_url; ?>" width="100" height="75" alt="">
 				<div><h3 class="text-[1.625rem] font-medium leading-[1] opacity-90"><?php esc_html_e(
     	'Incomplete Insights',
@@ -154,10 +131,6 @@ get_header();
 ); ?></p></div>
 			</article>
 		</div>
-		<p class="mt-12 text-center text-lg font-bold leading-6 opacity-90"><?php esc_html_e(
-  	"That's what we built drtalk to solve.",
-  	'drtalk-redesign'
-  ); ?></p>
 	</div>
 </section>
 
@@ -172,13 +145,10 @@ get_header();
 ); ?></p><p><?php esc_html_e(
 	"So he founded drtalk to fix it. To make professional communication seamless, referrals smart and efficient, and the knowledge dentists rely on easy to share. Not as an outsider guessing at the problem, but as someone who'd already spent decades inside it.",
 	'drtalk-redesign'
-); ?> <strong class="hidden lg:inline"><?php esc_html_e(
+); ?> <strong class="font-normal lg:font-bold"><?php esc_html_e(
  	"And it's already working for practices like yours.",
  	'drtalk-redesign'
- ); ?></strong></p><p class="lg:hidden"><?php esc_html_e(
-	"A decade later, that idea isn't a theory anymore. It's already working for practices like yours.",
-	'drtalk-redesign'
-); ?></p></div></div>
+ ); ?></strong></p></div></div>
 		<figure class="order-1 min-h-[25.1875rem] lg:order-2 lg:min-h-0"><img class="aspect-[600/399] w-full rounded-lg object-cover" src="<?php echo $founder_image_url; ?>" width="600" height="399" alt="<?php esc_attr_e(
 	'Dr. Thomas L. Stone',
 	'drtalk-redesign'
@@ -230,7 +200,7 @@ get_header();
   	'What practices see after switching',
   	'drtalk-redesign'
   ); ?></p>
-		<blockquote class="min-h-[7.5rem] text-base leading-6 lg:min-h-0 lg:text-[1.875rem] lg:leading-normal"><p>“<?php esc_html_e(
+		<blockquote class="text-xl leading-normal lg:text-[1.875rem]"><p>“<?php esc_html_e(
   	"drtalk has transformed our practice. Our team works in sync with referring offices, and we've seen a significant boost in efficiency and practice revenue.",
   	'drtalk-redesign'
   ); ?>”</p></blockquote>

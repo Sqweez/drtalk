@@ -4,7 +4,7 @@ $home_url = esc_url(home_url('/'));
 $about_url = esc_url(home_url('/about-us/'));
 $blog_url = esc_url(home_url('/blog/'));
 $login_url = esc_url(drtalk_redesign_login_url());
-$demo_url = esc_url(drtalk_redesign_demo_url());
+$referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
 $logo_url = esc_url(get_theme_file_uri('assets/images/drtalk-logo.svg'));
 $primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
 ?>
@@ -39,7 +39,7 @@ $primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
 				<a class="w-full" href="<?php echo $blog_url; ?>">News</a>
 			</div>
 			<div class="flex w-full flex-col gap-4">
-				<a class="inline-flex min-h-16 w-full items-center justify-center rounded-full bg-purple-dark px-8 py-5 text-center text-base font-bold leading-6 text-cream" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Get a Free Referral Analysis</a>
+				<a class="inline-flex min-h-16 w-full items-center justify-center rounded-full bg-purple-dark px-8 py-5 text-center text-base font-bold leading-6 text-cream" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">Get a Free Referral Analysis</a>
 				<a class="inline-flex min-h-16 w-full items-center justify-center rounded-full px-8 py-5 text-center text-base font-bold leading-6 text-purple-dark" href="<?php echo $login_url; ?>" target="_blank" rel="noreferrer">Log In</a>
 			</div>
 		</nav>
@@ -56,7 +56,7 @@ $primary_navigation_label = esc_attr__('Primary navigation', 'drtalk-redesign');
 
 		<div class="flex shrink-0 items-center gap-4">
 			<a class="inline-flex h-10 items-center justify-center rounded-[28px] px-6 py-3 text-base font-bold leading-6 text-purple-dark transition hover:bg-purple-dark/5" href="<?php echo $login_url; ?>" target="_blank" rel="noreferrer">Log In</a>
-			<a class="inline-flex h-10 items-center justify-center rounded-[28px] bg-purple-dark px-6 py-3 text-base font-bold leading-6 text-cream transition hover:bg-purple" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Get a Free Referral Analysis</a>
+			<a class="inline-flex h-10 items-center justify-center rounded-[28px] bg-purple-dark px-6 py-3 text-base font-bold leading-6 text-cream transition hover:bg-purple" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">Get a Free Referral Analysis</a>
 		</div>
 	</div>
 </header>

@@ -91,7 +91,7 @@ $blog_url = esc_url(home_url('/blog/'));
 					</div>
 
 					<!-- Share Section -->
-					<div class="hidden w-full max-w-[1200px] flex-col gap-4 sm:flex" data-name="links">
+					<div class="flex w-full max-w-[1200px] flex-col gap-4" data-name="links">
 						<p class="font-body text-[14px] font-bold leading-5 text-purple-dark">
 							<?php esc_html_e('Share this article:', 'drtalk-redesign'); ?>
 						</p>
