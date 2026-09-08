@@ -1285,12 +1285,6 @@
     outline-color: var(--color-orange);
   }
   @media (prefers-reduced-motion: reduce) {
-    .motion-reduce\:block {
-      display: block;
-    }
-    .motion-reduce\:hidden {
-      display: none;
-    }
     .motion-reduce\:translate-y-0 {
       --tw-translate-y: 0px;
       translate: var(--tw-translate-x) var(--tw-translate-y);

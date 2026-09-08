@@ -6,7 +6,7 @@ $orange_pattern_url = esc_url(get_theme_file_uri('assets/images/footer-pattern.p
 $hero_image_url = esc_url(get_theme_file_uri('assets/images/about-dashboard.png'));
 $founder_image_url = esc_url(get_theme_file_uri('assets/images/about-thomas.png'));
 $testimonial_image_url = esc_url(get_theme_file_uri('assets/images/about-albert.png'));
-$outdated_methods_icon_url = esc_url(get_theme_file_uri('assets/images/different-referral-friction-hover.gif'));
+$outdated_methods_icon_url = esc_url(get_theme_file_uri('assets/images/different-referral-friction-static.png'));
 $incomplete_insights_icon_url = esc_url(get_theme_file_uri('assets/images/about-incomplete.svg'));
 
 $platform_features = [
@@ -108,10 +108,7 @@ get_header();
 		</div>
 		<div class="mt-12 grid gap-2 lg:grid-cols-2">
 			<article class="flex flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl p-8 text-center" style="background-image: url('<?php echo $orange_pattern_url; ?>'); background-size: 35rem 35rem;">
-				<img class="h-20 w-[7.875rem] object-contain motion-reduce:hidden" src="<?php echo $outdated_methods_icon_url; ?>" width="2268" height="1440" alt="">
-				<img class="hidden h-20 w-[7.875rem] object-contain motion-reduce:block" src="<?php echo esc_url(
-    	get_theme_file_uri('assets/images/different-referral-friction-static.png')
-    ); ?>" width="2268" height="1440" alt="">
+				<img class="h-20 w-[7.875rem] object-contain" src="<?php echo $outdated_methods_icon_url; ?>" width="2268" height="1440" alt="">
 				<div><h3 class="text-[1.625rem] font-medium leading-[1] opacity-90"><?php esc_html_e(
     	'Outdated Methods',
     	'drtalk-redesign'
