@@ -1,6 +1,5 @@
 <?php
 
-$demo_url = esc_url(drtalk_redesign_demo_url());
 $referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
 $baa_url = esc_url(home_url('/business-associates-agreement/'));
 $contact_url = esc_url(drtalk_redesign_contact_url());
@@ -41,7 +40,7 @@ $faq_categories = [
 				'question' => 'Does drtalk integrate with my existing EMR or practice management software?',
 				'answer' => sprintf(
 					'Yes, drtalk has EMR integration capability. The specifics depend on your current system - <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">book a working session</a> with our team and we\'ll walk through exactly how drtalk fits into your existing setup, including what\'s possible with your practice management software.',
-					$demo_url
+					$referral_gap_analysis_url
 				)
 			]
 		]
@@ -98,7 +97,7 @@ $faq_categories = [
 				'question' => 'How do I get started?',
 				'answer' => sprintf(
 					'<a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a 30-minute working session</a> with our team. We\'ll map your current referral workflow, show you where drtalk fits in, and get your practice set up for a free trial if you think drtalk is a fit. No pressure, no obligation.',
-					$demo_url
+					$referral_gap_analysis_url
 				)
 			]
 		]
@@ -114,7 +113,7 @@ $plus_icon_url = get_theme_file_uri('assets/images/icon-plus.svg');
 		<h2 id="faq-title" class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Frequently Asked Questions</h2>
 		<div class="flex max-w-[42rem] flex-wrap items-center justify-center gap-2" role="tablist"
 				 aria-label="FAQ categories" data-faq-tabs></div>
-		<div class="min-h-[700px] w-full max-w-[45rem] transition-[opacity,translate] duration-[220ms] ease-[cubic-bezier(0.25,1,0.5,1)] lg:min-h-[456px]" data-faq-content></div>
+		<div class="w-full max-w-[45rem] transition-[opacity,translate] duration-[220ms] ease-[cubic-bezier(0.25,1,0.5,1)]" data-faq-content></div>
 	</div>
 	<script type="application/json" data-faq-data><?php echo $faq_data_json; ?></script>
 </section>

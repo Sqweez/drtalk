@@ -463,9 +463,6 @@
   .min-h-\[65vh\] {
     min-height: 65vh;
   }
-  .min-h-\[700px\] {
-    min-height: 700px;
-  }
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
@@ -1371,9 +1368,6 @@
     }
     .lg\:min-h-\[34rem\] {
       min-height: 34rem;
-    }
-    .lg\:min-h-\[456px\] {
-      min-height: 456px;
     }
     .lg\:w-\[30rem\] {
       width: 30rem;
