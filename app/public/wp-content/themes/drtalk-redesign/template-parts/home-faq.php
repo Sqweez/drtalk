@@ -114,7 +114,7 @@ $plus_icon_url = get_theme_file_uri('assets/images/icon-plus.svg');
 		<h2 id="faq-title" class="text-center text-4xl leading-none lg:text-5xl lg:leading-[1.1]">Frequently Asked Questions</h2>
 		<div class="flex max-w-[42rem] flex-wrap items-center justify-center gap-2" role="tablist"
 				 aria-label="FAQ categories" data-faq-tabs></div>
-		<div class="min-h-[700px] w-full max-w-[45rem] transition-[opacity,translate] duration-[220ms] ease-[cubic-bezier(0.25,1,0.5,1)] motion-reduce:translate-y-0 motion-reduce:transition-none lg:min-h-[456px]" data-faq-content></div>
+		<div class="min-h-[700px] w-full max-w-[45rem] transition-[opacity,translate] duration-[220ms] ease-[cubic-bezier(0.25,1,0.5,1)] lg:min-h-[456px]" data-faq-content></div>
 	</div>
 	<script type="application/json" data-faq-data><?php echo $faq_data_json; ?></script>
 </section>

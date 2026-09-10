@@ -37,7 +37,7 @@
         return;
       }
       navigation.classList.remove("is-open");
-      const transitionDuration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 320;
+      const transitionDuration = 320;
       closeTimer = window.setTimeout(() => {
         if (menuToggle.getAttribute("aria-expanded") === "false") {
           navigation.classList.add("hidden");
@@ -70,12 +70,8 @@
   var problemSection = document.querySelector("[data-problem-section]");
   if (problemSection) {
     const cards = [...problemSection.querySelectorAll("[data-problem-card]")];
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)");
     const restartIcon = (card) => {
-      if (reduceMotion.matches) {
-        return;
-      }
       const icon = card.querySelector("[data-problem-icon-src]");
       const source = icon == null ? void 0 : icon.dataset.problemIconSrc;
       if (!icon || !source) {
@@ -464,7 +460,6 @@
     const demo = howItWorksRoot.querySelector("[data-how-it-works-demo]");
     const demoStates = [...howItWorksRoot.querySelectorAll("[data-how-it-works-demo-state]")];
     const rotationInterval = 7e3;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let activeStepIndex = 0;
     let rotationTimer;
     let isInView = false;
@@ -500,7 +495,7 @@
     };
     const restartRotation = () => {
       stopRotation();
-      if (reducedMotion.matches || steps.length < 2 || !isInView || document.hidden) {
+      if (steps.length < 2 || !isInView || document.hidden) {
         return;
       }
       rotationTimer = window.setTimeout(() => {
@@ -562,7 +557,6 @@
       { threshold: 0.35 }
     );
     observer.observe(howItWorksRoot);
-    reducedMotion.addEventListener("change", restartRotation);
     if (steps.length && demo) {
       setActiveStep(activeStepIndex);
       restartRotation();
@@ -572,12 +566,8 @@
   // assets/js/why-us-cards.js
   var whyUsCards = [...document.querySelectorAll("[data-why-us-card]")];
   if (whyUsCards.length) {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)");
     const restartIcon = (card) => {
-      if (reduceMotion.matches) {
-        return;
-      }
       const icon = card.querySelector("[data-why-us-icon-src]");
       const source = icon == null ? void 0 : icon.dataset.whyUsIconSrc;
       if (!icon || !source) {

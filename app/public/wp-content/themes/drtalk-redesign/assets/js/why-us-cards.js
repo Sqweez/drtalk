@@ -1,14 +1,9 @@
 const whyUsCards = [...document.querySelectorAll('[data-why-us-card]')];
 
 if (whyUsCards.length) {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   const restartIcon = (card) => {
-    if (reduceMotion.matches) {
-      return;
-    }
-
     const icon = card.querySelector('[data-why-us-icon-src]');
     const source = icon?.dataset.whyUsIconSrc;
 

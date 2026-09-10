@@ -2,7 +2,6 @@ const responsivenessRoot = document.querySelector('[data-responsiveness]');
 
 if (responsivenessRoot) {
   const counters = [...responsivenessRoot.querySelectorAll('[data-count-target]')];
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const setCounter = (counter, value) => {
     const suffix = counter.dataset.countSuffix || '';
@@ -13,11 +12,6 @@ if (responsivenessRoot) {
     counters.forEach((counter) => {
       const target = Number(counter.dataset.countTarget);
       const start = Math.floor(Math.random() * Math.max(1, target * 0.35));
-
-      if (reducedMotion) {
-        setCounter(counter, target);
-        return;
-      }
 
       const startedAt = performance.now();
       const duration = 900;

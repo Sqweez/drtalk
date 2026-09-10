@@ -5,7 +5,6 @@ if (howItWorksRoot) {
   const demo = howItWorksRoot.querySelector('[data-how-it-works-demo]');
   const demoStates = [...howItWorksRoot.querySelectorAll('[data-how-it-works-demo-state]')];
   const rotationInterval = 7000;
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let activeStepIndex = 0;
   let rotationTimer;
   let isInView = false;
@@ -53,7 +52,7 @@ if (howItWorksRoot) {
   const restartRotation = () => {
     stopRotation();
 
-    if (reducedMotion.matches || steps.length < 2 || !isInView || document.hidden) {
+    if (steps.length < 2 || !isInView || document.hidden) {
       return;
     }
 
@@ -129,8 +128,6 @@ if (howItWorksRoot) {
   );
 
   observer.observe(howItWorksRoot);
-
-  reducedMotion.addEventListener('change', restartRotation);
 
   if (steps.length && demo) {
     setActiveStep(activeStepIndex);

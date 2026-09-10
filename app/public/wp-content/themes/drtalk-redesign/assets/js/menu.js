@@ -19,9 +19,7 @@ if (menuToggle && navigation) {
 
     navigation.classList.remove('is-open');
 
-    const transitionDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      ? 0
-      : 320;
+    const transitionDuration = 320;
 
     closeTimer = window.setTimeout(() => {
       if (menuToggle.getAttribute('aria-expanded') === 'false') {
