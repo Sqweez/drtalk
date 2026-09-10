@@ -67,7 +67,7 @@ $how_it_works_steps = [
 	],
 	[
 		'number' => '03',
-		'title' => 'Collaborate and close the loop',
+		'title' => 'Collaborate and follow through',
 		'description' =>
 			'Chat securely, share images, and update case status in one place. No more "Did you get my fax?" Just faster care and a more professional practice.',
 		'image' => 'how-it-works-03.png'

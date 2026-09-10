@@ -11,8 +11,7 @@ get_header(); ?>
 <?php while (have_posts()): ?>
 	<?php the_post(); ?>
 	<?php
- $published_date = drtalk_redesign_get_legal_page_date(get_the_ID(), 'published', get_the_date('M j, Y'));
- $modified_date = drtalk_redesign_get_legal_page_date(get_the_ID(), 'modified', get_the_modified_date('M j, Y'));
+ $effective_date = drtalk_redesign_get_legal_page_date(get_the_ID(), get_the_date('M j, Y'));
 
  $content = get_the_content();
  for ($i = 0; $i < 5; $i++) {
@@ -62,16 +61,9 @@ get_header(); ?>
 				<h1 class="font-heading text-[36px] font-semibold leading-none text-purple-dark sm:text-[48px] sm:leading-[1.1] sm:tracking-[-0.48px]">
 					<?php the_title(); ?>
 				</h1>
-				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-body text-base leading-6 text-purple-dark">
-					<div class="flex items-center gap-1">
-						<span class="opacity-50"><?php esc_html_e('Published:', 'drtalk-redesign'); ?></span>
-						<span><?php echo esc_html($published_date); ?></span>
-					</div>
-					<span class="size-1 shrink-0 rounded-full bg-purple-dark" aria-hidden="true"></span>
-					<div class="flex items-center gap-1">
-						<span class="opacity-50"><?php esc_html_e('Last Update:', 'drtalk-redesign'); ?></span>
-						<span><?php echo esc_html($modified_date); ?></span>
-					</div>
+				<div class="flex items-center gap-1 font-body text-base leading-6 text-purple-dark">
+					<span class="opacity-50"><?php esc_html_e('Effective:', 'drtalk-redesign'); ?></span>
+					<span><?php echo esc_html($effective_date); ?></span>
 				</div>
 			</header>
 

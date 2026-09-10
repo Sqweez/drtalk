@@ -80,7 +80,7 @@ get_header();
     	'drtalk-redesign'
     ); ?></p>
 			</div>
-			<a class="inline-flex h-16 items-center justify-center gap-2 rounded-full border-2 border-purple-dark px-8 text-center text-base font-bold leading-6 text-purple-dark transition-colors hover:bg-purple-dark hover:text-cream" href="#what-tom-built">
+			<a class="inline-flex h-16 items-center justify-center gap-2 rounded-full border-2 border-purple-dark px-8 text-center text-base font-bold leading-6 text-purple-dark transition-colors hover:bg-purple-dark hover:text-cream" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">
 				<?php esc_html_e('See How drtalk Works', 'drtalk-redesign'); ?>
 				<span class="text-2xl leading-none" aria-hidden="true">→</span>
 			</a>
@@ -113,7 +113,7 @@ get_header();
     	'Outdated Methods',
     	'drtalk-redesign'
     ); ?></h3><p class="mt-2 text-lg leading-6 opacity-90"><?php esc_html_e(
-	'Most specialists are still managing them the way they did a decade ago…a call here, a lunch there. Hoping the GP down the street remembers you the next time a patient needs work.',
+	'Most specialists are still managing referrals the way they did a decade ago…a call here, a lunch there. Hoping the GP down the street remembers you the next time a patient needs work.',
 	'drtalk-redesign'
 ); ?></p></div>
 			</article>
