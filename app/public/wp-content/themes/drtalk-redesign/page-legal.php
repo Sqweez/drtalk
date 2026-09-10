@@ -11,8 +11,8 @@ get_header(); ?>
 <?php while (have_posts()): ?>
 	<?php the_post(); ?>
 	<?php
- $published_date = get_the_date('M j, Y');
- $modified_date = get_the_modified_date('M j, Y');
+ $published_date = drtalk_redesign_get_legal_page_date(get_the_ID(), 'published', get_the_date('M j, Y'));
+ $modified_date = drtalk_redesign_get_legal_page_date(get_the_ID(), 'modified', get_the_modified_date('M j, Y'));
 
  $content = get_the_content();
  for ($i = 0; $i < 5; $i++) {

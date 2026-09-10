@@ -1961,12 +1961,6 @@
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .trusted-partners-track {
-      animation: none;
-    }
-  }
-
   @keyframes trusted-partners-marquee {
     from {
       transform: translate3d(0, 0, 0);
