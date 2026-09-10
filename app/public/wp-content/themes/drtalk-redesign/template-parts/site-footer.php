@@ -1,7 +1,7 @@
 <?php
 
 $home_url = esc_url(home_url('/'));
-$demo_url = esc_url(drtalk_redesign_demo_url());
+$referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
 $login_url = esc_url(drtalk_redesign_login_url());
 $about_url = esc_url(home_url('/about-us/'));
 $blog_url = esc_url(home_url('/blog/'));
@@ -31,7 +31,7 @@ $company_navigation_label = esc_attr__('Company navigation', 'drtalk-redesign');
 			<nav class="flex flex-1 flex-col items-start gap-4" aria-label="<?php echo $website_navigation_label; ?>">
 				<p class="w-[120px] opacity-50">Website</p>
 				<ul class="flex w-full flex-col items-start gap-2">
-					<li><a class="transition hover:text-orange" href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo</a></li>
+					<li><a class="transition hover:text-orange" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">Book a Demo</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $login_url; ?>" target="_blank" rel="noreferrer">Log In</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $about_url; ?>">About</a></li>
 					<li><a class="transition hover:text-orange" href="<?php echo $blog_url; ?>">News</a></li>
