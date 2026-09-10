@@ -1,6 +1,5 @@
 <?php
 
-$demo_url = esc_url(drtalk_redesign_demo_url());
 $referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
 $arrow_left_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-left.svg'));
 $arrow_right_url = esc_url(get_theme_file_uri('assets/images/icon-arrow-right.svg'));
@@ -690,7 +689,7 @@ get_header();
 						<div class="personalized-noise" style="<?php echo $personalized_noise_style; ?>" aria-hidden="true"></div>
 						<div class="personalized-copy">
 							<div><h3><?php echo $personalized_title; ?></h3><p><?php echo $personalized_description; ?></p></div>
-							<div class="personalized-action"><a href="<?php echo $demo_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p>30 minutes. No pitch, no obligation.</p></div>
+							<div class="personalized-action"><a href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer">Book a Demo Today</a><p>30 minutes. No pitch, no obligation.</p></div>
 						</div>
 						<div class="personalized-screen"><img src="<?php echo $personalized_screen; ?>" alt="drtalk platform screen"></div>
 					</div>
