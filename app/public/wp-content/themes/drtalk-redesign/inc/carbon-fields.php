@@ -355,6 +355,108 @@ function drtalk_redesign_register_front_page_fields()
 								->set_required(true)
 						])
 				])
+				->add_fields('testimonials', __('Testimonials', 'drtalk-redesign'), [
+					Field::make('checkbox', 'is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+						true
+					),
+					Field::make('textarea', 'title', __('Section Title (H2)', 'drtalk-redesign'))
+						->set_default_value('For the people who use it every day.')
+						->set_rows(2)
+						->set_width(100),
+					Field::make('complex', 'testimonials_list', __('Testimonials List', 'drtalk-redesign'))
+						->set_collapsed(true)
+						->add_fields([
+							Field::make('text', 'name', __('Author Name', 'drtalk-redesign'))
+								->set_width(25)
+								->set_required(true),
+							Field::make('text', 'role', __('Job Role / Title', 'drtalk-redesign'))->set_width(25),
+							Field::make('text', 'company', __('Practice / Company', 'drtalk-redesign'))->set_width(25),
+							Field::make('text', 'eyebrow', __('Eyebrow / Payoff', 'drtalk-redesign'))
+								->set_help_text(
+									__('e.g. Save Time, Schedule Faster, Improve Workflows', 'drtalk-redesign')
+								)
+								->set_width(25),
+							Field::make('textarea', 'quote', __('Quote / Content', 'drtalk-redesign'))
+								->set_rows(3)
+								->set_width(100)
+								->set_required(true),
+							Field::make('image', 'avatar', __('Author Photo', 'drtalk-redesign'))
+								->set_value_type('id')
+								->set_width(50),
+							Field::make('image', 'logo', __('Company Logo', 'drtalk-redesign'))
+								->set_value_type('id')
+								->set_width(50)
+						])
+				])
+				->add_fields('founder', __('Founder / Our Story', 'drtalk-redesign'), [
+					Field::make('checkbox', 'is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+						true
+					),
+					Field::make('textarea', 'title', __('Section Title (H2)', 'drtalk-redesign'))
+						->set_default_value(
+							'Built by specialists who lived the problem. Not developers who read about it.'
+						)
+						->set_rows(2)
+						->set_width(100),
+					Field::make('separator', 'sep_founder_profile', __('Founder Profile', 'drtalk-redesign')),
+					Field::make('image', 'founder_image', __('Founder Photo', 'drtalk-redesign'))
+						->set_value_type('id')
+						->set_width(30),
+					Field::make(
+						'textarea',
+						'founder_name',
+						__('Founder Name & Titles (HTML allowed)', 'drtalk-redesign')
+					)
+						->set_default_value('Thomas L. Stone,<br>MD, DDS, FACS')
+						->set_rows(2)
+						->set_width(35),
+					Field::make(
+						'textarea',
+						'founder_role',
+						__('Founder Bio / Subtitle (HTML allowed)', 'drtalk-redesign')
+					)
+						->set_default_value('Oral & Maxillofacial Surgeon;<br>Founder of drtalk (est. 2014)')
+						->set_rows(2)
+						->set_width(35),
+					Field::make('separator', 'sep_founder_story', __('Story & Call to Action', 'drtalk-redesign')),
+					Field::make(
+						'textarea',
+						'story',
+						__('Story Paragraphs (HTML / Paragraphs allowed)', 'drtalk-redesign')
+					)
+						->set_default_value(
+							"<p>Over more than 25 years in oral surgery, Dr. Stone watched referral workflows break under growth, GP relationships quietly cool when communication lagged, and talented staff spend hours on admin that a better system would have handled automatically.</p>\n<p>He created drtalk because no existing tool was built for the way specialist practices actually work. Not as an outsider guessing at the problem, but as someone who lived it for decades.</p>"
+						)
+						->set_rows(6)
+						->set_width(100),
+					Field::make('text', 'link_text', __('Link Text', 'drtalk-redesign'))
+						->set_default_value('Read Our Story')
+						->set_width(50),
+					Field::make(
+						'text',
+						'link_url',
+						__('Link URL (leave empty for default About Us page)', 'drtalk-redesign')
+					)->set_width(50)
+				])
+				->add_fields('concerns', __('Common Concerns / FAQ Carousel', 'drtalk-redesign'), [
+					Field::make('checkbox', 'is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+						true
+					),
+					Field::make('text', 'title', __('Section Title (H2)', 'drtalk-redesign'))
+						->set_default_value('Common concerns. Honest answers.')
+						->set_width(100),
+					Field::make('complex', 'concerns_list', __('Concerns List', 'drtalk-redesign'))
+						->set_collapsed(true)
+						->add_fields([
+							Field::make('text', 'title', __('Concern / Question', 'drtalk-redesign'))
+								->set_width(40)
+								->set_required(true),
+							Field::make('textarea', 'answer', __('Answer / Explanation', 'drtalk-redesign'))
+								->set_rows(3)
+								->set_width(60)
+								->set_required(true)
+						])
+				])
 		]);
 }
 add_action('carbon_fields_register_fields', 'drtalk_redesign_register_front_page_fields');
@@ -622,6 +724,11 @@ function drtalk_redesign_seed_home_blocks($force = false)
 		'Personas Referring GPs'
 	);
 
+	$founder_image_id = drtalk_redesign_get_or_create_theme_attachment(
+		'assets/images/thomas-stone-figma.png',
+		'Thomas L. Stone Founder Photo'
+	);
+
 	$default_blocks = [
 		[
 			'_type' => 'hero',
@@ -875,6 +982,51 @@ function drtalk_redesign_seed_home_blocks($force = false)
 					'image' => $persona_3_id ?: ''
 				]
 			]
+		],
+		[
+			'_type' => 'testimonials',
+			'is_active' => true,
+			'title' => 'For the people who use it every day.',
+			'testimonials_list' => drtalk_redesign_get_cpt_testimonials_for_migration()
+		],
+		[
+			'_type' => 'founder',
+			'is_active' => true,
+			'title' => 'Built by specialists who lived the problem. Not developers who read about it.',
+			'founder_image' => $founder_image_id ?: '',
+			'founder_name' => 'Thomas L. Stone,<br>MD, DDS, FACS',
+			'founder_role' => 'Oral & Maxillofacial Surgeon;<br>Founder of drtalk (est. 2014)',
+			'story' =>
+				"<p>Over more than 25 years in oral surgery, Dr. Stone watched referral workflows break under growth, GP relationships quietly cool when communication lagged, and talented staff spend hours on admin that a better system would have handled automatically.</p>\n<p>He created drtalk because no existing tool was built for the way specialist practices actually work. Not as an outsider guessing at the problem, but as someone who lived it for decades.</p>",
+			'link_text' => 'Read Our Story',
+			'link_url' => ''
+		],
+		[
+			'_type' => 'concerns',
+			'is_active' => true,
+			'title' => 'Common concerns. Honest answers.',
+			'concerns_list' => [
+				[
+					'title' => '“We already have a system for referrals.”',
+					'answer' =>
+						'Great - then the analysis will help you pressure-test it. We\'ll walk through how practices with similar setups handle growth, staff turnover, and GP responsiveness expectations. If your workflow holds up, you\'ll know it. If there are gaps, you\'ll see them before they become expensive.'
+				],
+				[
+					'title' => '“I don\'t want to add another subscription.”',
+					'answer' =>
+						'You\'re not being asked to. The analysis is free and comes with no obligation. If after seeing how drtalk works alongside your current setup the ROI isn\'t obvious, it\'s probably not the right move and we\'ll say so.'
+				],
+				[
+					'title' => '“My GPs won\'t use another platform.”',
+					'answer' =>
+						'They don\'t have to, and many join on their own once they realize it makes their life easier too. Free access for GPs, nothing to install, and direct secure messaging and point-of-care scheduling with your office instead of chasing calls and faxes.'
+				],
+				[
+					'title' => '“My staff won\'t adopt another tool.”',
+					'answer' =>
+						'Staff resistance comes from tools that add to their workload. During the review we\'ll show specifically how drtalk reduces the daily chaos your team already deals with, not pile on top of it.'
+				]
+			]
 		]
 	];
 
@@ -882,3 +1034,133 @@ function drtalk_redesign_seed_home_blocks($force = false)
 	update_option('drtalk_home_blocks_seeded_v1', 1);
 }
 add_action('admin_init', 'drtalk_redesign_seed_home_blocks');
+
+/**
+ * Reads existing CPT testimonials from the database and returns them formatted for the Carbon Fields block.
+ *
+ * @return array
+ */
+function drtalk_redesign_get_cpt_testimonials_for_migration()
+{
+	$posts = get_posts([
+		'post_type' => 'testimonial',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'orderby' => 'menu_order',
+		'order' => 'ASC'
+	]);
+
+	if (empty($posts)) {
+		return [];
+	}
+
+	$items = [];
+	foreach ($posts as $post) {
+		$logo_id = absint(get_post_meta($post->ID, '_drtalk_testimonial_logo_id', true));
+		$photo_id = absint(get_post_thumbnail_id($post->ID));
+
+		$items[] = [
+			'name' => get_the_title($post),
+			'role' => (string) get_post_meta($post->ID, '_drtalk_testimonial_role', true),
+			'company' => (string) get_post_meta($post->ID, '_drtalk_testimonial_company', true),
+			'eyebrow' => (string) get_post_meta($post->ID, '_drtalk_testimonial_payoff', true),
+			'quote' => wp_strip_all_tags($post->post_content),
+			'avatar' => $photo_id ?: '',
+			'logo' => $logo_id ?: ''
+		];
+	}
+
+	return $items;
+}
+
+/**
+ * Automatically migrates existing CPT testimonials and appends missing blocks into Carbon Fields home_blocks.
+ */
+function drtalk_redesign_sync_blocks_to_carbon()
+{
+	if (!function_exists('carbon_get_theme_option') || !function_exists('carbon_set_theme_option')) {
+		return;
+	}
+
+	$blocks = carbon_get_theme_option('home_blocks');
+	if (!is_array($blocks) || empty($blocks)) {
+		return;
+	}
+
+	$modified = false;
+	$existing_types = [];
+	foreach ($blocks as $b) {
+		if (isset($b['_type'])) {
+			$existing_types[] = $b['_type'];
+		}
+	}
+
+	if (!in_array('testimonials', $existing_types, true)) {
+		$items = drtalk_redesign_get_cpt_testimonials_for_migration();
+		if (!empty($items)) {
+			$blocks[] = [
+				'_type' => 'testimonials',
+				'is_active' => true,
+				'title' => 'For the people who use it every day.',
+				'testimonials_list' => $items
+			];
+			$modified = true;
+		}
+	}
+
+	if (!in_array('founder', $existing_types, true)) {
+		$founder_image_id = drtalk_redesign_get_or_create_theme_attachment(
+			'assets/images/thomas-stone-figma.png',
+			'Thomas L. Stone Founder Photo'
+		);
+		$blocks[] = [
+			'_type' => 'founder',
+			'is_active' => true,
+			'title' => 'Built by specialists who lived the problem. Not developers who read about it.',
+			'founder_image' => $founder_image_id ?: '',
+			'founder_name' => 'Thomas L. Stone,<br>MD, DDS, FACS',
+			'founder_role' => 'Oral & Maxillofacial Surgeon;<br>Founder of drtalk (est. 2014)',
+			'story' =>
+				"<p>Over more than 25 years in oral surgery, Dr. Stone watched referral workflows break under growth, GP relationships quietly cool when communication lagged, and talented staff spend hours on admin that a better system would have handled automatically.</p>\n<p>He created drtalk because no existing tool was built for the way specialist practices actually work. Not as an outsider guessing at the problem, but as someone who lived it for decades.</p>",
+			'link_text' => 'Read Our Story',
+			'link_url' => ''
+		];
+		$modified = true;
+	}
+
+	if (!in_array('concerns', $existing_types, true)) {
+		$blocks[] = [
+			'_type' => 'concerns',
+			'is_active' => true,
+			'title' => 'Common concerns. Honest answers.',
+			'concerns_list' => [
+				[
+					'title' => '“We already have a system for referrals.”',
+					'answer' =>
+						'Great - then the analysis will help you pressure-test it. We\'ll walk through how practices with similar setups handle growth, staff turnover, and GP responsiveness expectations. If your workflow holds up, you\'ll know it. If there are gaps, you\'ll see them before they become expensive.'
+				],
+				[
+					'title' => '“I don\'t want to add another subscription.”',
+					'answer' =>
+						'You\'re not being asked to. The analysis is free and comes with no obligation. If after seeing how drtalk works alongside your current setup the ROI isn\'t obvious, it\'s probably not the right move and we\'ll say so.'
+				],
+				[
+					'title' => '“My GPs won\'t use another platform.”',
+					'answer' =>
+						'They don\'t have to, and many join on their own once they realize it makes their life easier too. Free access for GPs, nothing to install, and direct secure messaging and point-of-care scheduling with your office instead of chasing calls and faxes.'
+				],
+				[
+					'title' => '“My staff won\'t adopt another tool.”',
+					'answer' =>
+						'Staff resistance comes from tools that add to their workload. During the review we\'ll show specifically how drtalk reduces the daily chaos your team already deals with, not pile on top of it.'
+				]
+			]
+		];
+		$modified = true;
+	}
+
+	if ($modified) {
+		carbon_set_theme_option('home_blocks', $blocks);
+	}
+}
+add_action('admin_init', 'drtalk_redesign_sync_blocks_to_carbon', 30);
