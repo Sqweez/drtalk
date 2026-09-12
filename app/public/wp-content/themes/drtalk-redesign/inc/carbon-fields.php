@@ -457,6 +457,103 @@ function drtalk_redesign_register_front_page_fields()
 								->set_required(true)
 						])
 				])
+				->add_fields('fomo', __('FOMO / Referral Leakage Tracker', 'drtalk-redesign'), [
+					Field::make('checkbox', 'is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+						true
+					),
+					Field::make('textarea', 'title', __('Section Title (H2, HTML allowed)', 'drtalk-redesign'))
+						->set_default_value('What you lose without<br>a smart referral process.')
+						->set_rows(2)
+						->set_width(50),
+					Field::make('textarea', 'description', __('Description (HTML allowed)', 'drtalk-redesign'))
+						->set_default_value(
+							"The average specialist practice loses $4,640 every hour to missed and unconverted referrals.<br>Here's what's slipped by since you landed on this page:"
+						)
+						->set_rows(2)
+						->set_width(50),
+					Field::make('separator', 'sep_fomo_settings', __('Live Counter Settings', 'drtalk-redesign')),
+					Field::make('text', 'baseline', __('Baseline Amount ($)', 'drtalk-redesign'))
+						->set_default_value('0')
+						->set_attribute('type', 'number')
+						->set_width(33),
+					Field::make('text', 'hourly_rate', __('Hourly Loss Rate ($)', 'drtalk-redesign'))
+						->set_default_value('4640')
+						->set_attribute('type', 'number')
+						->set_width(33),
+					Field::make('textarea', 'disclaimer', __('Disclaimer Note (HTML allowed)', 'drtalk-redesign'))
+						->set_default_value(
+							'Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.'
+						)
+						->set_rows(2)
+						->set_width(34)
+				])
+				->add_fields('cta', __('Call to Action / Process Steps', 'drtalk-redesign'), [
+					Field::make('checkbox', 'is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+						true
+					),
+					Field::make('text', 'title', __('Heading', 'drtalk-redesign'))
+						->set_default_value('Your referral workflow has gaps.')
+						->set_width(50),
+					Field::make('text', 'subtitle', __('Subheading', 'drtalk-redesign'))
+						->set_default_value('Give us 30 minutes and we’ll find them.')
+						->set_width(50),
+					Field::make('complex', 'cta_steps', __('Process Steps', 'drtalk-redesign'))
+						->set_layout('tabbed-horizontal')
+						->add_fields([
+							Field::make('image', 'icon', __('Step Icon (PNG)', 'drtalk-redesign'))
+								->set_value_type('id')
+								->set_width(30),
+							Field::make('text', 'step_title', __('Step Title', 'drtalk-redesign'))->set_width(35),
+							Field::make('textarea', 'step_copy', __('Step Description', 'drtalk-redesign'))
+								->set_rows(2)
+								->set_width(35)
+						]),
+					Field::make('separator', 'sep_cta_action', __('Action Button & Details', 'drtalk-redesign')),
+					Field::make('text', 'button_text', __('Button Text', 'drtalk-redesign'))
+						->set_default_value('Claim Your Free Referral Gap Analysis')
+						->set_width(50),
+					Field::make('text', 'button_url', __('Button URL', 'drtalk-redesign'))
+						->set_help_text(__('Leave empty to use default Referral Gap Analysis URL', 'drtalk-redesign'))
+						->set_width(50),
+					Field::make('textarea', 'subtext', __('Button Subtext (HTML allowed)', 'drtalk-redesign'))
+						->set_default_value('30 minutes. No obligation<br>Best with practice owner + office manager.')
+						->set_rows(2)
+						->set_width(50),
+					Field::make('image', 'noise_pattern', __('Background Pattern', 'drtalk-redesign'))
+						->set_value_type('id')
+						->set_help_text(__('Optional background noise overlay image', 'drtalk-redesign'))
+						->set_width(50)
+				])
+				->add_fields('faq', __('Frequently Asked Questions', 'drtalk-redesign'), [
+					Field::make('checkbox', 'is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+						true
+					),
+					Field::make('text', 'title', __('Section Title (H2)', 'drtalk-redesign'))
+						->set_default_value('Frequently Asked Questions')
+						->set_width(70),
+					Field::make('image', 'plus_icon', __('Plus Icon (SVG)', 'drtalk-redesign'))
+						->set_value_type('id')
+						->set_help_text(__('Optional custom plus/expand icon', 'drtalk-redesign'))
+						->set_width(30),
+					Field::make('complex', 'faq_categories', __('FAQ Categories', 'drtalk-redesign'))
+						->set_layout('tabbed-horizontal')
+						->add_fields([
+							Field::make('text', 'category_name', __('Category Name', 'drtalk-redesign'))
+								->set_width(100)
+								->set_required(true),
+							Field::make('complex', 'faq_questions', __('Questions', 'drtalk-redesign'))
+								->set_collapsed(true)
+								->add_fields([
+									Field::make('text', 'question', __('Question', 'drtalk-redesign'))
+										->set_width(100)
+										->set_required(true),
+									Field::make('textarea', 'answer', __('Answer (HTML allowed)', 'drtalk-redesign'))
+										->set_rows(4)
+										->set_width(100)
+										->set_required(true)
+								])
+						])
+				])
 		]);
 }
 add_action('carbon_fields_register_fields', 'drtalk_redesign_register_front_page_fields');
@@ -728,6 +825,20 @@ function drtalk_redesign_seed_home_blocks($force = false)
 		'assets/images/thomas-stone-figma.png',
 		'Thomas L. Stone Founder Photo'
 	);
+
+	$cta_1_id = drtalk_redesign_get_or_create_theme_attachment('assets/images/cta-process-1.png', 'CTA Process 1 Icon');
+	$cta_2_id = drtalk_redesign_get_or_create_theme_attachment('assets/images/cta-process-2.png', 'CTA Process 2 Icon');
+	$cta_3_id = drtalk_redesign_get_or_create_theme_attachment('assets/images/cta-process-3.png', 'CTA Process 3 Icon');
+	$cta_4_id = drtalk_redesign_get_or_create_theme_attachment('assets/images/cta-process-4.png', 'CTA Process 4 Icon');
+	$cta_noise_id = drtalk_redesign_get_or_create_theme_attachment(
+		'assets/images/footer-pattern.png',
+		'CTA Noise Pattern'
+	);
+
+	$plus_icon_id = drtalk_redesign_get_or_create_theme_attachment('assets/images/icon-plus.svg', 'FAQ Plus Icon');
+	$referral_gap_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
+	$baa_url = esc_url(home_url('/business-associates-agreement/'));
+	$contact_url = esc_url(drtalk_redesign_contact_url());
 
 	$default_blocks = [
 		[
@@ -1027,6 +1138,155 @@ function drtalk_redesign_seed_home_blocks($force = false)
 						'Staff resistance comes from tools that add to their workload. During the review we\'ll show specifically how drtalk reduces the daily chaos your team already deals with, not pile on top of it.'
 				]
 			]
+		],
+		[
+			'_type' => 'fomo',
+			'is_active' => true,
+			'title' => 'What you lose without<br>a smart referral process.',
+			'description' =>
+				"The average specialist practice loses $4,640 every hour to missed and unconverted referrals.<br>Here's what's slipped by since you landed on this page:",
+			'baseline' => '0',
+			'hourly_rate' => '4640',
+			'disclaimer' =>
+				'Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.'
+		],
+		[
+			'_type' => 'cta',
+			'is_active' => true,
+			'title' => 'Your referral workflow has gaps.',
+			'subtitle' => 'Give us 30 minutes and we’ll find them.',
+			'cta_steps' => [
+				[
+					'icon' => $cta_1_id ?: '',
+					'step_title' => 'We learn your workflow',
+					'step_copy' =>
+						'How referrals come in today, who handles them, and how it gets back to referring GPs.'
+				],
+				[
+					'icon' => $cta_2_id ?: '',
+					'step_title' => 'We show you the breakpoints',
+					'step_copy' =>
+						'We give you a score and highlight common pain points for practices with similar setups.'
+				],
+				[
+					'icon' => $cta_3_id ?: '',
+					'step_title' => 'You keep the full findings',
+					'step_copy' =>
+						'A written analysis summary is yours to keep, regardless of what you decide to do next.'
+				],
+				[
+					'icon' => $cta_4_id ?: '',
+					'step_title' => 'No follow up pressure',
+					'step_copy' =>
+						"If drtalk isn't right for your practice, we'll tell you that. Our job is to be useful. Not to close you."
+				]
+			],
+			'button_text' => 'Claim Your Free Referral Gap Analysis',
+			'button_url' => '',
+			'subtext' => '30 minutes. No obligation<br>Best with practice owner + office manager.',
+			'noise_pattern' => $cta_noise_id ?: ''
+		],
+		[
+			'_type' => 'faq',
+			'is_active' => true,
+			'title' => 'Frequently Asked Questions',
+			'plus_icon' => $plus_icon_id ?: '',
+			'faq_categories' => [
+				[
+					'category_name' => 'Referrals & Workflow',
+					'faq_questions' => [
+						[
+							'question' => 'How does drtalk help reduce referral leakage?',
+							'answer' => sprintf(
+								'Referral leakage, patients who are referred but never schedule or complete treatment, is one of the biggest sources of lost revenue in specialty practice. drtalk gives your team a shared dashboard where every referral is tracked in real time, from the moment it\'s sent to the moment the patient is seen. Nothing gets lost in a fax pile, a missed call, or an unread email. Practices using drtalk consistently recover a significant portion of referrals that would otherwise fall through the cracks. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book your free Referral Gap Analysis</a> now to see how referral leakage is affecting your practice.',
+								$referral_gap_url
+							)
+						],
+						[
+							'question' => 'Do my referring GPs need to learn a new system?',
+							'answer' =>
+								'No. drtalk is designed to work with how your referring offices already operate. GPs can still send referrals through their existing email or e-fax with nothing to install and no logins required. Many join drtalk on their own once they see it\'s free and replaces the phone tag with direct secure messaging.'
+						],
+						[
+							'question' => "What happens to a referral once it's sent?",
+							'answer' =>
+								'Every referral lands in a shared practice dashboard visible to your whole team, not just one person\'s inbox. Your staff can see the referral status, exchange messages and documents with the referring office, and track the patient through to a scheduled appointment. Because the whole team is looped in, there\'s no gap in coverage if someone is out, and no referral gets missed because it was sitting unseen in one person\'s queue.'
+						],
+						[
+							'question' => 'Is drtalk built for dental, or for broader healthcare?',
+							'answer' =>
+								'drtalk supports healthcare teams broadly, but it was purpose-built for dentistry and has the deepest functionality for dental specialists. The referral workflows, communication tools, and practice dashboard are all tuned for the realities of dental referrals. If you\'re a dental specialist looking to tighten your referral network and reduce patient drop-off, drtalk was built with your practice in mind.'
+						],
+						[
+							'question' => 'Will my team actually adopt this, or will it just add more steps?',
+							'answer' =>
+								'The teams that adopt drtalk fastest are the ones who\'ve been burned by referrals going quiet - staff who\'ve spent time chasing down faxes, fielding \'did you get our referral?\' calls, or finding out weeks later that a patient never scheduled. drtalk reduces that noise immediately. Most practices see their team self-motivated to use it once they realize they\'re not losing track of cases anymore. Onboarding is straightforward, and we work with your team directly to make sure adoption sticks.'
+						],
+						[
+							'question' => 'Does drtalk integrate with my existing EMR or practice management software?',
+							'answer' => sprintf(
+								'Yes, drtalk has EMR integration capability. The specifics depend on your current system - <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">book a working session</a> with our team and we\'ll walk through exactly how drtalk fits into your existing setup, including what\'s possible with your practice management software.',
+								$referral_gap_url
+							)
+						]
+					]
+				],
+				[
+					'category_name' => 'Security & Compliance',
+					'faq_questions' => [
+						[
+							'question' => 'Is drtalk HIPAA compliant and secure?',
+							'answer' => sprintf(
+								'Yes. drtalk uses AES-256 encryption - the standard trusted by the U.S. government for sensitive data - for all messages, files, and referrals, both in transit and at rest. Every user on the network has a signed <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">Business Associate Agreement (BAA)</a>, role-based access controls are in place, and all Protected Health Information (PHI) is stored in a secure, encrypted cloud environment. drtalk was built for healthcare from the ground up, so compliance isn\'t an afterthought, it\'s the foundation.',
+								$baa_url
+							)
+						],
+						[
+							'question' => 'How is drtalk different from just using email or secure email?',
+							'answer' =>
+								'Email - even \'secure\' email - puts the burden of compliance on both ends of the conversation. There\'s no guarantee the recipient is compliant, no visibility into whether a message was acted on, and no structured way to track a referral through to completion. drtalk gives you a verified, encrypted network where every participant has a signed BAA, every referral is tracked, and your team has a clear record of every communication. It\'s the difference between hoping a referral gets through and knowing it did.'
+						]
+					]
+				],
+				[
+					'category_name' => 'Pricing & Getting Started',
+					'faq_questions' => [
+						[
+							'question' => 'How much does drtalk cost?',
+							'answer' => sprintf(
+								'drtalk offers a free trial so you can explore the platform and see how it fits your practice before committing to anything. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a free Referral Gap Analysis</a> to help you figure out the right plan for your practice.',
+								$referral_gap_url
+							)
+						],
+						[
+							'question' => 'Is there a contract or setup fee?',
+							'answer' =>
+								'No contract and no setup fee. Our team will help you connect your referral workflows and get your staff up to speed so you\'re seeing value quickly, not eventually.'
+						],
+						[
+							'question' => 'How many people from my practice can use drtalk?',
+							'answer' => sprintf(
+								'Plans include unlimited team members per location with front desk, assistants, coordinators, and providers all included. If you\'re evaluating drtalk as an enterprise solution, <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">let us know</a> and we\'ll walk you through what\'s available now and what\'s coming.',
+								$contact_url
+							)
+						],
+						[
+							'question' => 'How quickly will we see results?',
+							'answer' => sprintf(
+								'Most practices start seeing a difference within the first few weeks - referrals that would have gone quiet get followed up, patients who would have slipped through get scheduled, and staff spend less time chasing. The longer-term impact is a tighter referral network and a measurable reduction in leakage. The best way to see what\'s possible for your practice specifically is by <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">booking a Referral Gap Analysis working session</a> - we\'ll show you exactly where the gaps are and what closing them is worth.',
+								$referral_gap_url
+							)
+						],
+						[
+							'question' => 'How do I get started?',
+							'answer' => sprintf(
+								'<a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a 30-minute working session</a> with our team. We\'ll map your current referral workflow, show you where drtalk fits in, and get your practice set up for a free trial if you think drtalk is a fit. No pressure, no obligation.',
+								$referral_gap_url
+							)
+						]
+					]
+				]
+			]
 		]
 	];
 
@@ -1153,6 +1413,193 @@ function drtalk_redesign_sync_blocks_to_carbon()
 					'title' => '“My staff won\'t adopt another tool.”',
 					'answer' =>
 						'Staff resistance comes from tools that add to their workload. During the review we\'ll show specifically how drtalk reduces the daily chaos your team already deals with, not pile on top of it.'
+				]
+			]
+		];
+		$modified = true;
+	}
+
+	if (!in_array('fomo', $existing_types, true)) {
+		$blocks[] = [
+			'_type' => 'fomo',
+			'is_active' => true,
+			'title' => 'What you lose without<br>a smart referral process.',
+			'description' =>
+				"The average specialist practice loses $4,640 every hour to missed and unconverted referrals.<br>Here's what's slipped by since you landed on this page:",
+			'baseline' => '0',
+			'hourly_rate' => '4640',
+			'disclaimer' =>
+				'Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.'
+		];
+		$modified = true;
+	}
+
+	if (!in_array('cta', $existing_types, true)) {
+		$cta_1_id = drtalk_redesign_get_or_create_theme_attachment(
+			'assets/images/cta-process-1.png',
+			'CTA Process 1 Icon'
+		);
+		$cta_2_id = drtalk_redesign_get_or_create_theme_attachment(
+			'assets/images/cta-process-2.png',
+			'CTA Process 2 Icon'
+		);
+		$cta_3_id = drtalk_redesign_get_or_create_theme_attachment(
+			'assets/images/cta-process-3.png',
+			'CTA Process 3 Icon'
+		);
+		$cta_4_id = drtalk_redesign_get_or_create_theme_attachment(
+			'assets/images/cta-process-4.png',
+			'CTA Process 4 Icon'
+		);
+		$cta_noise_id = drtalk_redesign_get_or_create_theme_attachment(
+			'assets/images/footer-pattern.png',
+			'CTA Noise Pattern'
+		);
+
+		$blocks[] = [
+			'_type' => 'cta',
+			'is_active' => true,
+			'title' => 'Your referral workflow has gaps.',
+			'subtitle' => 'Give us 30 minutes and we’ll find them.',
+			'cta_steps' => [
+				[
+					'icon' => $cta_1_id ?: '',
+					'step_title' => 'We learn your workflow',
+					'step_copy' =>
+						'How referrals come in today, who handles them, and how it gets back to referring GPs.'
+				],
+				[
+					'icon' => $cta_2_id ?: '',
+					'step_title' => 'We show you the breakpoints',
+					'step_copy' =>
+						'We give you a score and highlight common pain points for practices with similar setups.'
+				],
+				[
+					'icon' => $cta_3_id ?: '',
+					'step_title' => 'You keep the full findings',
+					'step_copy' =>
+						'A written analysis summary is yours to keep, regardless of what you decide to do next.'
+				],
+				[
+					'icon' => $cta_4_id ?: '',
+					'step_title' => 'No follow up pressure',
+					'step_copy' =>
+						"If drtalk isn't right for your practice, we'll tell you that. Our job is to be useful. Not to close you."
+				]
+			],
+			'button_text' => 'Claim Your Free Referral Gap Analysis',
+			'button_url' => '',
+			'subtext' => '30 minutes. No obligation<br>Best with practice owner + office manager.',
+			'noise_pattern' => $cta_noise_id ?: ''
+		];
+		$modified = true;
+	}
+
+	if (!in_array('faq', $existing_types, true)) {
+		$plus_icon_id = drtalk_redesign_get_or_create_theme_attachment('assets/images/icon-plus.svg', 'FAQ Plus Icon');
+		$referral_gap_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
+		$baa_url = esc_url(home_url('/business-associates-agreement/'));
+		$contact_url = esc_url(drtalk_redesign_contact_url());
+
+		$blocks[] = [
+			'_type' => 'faq',
+			'is_active' => true,
+			'title' => 'Frequently Asked Questions',
+			'plus_icon' => $plus_icon_id ?: '',
+			'faq_categories' => [
+				[
+					'category_name' => 'Referrals & Workflow',
+					'faq_questions' => [
+						[
+							'question' => 'How does drtalk help reduce referral leakage?',
+							'answer' => sprintf(
+								'Referral leakage, patients who are referred but never schedule or complete treatment, is one of the biggest sources of lost revenue in specialty practice. drtalk gives your team a shared dashboard where every referral is tracked in real time, from the moment it\'s sent to the moment the patient is seen. Nothing gets lost in a fax pile, a missed call, or an unread email. Practices using drtalk consistently recover a significant portion of referrals that would otherwise fall through the cracks. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book your free Referral Gap Analysis</a> now to see how referral leakage is affecting your practice.',
+								$referral_gap_url
+							)
+						],
+						[
+							'question' => 'Do my referring GPs need to learn a new system?',
+							'answer' =>
+								'No. drtalk is designed to work with how your referring offices already operate. GPs can still send referrals through their existing email or e-fax with nothing to install and no logins required. Many join drtalk on their own once they see it\'s free and replaces the phone tag with direct secure messaging.'
+						],
+						[
+							'question' => "What happens to a referral once it's sent?",
+							'answer' =>
+								'Every referral lands in a shared practice dashboard visible to your whole team, not just one person\'s inbox. Your staff can see the referral status, exchange messages and documents with the referring office, and track the patient through to a scheduled appointment. Because the whole team is looped in, there\'s no gap in coverage if someone is out, and no referral gets missed because it was sitting unseen in one person\'s queue.'
+						],
+						[
+							'question' => 'Is drtalk built for dental, or for broader healthcare?',
+							'answer' =>
+								'drtalk supports healthcare teams broadly, but it was purpose-built for dentistry and has the deepest functionality for dental specialists. The referral workflows, communication tools, and practice dashboard are all tuned for the realities of dental referrals. If you\'re a dental specialist looking to tighten your referral network and reduce patient drop-off, drtalk was built with your practice in mind.'
+						],
+						[
+							'question' => 'Will my team actually adopt this, or will it just add more steps?',
+							'answer' =>
+								'The teams that adopt drtalk fastest are the ones who\'ve been burned by referrals going quiet - staff who\'ve spent time chasing down faxes, fielding \'did you get our referral?\' calls, or finding out weeks later that a patient never scheduled. drtalk reduces that noise immediately. Most practices see their team self-motivated to use it once they realize they\'re not losing track of cases anymore. Onboarding is straightforward, and we work with your team directly to make sure adoption sticks.'
+						],
+						[
+							'question' => 'Does drtalk integrate with my existing EMR or practice management software?',
+							'answer' => sprintf(
+								'Yes, drtalk has EMR integration capability. The specifics depend on your current system - <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">book a working session</a> with our team and we\'ll walk through exactly how drtalk fits into your existing setup, including what\'s possible with your practice management software.',
+								$referral_gap_url
+							)
+						]
+					]
+				],
+				[
+					'category_name' => 'Security & Compliance',
+					'faq_questions' => [
+						[
+							'question' => 'Is drtalk HIPAA compliant and secure?',
+							'answer' => sprintf(
+								'Yes. drtalk uses AES-256 encryption - the standard trusted by the U.S. government for sensitive data - for all messages, files, and referrals, both in transit and at rest. Every user on the network has a signed <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">Business Associate Agreement (BAA)</a>, role-based access controls are in place, and all Protected Health Information (PHI) is stored in a secure, encrypted cloud environment. drtalk was built for healthcare from the ground up, so compliance isn\'t an afterthought, it\'s the foundation.',
+								$baa_url
+							)
+						],
+						[
+							'question' => 'How is drtalk different from just using email or secure email?',
+							'answer' =>
+								'Email - even \'secure\' email - puts the burden of compliance on both ends of the conversation. There\'s no guarantee the recipient is compliant, no visibility into whether a message was acted on, and no structured way to track a referral through to completion. drtalk gives you a verified, encrypted network where every participant has a signed BAA, every referral is tracked, and your team has a clear record of every communication. It\'s the difference between hoping a referral gets through and knowing it did.'
+						]
+					]
+				],
+				[
+					'category_name' => 'Pricing & Getting Started',
+					'faq_questions' => [
+						[
+							'question' => 'How much does drtalk cost?',
+							'answer' => sprintf(
+								'drtalk offers a free trial so you can explore the platform and see how it fits your practice before committing to anything. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a free Referral Gap Analysis</a> to help you figure out the right plan for your practice.',
+								$referral_gap_url
+							)
+						],
+						[
+							'question' => 'Is there a contract or setup fee?',
+							'answer' =>
+								'No contract and no setup fee. Our team will help you connect your referral workflows and get your staff up to speed so you\'re seeing value quickly, not eventually.'
+						],
+						[
+							'question' => 'How many people from my practice can use drtalk?',
+							'answer' => sprintf(
+								'Plans include unlimited team members per location with front desk, assistants, coordinators, and providers all included. If you\'re evaluating drtalk as an enterprise solution, <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">let us know</a> and we\'ll walk you through what\'s available now and what\'s coming.',
+								$contact_url
+							)
+						],
+						[
+							'question' => 'How quickly will we see results?',
+							'answer' => sprintf(
+								'Most practices start seeing a difference within the first few weeks - referrals that would have gone quiet get followed up, patients who would have slipped through get scheduled, and staff spend less time chasing. The longer-term impact is a tighter referral network and a measurable reduction in leakage. The best way to see what\'s possible for your practice specifically is by <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">booking a Referral Gap Analysis working session</a> - we\'ll show you exactly where the gaps are and what closing them is worth.',
+								$referral_gap_url
+							)
+						],
+						[
+							'question' => 'How do I get started?',
+							'answer' => sprintf(
+								'<a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a 30-minute working session</a> with our team. We\'ll map your current referral workflow, show you where drtalk fits in, and get your practice set up for a free trial if you think drtalk is a fit. No pressure, no obligation.',
+								$referral_gap_url
+							)
+						]
+					]
 				]
 			]
 		];
