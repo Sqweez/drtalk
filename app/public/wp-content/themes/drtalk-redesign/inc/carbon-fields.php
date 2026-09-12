@@ -282,10 +282,10 @@ function drtalk_redesign_register_front_page_fields()
 					Field::make('textarea', 'title', __('Section Title (H2)', 'drtalk-redesign'))
 						->set_default_value('Real results.<br class="lg:hidden"> Proven at scale.')
 						->set_rows(2),
-					Field::make('complex', 'stats', __('Stats Cards List', 'drtalk-redesign'))
+					Field::make('complex', 'stats_list', __('Stats Cards List', 'drtalk-redesign'))
 						->set_collapsed(true)
 						->add_fields([
-							Field::make('text', 'value', __('Value / Metric', 'drtalk-redesign'))
+							Field::make('text', 'stat_value', __('Value / Metric', 'drtalk-redesign'))
 								->set_default_value('$500M+')
 								->set_width(33)
 								->set_required(true),
@@ -305,6 +305,52 @@ function drtalk_redesign_register_front_page_fields()
 								->set_width(34),
 							Field::make('textarea', 'copy', __('Description (HTML allowed)', 'drtalk-redesign'))
 								->set_rows(2)
+								->set_width(100)
+								->set_required(true)
+						])
+				])
+				->add_fields('personas', __('Personas / Audience Relief', 'drtalk-redesign'), [
+					Field::make('checkbox', 'is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+						true
+					),
+					Field::make('textarea', 'title', __('Section Title (H2)', 'drtalk-redesign'))
+						->set_default_value('The same platform, different relief for everyone it touches.')
+						->set_rows(2)
+						->set_width(100),
+					Field::make('text', 'button_text', __('Button Text', 'drtalk-redesign'))
+						->set_default_value('Book a Demo Today')
+						->set_width(33),
+					Field::make(
+						'text',
+						'button_url',
+						__('Button URL (leave empty for default Gap Analysis link)', 'drtalk-redesign')
+					)->set_width(33),
+					Field::make('text', 'button_subtext', __('Button Subtext', 'drtalk-redesign'))
+						->set_default_value('30 minutes. No pitch, no obligation.')
+						->set_width(34),
+					Field::make('complex', 'personas_list', __('Personas List', 'drtalk-redesign'))
+						->set_collapsed(true)
+						->add_fields([
+							Field::make('text', 'label', __('Tab Label', 'drtalk-redesign'))
+								->set_default_value('Dental Specialists')
+								->set_width(25)
+								->set_required(true),
+							Field::make('text', 'title', __('Persona Title (H3)', 'drtalk-redesign'))
+								->set_default_value('Be the First Choice for Referrals')
+								->set_width(35)
+								->set_required(true),
+							Field::make('select', 'tone', __('Color Tone', 'drtalk-redesign'))
+								->set_options([
+									'lilac' => 'Lilac / Dark Pattern',
+									'orange' => 'Orange Pattern'
+								])
+								->set_default_value('lilac')
+								->set_width(20),
+							Field::make('image', 'image', __('Preview Image (PNG)', 'drtalk-redesign'))
+								->set_value_type('id')
+								->set_width(20),
+							Field::make('textarea', 'description', __('Description', 'drtalk-redesign'))
+								->set_rows(3)
 								->set_width(100)
 								->set_required(true)
 						])
@@ -563,6 +609,19 @@ function drtalk_redesign_seed_home_blocks($force = false)
 		'Scale Numbers 5 Illustration'
 	);
 
+	$persona_1_id = drtalk_redesign_get_or_create_theme_attachment(
+		'assets/images/personas-specialists.png',
+		'Personas Dental Specialists'
+	);
+	$persona_2_id = drtalk_redesign_get_or_create_theme_attachment(
+		'assets/images/personas-managers.png',
+		'Personas Office Managers'
+	);
+	$persona_3_id = drtalk_redesign_get_or_create_theme_attachment(
+		'assets/images/personas-gps.png',
+		'Personas Referring GPs'
+	);
+
 	$default_blocks = [
 		[
 			'_type' => 'hero',
@@ -742,6 +801,78 @@ function drtalk_redesign_seed_home_blocks($force = false)
 						'A web-based platform for your front desk. A native mobile app for dentists and specialists. Your whole team stays in control and securely connected, no matter where the work happens.',
 					'static_icon' => $why_4_static ?: '',
 					'hover_icon' => $why_4_hover ?: ''
+				]
+			]
+		],
+		[
+			'_type' => 'stats',
+			'is_active' => true,
+			'title' => 'Real results.<br class="lg:hidden"> Proven at scale.',
+			'stats_list' => [
+				[
+					'stat_value' => '$500M+',
+					'copy' => 'In referral-driven <strong>revenue</strong> tracked',
+					'image' => $num_1_id ?: '',
+					'key' => 'revenue'
+				],
+				[
+					'stat_value' => 'Up to 20%',
+					'copy' => '<strong>Revenue growth</strong> for drtalk practices in year one',
+					'image' => $num_2_id ?: '',
+					'key' => 'growth'
+				],
+				[
+					'stat_value' => '1,500+',
+					'copy' => '<strong>Practices</strong> on drtalk nationwide',
+					'image' => $num_3_id ?: '',
+					'key' => 'practices'
+				],
+				[
+					'stat_value' => '70%',
+					'copy' => '<strong>Faster</strong> time-to-scheduled appointment',
+					'image' => $num_4_id ?: '',
+					'key' => 'faster'
+				],
+				[
+					'stat_value' => '60%',
+					'copy' =>
+						'<strong>Reduction</strong> in admin<span class="numbers-card-copy-break"><br></span> workload',
+					'image' => $num_5_id ?: '',
+					'key' => 'workload'
+				]
+			]
+		],
+		[
+			'_type' => 'personas',
+			'is_active' => true,
+			'title' => 'The same platform, different relief for everyone it touches.',
+			'button_text' => 'Book a Demo Today',
+			'button_url' => '',
+			'button_subtext' => '30 minutes. No pitch, no obligation.',
+			'personas_list' => [
+				[
+					'label' => 'Dental Specialists',
+					'title' => 'Be the First Choice for Referrals',
+					'description' =>
+						'Your reputation earns the referral. Your system keeps it. drtalk helps you ensure every referral is handled - and every GP knows it.',
+					'tone' => 'lilac',
+					'image' => $persona_1_id ?: ''
+				],
+				[
+					'label' => 'Office Managers',
+					'title' => 'Run the Office Like a Pro',
+					'description' =>
+						'No more chasing faxes or hunting through email threads. Every referral is visible, assigned, and tracked in one place. Less chaos, clearer ownership, smoother days.',
+					'tone' => 'orange',
+					'image' => $persona_2_id ?: ''
+				],
+				[
+					'label' => 'Referring GPs',
+					'title' => 'Referring Shouldn’t Be a Hassle',
+					'description' =>
+						'No more patient handoffs that fall through the cracks. Send referrals the way you already work and get fast, clear communication back. Free for referring dentists, always.',
+					'tone' => 'lilac',
+					'image' => $persona_3_id ?: ''
 				]
 			]
 		]

@@ -16,12 +16,12 @@ $numbers_noise_style = esc_attr("--numbers-noise-image: url('{$numbers_noise_url
 
 $title = isset($block['title']) ? $block['title'] : '';
 
-$custom_stats = !empty($block['stats']) && is_array($block['stats']) ? $block['stats'] : [];
+$custom_stats = !empty($block['stats_list']) && is_array($block['stats_list']) ? $block['stats_list'] : [];
 
 $stats = [];
 
 foreach ($custom_stats as $item) {
-	$value = !empty($item['value']) ? $item['value'] : '';
+	$value = !empty($item['stat_value']) ? $item['stat_value'] : '';
 	$copy = !empty($item['copy']) ? $item['copy'] : '';
 	$key = !empty($item['key']) ? $item['key'] : '';
 
@@ -49,11 +49,11 @@ if (empty($stats)) {
 		<div class="numbers-grid grid w-full grid-cols-1 gap-1 lg:grid-cols-6 lg:gap-4">
 			<?php foreach ($stats as $results_stat): ?>
 				<?php
-				$results_value = esc_html($results_stat['value']);
-				$results_copy = wp_kses_post($results_stat['copy']);
-				$results_image = esc_url($results_stat['image_url']);
-				$results_key = esc_attr($results_stat['key']);
-				?>
+    $results_value = esc_html($results_stat['value']);
+    $results_copy = wp_kses_post($results_stat['copy']);
+    $results_image = esc_url($results_stat['image_url']);
+    $results_key = esc_attr($results_stat['key']);
+    ?>
 				<article class="numbers-card relative flex min-h-[7.5rem] flex-col overflow-hidden rounded-2xl bg-lilac px-5 pb-8 pt-5 text-purple-dark lg:h-[17.5rem] lg:rounded-3xl lg:px-12 lg:py-14" data-stat="<?php echo $results_key; ?>" style="<?php echo $numbers_noise_style; ?>" tabindex="0">
 					<div class="numbers-card-noise" aria-hidden="true"></div>
 					<div class="relative z-10">
