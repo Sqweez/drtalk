@@ -1,6 +1,8 @@
 node_modules/
+vendor/
 dist/output.css
 dist/theme.js
 assets/fonts/
 assets/images/
 package-lock.json
+

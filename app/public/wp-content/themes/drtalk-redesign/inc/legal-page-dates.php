@@ -54,7 +54,10 @@ function drtalk_redesign_render_legal_page_dates_meta_box($post)
   	$effective_date
   ); ?>">
 	</p>
-	<p class="description"><?php esc_html_e('Leave the date empty to use the WordPress publication date.', 'drtalk-redesign'); ?></p>
+	<p class="description"><?php esc_html_e(
+ 	'Leave the date empty to use the WordPress publication date.',
+ 	'drtalk-redesign'
+ ); ?></p>
 	<?php
 }
 

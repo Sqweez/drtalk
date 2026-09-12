@@ -8,6 +8,7 @@ require_once get_theme_file_path('inc/links.php');
 require_once get_theme_file_path('inc/settings.php');
 require_once get_theme_file_path('inc/testimonials.php');
 require_once get_theme_file_path('inc/legal-page-dates.php');
+require_once get_theme_file_path('inc/carbon-fields.php');
 
 /**
  * Configures WordPress features used by the public-facing theme.
