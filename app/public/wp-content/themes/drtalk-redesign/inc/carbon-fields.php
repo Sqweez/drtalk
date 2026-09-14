@@ -663,26 +663,50 @@ add_filter('upload_mimes', function ($mimes) {
 });
 
 /**
- * Seeds default home blocks if none are configured yet.
+ * Reads existing CPT testimonials from the database and returns them formatted for the Carbon Fields block.
  *
- * @param bool $force
+ * @return array
  */
-function drtalk_redesign_seed_home_blocks($force = false)
+function drtalk_redesign_get_cpt_testimonials_for_migration()
 {
-	if (!function_exists('carbon_get_theme_option') || !function_exists('carbon_set_theme_option')) {
-		return;
+	$posts = get_posts([
+		'post_type' => 'testimonial',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'orderby' => 'menu_order',
+		'order' => 'ASC'
+	]);
+
+	if (empty($posts)) {
+		return [];
 	}
 
-	if (!$force && get_option('drtalk_home_blocks_seeded_v1')) {
-		return;
+	$items = [];
+	foreach ($posts as $post) {
+		$logo_id = absint(get_post_meta($post->ID, '_drtalk_testimonial_logo_id', true));
+		$photo_id = absint(get_post_thumbnail_id($post->ID));
+
+		$items[] = [
+			'name' => get_the_title($post),
+			'role' => (string) get_post_meta($post->ID, '_drtalk_testimonial_role', true),
+			'company' => (string) get_post_meta($post->ID, '_drtalk_testimonial_company', true),
+			'eyebrow' => (string) get_post_meta($post->ID, '_drtalk_testimonial_payoff', true),
+			'quote' => wp_strip_all_tags($post->post_content),
+			'avatar' => $photo_id ?: '',
+			'logo' => $logo_id ?: ''
+		];
 	}
 
-	$existing_blocks = carbon_get_theme_option('home_blocks');
-	if (!$force && !empty($existing_blocks)) {
-		update_option('drtalk_home_blocks_seeded_v1', 1);
-		return;
-	}
+	return $items;
+}
 
+/**
+ * Returns default configuration data for all 14 canonical front page blocks keyed by block type.
+ *
+ * @return array<string, array>
+ */
+function drtalk_redesign_get_default_home_blocks()
+{
 	$phone_image_id = drtalk_redesign_get_or_create_theme_attachment(
 		'assets/images/hero-phone.png',
 		'drtalk Hero Phone Mockup'
@@ -840,8 +864,8 @@ function drtalk_redesign_seed_home_blocks($force = false)
 	$baa_url = esc_url(home_url('/business-associates-agreement/'));
 	$contact_url = esc_url(drtalk_redesign_contact_url());
 
-	$default_blocks = [
-		[
+	return [
+		'hero' => [
 			'_type' => 'hero',
 			'is_active' => true,
 			'eyebrow' => 'Built by Dentists for Dentists',
@@ -855,7 +879,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 			'phone_image' => $phone_image_id ?: '',
 			'show_decorations' => true
 		],
-		[
+		'partners' => [
 			'_type' => 'partners',
 			'is_active' => true,
 			'title' => 'Trusted By Dentistry’s Top Leaders',
@@ -892,7 +916,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 				]
 			]
 		],
-		[
+		'problem_cards' => [
 			'_type' => 'problem_cards',
 			'is_active' => true,
 			'eyebrow' => 'Put Operational AI to Work',
@@ -936,7 +960,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 				]
 			]
 		],
-		[
+		'calculator' => [
 			'_type' => 'calculator',
 			'is_active' => true,
 			'title' => "If you can't measure your referral leakage, you can't fix it.",
@@ -955,7 +979,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 			'button_text' => 'Claim Your Free Referral Gap Analysis',
 			'button_url' => ''
 		],
-		[
+		'how_it_works' => [
 			'_type' => 'how_it_works',
 			'is_active' => true,
 			'title' => 'From chaos to clarity.<br>No disruption. No overhaul.',
@@ -985,7 +1009,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 				]
 			]
 		],
-		[
+		'responsiveness' => [
 			'_type' => 'responsiveness',
 			'is_active' => true,
 			'title' => 'Most compete on reputation.<br>The best compete on responsiveness.',
@@ -1022,7 +1046,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 				]
 			]
 		],
-		[
+		'stats' => [
 			'_type' => 'stats',
 			'is_active' => true,
 			'title' => 'Real results.<br class="lg:hidden"> Proven at scale.',
@@ -1060,7 +1084,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 				]
 			]
 		],
-		[
+		'personas' => [
 			'_type' => 'personas',
 			'is_active' => true,
 			'title' => 'The same platform, different relief for everyone it touches.',
@@ -1094,13 +1118,13 @@ function drtalk_redesign_seed_home_blocks($force = false)
 				]
 			]
 		],
-		[
+		'testimonials' => [
 			'_type' => 'testimonials',
 			'is_active' => true,
 			'title' => 'For the people who use it every day.',
 			'testimonials_list' => drtalk_redesign_get_cpt_testimonials_for_migration()
 		],
-		[
+		'founder' => [
 			'_type' => 'founder',
 			'is_active' => true,
 			'title' => 'Built by specialists who lived the problem. Not developers who read about it.',
@@ -1112,7 +1136,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 			'link_text' => 'Read Our Story',
 			'link_url' => ''
 		],
-		[
+		'concerns' => [
 			'_type' => 'concerns',
 			'is_active' => true,
 			'title' => 'Common concerns. Honest answers.',
@@ -1139,7 +1163,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 				]
 			]
 		],
-		[
+		'fomo' => [
 			'_type' => 'fomo',
 			'is_active' => true,
 			'title' => 'What you lose without<br>a smart referral process.',
@@ -1150,7 +1174,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 			'disclaimer' =>
 				'Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.'
 		],
-		[
+		'cta' => [
 			'_type' => 'cta',
 			'is_active' => true,
 			'title' => 'Your referral workflow has gaps.',
@@ -1186,7 +1210,7 @@ function drtalk_redesign_seed_home_blocks($force = false)
 			'subtext' => '30 minutes. No obligation<br>Best with practice owner + office manager.',
 			'noise_pattern' => $cta_noise_id ?: ''
 		],
-		[
+		'faq' => [
 			'_type' => 'faq',
 			'is_active' => true,
 			'title' => 'Frequently Asked Questions',
@@ -1289,52 +1313,37 @@ function drtalk_redesign_seed_home_blocks($force = false)
 			]
 		]
 	];
+}
 
-	carbon_set_theme_option('home_blocks', $default_blocks);
+/**
+ * Seeds default home blocks if none are configured yet.
+ *
+ * @param bool $force
+ */
+function drtalk_redesign_seed_home_blocks($force = false)
+{
+	if (!function_exists('carbon_get_theme_option') || !function_exists('carbon_set_theme_option')) {
+		return;
+	}
+
+	if (!$force && get_option('drtalk_home_blocks_seeded_v1')) {
+		return;
+	}
+
+	$existing_blocks = carbon_get_theme_option('home_blocks');
+	if (!$force && !empty($existing_blocks)) {
+		update_option('drtalk_home_blocks_seeded_v1', 1);
+		return;
+	}
+
+	$default_blocks_map = drtalk_redesign_get_default_home_blocks();
+	carbon_set_theme_option('home_blocks', array_values($default_blocks_map));
 	update_option('drtalk_home_blocks_seeded_v1', 1);
 }
 add_action('admin_init', 'drtalk_redesign_seed_home_blocks');
 
 /**
- * Reads existing CPT testimonials from the database and returns them formatted for the Carbon Fields block.
- *
- * @return array
- */
-function drtalk_redesign_get_cpt_testimonials_for_migration()
-{
-	$posts = get_posts([
-		'post_type' => 'testimonial',
-		'post_status' => 'publish',
-		'posts_per_page' => -1,
-		'orderby' => 'menu_order',
-		'order' => 'ASC'
-	]);
-
-	if (empty($posts)) {
-		return [];
-	}
-
-	$items = [];
-	foreach ($posts as $post) {
-		$logo_id = absint(get_post_meta($post->ID, '_drtalk_testimonial_logo_id', true));
-		$photo_id = absint(get_post_thumbnail_id($post->ID));
-
-		$items[] = [
-			'name' => get_the_title($post),
-			'role' => (string) get_post_meta($post->ID, '_drtalk_testimonial_role', true),
-			'company' => (string) get_post_meta($post->ID, '_drtalk_testimonial_company', true),
-			'eyebrow' => (string) get_post_meta($post->ID, '_drtalk_testimonial_payoff', true),
-			'quote' => wp_strip_all_tags($post->post_content),
-			'avatar' => $photo_id ?: '',
-			'logo' => $logo_id ?: ''
-		];
-	}
-
-	return $items;
-}
-
-/**
- * Automatically migrates existing CPT testimonials and appends missing blocks into Carbon Fields home_blocks.
+ * Automatically ensures all 14 canonical blocks exist in Carbon Fields home_blocks and migrates CPT testimonials.
  */
 function drtalk_redesign_sync_blocks_to_carbon()
 {
@@ -1344,266 +1353,57 @@ function drtalk_redesign_sync_blocks_to_carbon()
 
 	$blocks = carbon_get_theme_option('home_blocks');
 	if (!is_array($blocks) || empty($blocks)) {
+		drtalk_redesign_seed_home_blocks(true);
 		return;
 	}
 
-	$modified = false;
-	$existing_types = [];
+	$canonical_order = [
+		'hero',
+		'partners',
+		'problem_cards',
+		'calculator',
+		'how_it_works',
+		'responsiveness',
+		'stats',
+		'personas',
+		'testimonials',
+		'founder',
+		'concerns',
+		'fomo',
+		'cta',
+		'faq'
+	];
+
+	$blocks_by_type = [];
 	foreach ($blocks as $b) {
 		if (isset($b['_type'])) {
-			$existing_types[] = $b['_type'];
+			$blocks_by_type[$b['_type']] = $b;
 		}
 	}
 
-	if (!in_array('testimonials', $existing_types, true)) {
-		$items = drtalk_redesign_get_cpt_testimonials_for_migration();
-		if (!empty($items)) {
-			$blocks[] = [
-				'_type' => 'testimonials',
-				'is_active' => true,
-				'title' => 'For the people who use it every day.',
-				'testimonials_list' => $items
-			];
-			$modified = true;
+	$default_blocks_map = null;
+	$modified = false;
+
+	foreach ($canonical_order as $type) {
+		if (!isset($blocks_by_type[$type])) {
+			if ($default_blocks_map === null) {
+				$default_blocks_map = drtalk_redesign_get_default_home_blocks();
+			}
+			if (isset($default_blocks_map[$type])) {
+				$blocks_by_type[$type] = $default_blocks_map[$type];
+				$modified = true;
+			}
 		}
 	}
 
-	if (!in_array('founder', $existing_types, true)) {
-		$founder_image_id = drtalk_redesign_get_or_create_theme_attachment(
-			'assets/images/thomas-stone-figma.png',
-			'Thomas L. Stone Founder Photo'
-		);
-		$blocks[] = [
-			'_type' => 'founder',
-			'is_active' => true,
-			'title' => 'Built by specialists who lived the problem. Not developers who read about it.',
-			'founder_image' => $founder_image_id ?: '',
-			'founder_name' => 'Thomas L. Stone,<br>MD, DDS, FACS',
-			'founder_role' => 'Oral & Maxillofacial Surgeon;<br>Founder of drtalk (est. 2014)',
-			'story' =>
-				"<p>Over more than 25 years in oral surgery, Dr. Stone watched referral workflows break under growth, GP relationships quietly cool when communication lagged, and talented staff spend hours on admin that a better system would have handled automatically.</p>\n<p>He created drtalk because no existing tool was built for the way specialist practices actually work. Not as an outsider guessing at the problem, but as someone who lived it for decades.</p>",
-			'link_text' => 'Read Our Story',
-			'link_url' => ''
-		];
-		$modified = true;
-	}
-
-	if (!in_array('concerns', $existing_types, true)) {
-		$blocks[] = [
-			'_type' => 'concerns',
-			'is_active' => true,
-			'title' => 'Common concerns. Honest answers.',
-			'concerns_list' => [
-				[
-					'title' => '“We already have a system for referrals.”',
-					'answer' =>
-						'Great - then the analysis will help you pressure-test it. We\'ll walk through how practices with similar setups handle growth, staff turnover, and GP responsiveness expectations. If your workflow holds up, you\'ll know it. If there are gaps, you\'ll see them before they become expensive.'
-				],
-				[
-					'title' => '“I don\'t want to add another subscription.”',
-					'answer' =>
-						'You\'re not being asked to. The analysis is free and comes with no obligation. If after seeing how drtalk works alongside your current setup the ROI isn\'t obvious, it\'s probably not the right move and we\'ll say so.'
-				],
-				[
-					'title' => '“My GPs won\'t use another platform.”',
-					'answer' =>
-						'They don\'t have to, and many join on their own once they realize it makes their life easier too. Free access for GPs, nothing to install, and direct secure messaging and point-of-care scheduling with your office instead of chasing calls and faxes.'
-				],
-				[
-					'title' => '“My staff won\'t adopt another tool.”',
-					'answer' =>
-						'Staff resistance comes from tools that add to their workload. During the review we\'ll show specifically how drtalk reduces the daily chaos your team already deals with, not pile on top of it.'
-				]
-			]
-		];
-		$modified = true;
-	}
-
-	if (!in_array('fomo', $existing_types, true)) {
-		$blocks[] = [
-			'_type' => 'fomo',
-			'is_active' => true,
-			'title' => 'What you lose without<br>a smart referral process.',
-			'description' =>
-				"The average specialist practice loses $4,640 every hour to missed and unconverted referrals.<br>Here's what's slipped by since you landed on this page:",
-			'baseline' => '0',
-			'hourly_rate' => '4640',
-			'disclaimer' =>
-				'Based on 80 referrals/mo, 58% leakage, $3,000 avg case value —<br>industry averages for specialty dental practices.'
-		];
-		$modified = true;
-	}
-
-	if (!in_array('cta', $existing_types, true)) {
-		$cta_1_id = drtalk_redesign_get_or_create_theme_attachment(
-			'assets/images/cta-process-1.png',
-			'CTA Process 1 Icon'
-		);
-		$cta_2_id = drtalk_redesign_get_or_create_theme_attachment(
-			'assets/images/cta-process-2.png',
-			'CTA Process 2 Icon'
-		);
-		$cta_3_id = drtalk_redesign_get_or_create_theme_attachment(
-			'assets/images/cta-process-3.png',
-			'CTA Process 3 Icon'
-		);
-		$cta_4_id = drtalk_redesign_get_or_create_theme_attachment(
-			'assets/images/cta-process-4.png',
-			'CTA Process 4 Icon'
-		);
-		$cta_noise_id = drtalk_redesign_get_or_create_theme_attachment(
-			'assets/images/footer-pattern.png',
-			'CTA Noise Pattern'
-		);
-
-		$blocks[] = [
-			'_type' => 'cta',
-			'is_active' => true,
-			'title' => 'Your referral workflow has gaps.',
-			'subtitle' => 'Give us 30 minutes and we’ll find them.',
-			'cta_steps' => [
-				[
-					'icon' => $cta_1_id ?: '',
-					'step_title' => 'We learn your workflow',
-					'step_copy' =>
-						'How referrals come in today, who handles them, and how it gets back to referring GPs.'
-				],
-				[
-					'icon' => $cta_2_id ?: '',
-					'step_title' => 'We show you the breakpoints',
-					'step_copy' =>
-						'We give you a score and highlight common pain points for practices with similar setups.'
-				],
-				[
-					'icon' => $cta_3_id ?: '',
-					'step_title' => 'You keep the full findings',
-					'step_copy' =>
-						'A written analysis summary is yours to keep, regardless of what you decide to do next.'
-				],
-				[
-					'icon' => $cta_4_id ?: '',
-					'step_title' => 'No follow up pressure',
-					'step_copy' =>
-						"If drtalk isn't right for your practice, we'll tell you that. Our job is to be useful. Not to close you."
-				]
-			],
-			'button_text' => 'Claim Your Free Referral Gap Analysis',
-			'button_url' => '',
-			'subtext' => '30 minutes. No obligation<br>Best with practice owner + office manager.',
-			'noise_pattern' => $cta_noise_id ?: ''
-		];
-		$modified = true;
-	}
-
-	if (!in_array('faq', $existing_types, true)) {
-		$plus_icon_id = drtalk_redesign_get_or_create_theme_attachment('assets/images/icon-plus.svg', 'FAQ Plus Icon');
-		$referral_gap_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
-		$baa_url = esc_url(home_url('/business-associates-agreement/'));
-		$contact_url = esc_url(drtalk_redesign_contact_url());
-
-		$blocks[] = [
-			'_type' => 'faq',
-			'is_active' => true,
-			'title' => 'Frequently Asked Questions',
-			'plus_icon' => $plus_icon_id ?: '',
-			'faq_categories' => [
-				[
-					'category_name' => 'Referrals & Workflow',
-					'faq_questions' => [
-						[
-							'question' => 'How does drtalk help reduce referral leakage?',
-							'answer' => sprintf(
-								'Referral leakage, patients who are referred but never schedule or complete treatment, is one of the biggest sources of lost revenue in specialty practice. drtalk gives your team a shared dashboard where every referral is tracked in real time, from the moment it\'s sent to the moment the patient is seen. Nothing gets lost in a fax pile, a missed call, or an unread email. Practices using drtalk consistently recover a significant portion of referrals that would otherwise fall through the cracks. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book your free Referral Gap Analysis</a> now to see how referral leakage is affecting your practice.',
-								$referral_gap_url
-							)
-						],
-						[
-							'question' => 'Do my referring GPs need to learn a new system?',
-							'answer' =>
-								'No. drtalk is designed to work with how your referring offices already operate. GPs can still send referrals through their existing email or e-fax with nothing to install and no logins required. Many join drtalk on their own once they see it\'s free and replaces the phone tag with direct secure messaging.'
-						],
-						[
-							'question' => "What happens to a referral once it's sent?",
-							'answer' =>
-								'Every referral lands in a shared practice dashboard visible to your whole team, not just one person\'s inbox. Your staff can see the referral status, exchange messages and documents with the referring office, and track the patient through to a scheduled appointment. Because the whole team is looped in, there\'s no gap in coverage if someone is out, and no referral gets missed because it was sitting unseen in one person\'s queue.'
-						],
-						[
-							'question' => 'Is drtalk built for dental, or for broader healthcare?',
-							'answer' =>
-								'drtalk supports healthcare teams broadly, but it was purpose-built for dentistry and has the deepest functionality for dental specialists. The referral workflows, communication tools, and practice dashboard are all tuned for the realities of dental referrals. If you\'re a dental specialist looking to tighten your referral network and reduce patient drop-off, drtalk was built with your practice in mind.'
-						],
-						[
-							'question' => 'Will my team actually adopt this, or will it just add more steps?',
-							'answer' =>
-								'The teams that adopt drtalk fastest are the ones who\'ve been burned by referrals going quiet - staff who\'ve spent time chasing down faxes, fielding \'did you get our referral?\' calls, or finding out weeks later that a patient never scheduled. drtalk reduces that noise immediately. Most practices see their team self-motivated to use it once they realize they\'re not losing track of cases anymore. Onboarding is straightforward, and we work with your team directly to make sure adoption sticks.'
-						],
-						[
-							'question' => 'Does drtalk integrate with my existing EMR or practice management software?',
-							'answer' => sprintf(
-								'Yes, drtalk has EMR integration capability. The specifics depend on your current system - <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">book a working session</a> with our team and we\'ll walk through exactly how drtalk fits into your existing setup, including what\'s possible with your practice management software.',
-								$referral_gap_url
-							)
-						]
-					]
-				],
-				[
-					'category_name' => 'Security & Compliance',
-					'faq_questions' => [
-						[
-							'question' => 'Is drtalk HIPAA compliant and secure?',
-							'answer' => sprintf(
-								'Yes. drtalk uses AES-256 encryption - the standard trusted by the U.S. government for sensitive data - for all messages, files, and referrals, both in transit and at rest. Every user on the network has a signed <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">Business Associate Agreement (BAA)</a>, role-based access controls are in place, and all Protected Health Information (PHI) is stored in a secure, encrypted cloud environment. drtalk was built for healthcare from the ground up, so compliance isn\'t an afterthought, it\'s the foundation.',
-								$baa_url
-							)
-						],
-						[
-							'question' => 'How is drtalk different from just using email or secure email?',
-							'answer' =>
-								'Email - even \'secure\' email - puts the burden of compliance on both ends of the conversation. There\'s no guarantee the recipient is compliant, no visibility into whether a message was acted on, and no structured way to track a referral through to completion. drtalk gives you a verified, encrypted network where every participant has a signed BAA, every referral is tracked, and your team has a clear record of every communication. It\'s the difference between hoping a referral gets through and knowing it did.'
-						]
-					]
-				],
-				[
-					'category_name' => 'Pricing & Getting Started',
-					'faq_questions' => [
-						[
-							'question' => 'How much does drtalk cost?',
-							'answer' => sprintf(
-								'drtalk offers a free trial so you can explore the platform and see how it fits your practice before committing to anything. <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a free Referral Gap Analysis</a> to help you figure out the right plan for your practice.',
-								$referral_gap_url
-							)
-						],
-						[
-							'question' => 'Is there a contract or setup fee?',
-							'answer' =>
-								'No contract and no setup fee. Our team will help you connect your referral workflows and get your staff up to speed so you\'re seeing value quickly, not eventually.'
-						],
-						[
-							'question' => 'How many people from my practice can use drtalk?',
-							'answer' => sprintf(
-								'Plans include unlimited team members per location with front desk, assistants, coordinators, and providers all included. If you\'re evaluating drtalk as an enterprise solution, <a href="%s" class="font-bold underline text-purple-dark hover:text-purple">let us know</a> and we\'ll walk you through what\'s available now and what\'s coming.',
-								$contact_url
-							)
-						],
-						[
-							'question' => 'How quickly will we see results?',
-							'answer' => sprintf(
-								'Most practices start seeing a difference within the first few weeks - referrals that would have gone quiet get followed up, patients who would have slipped through get scheduled, and staff spend less time chasing. The longer-term impact is a tighter referral network and a measurable reduction in leakage. The best way to see what\'s possible for your practice specifically is by <a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">booking a Referral Gap Analysis working session</a> - we\'ll show you exactly where the gaps are and what closing them is worth.',
-								$referral_gap_url
-							)
-						],
-						[
-							'question' => 'How do I get started?',
-							'answer' => sprintf(
-								'<a href="%s" target="_blank" rel="noreferrer" class="font-bold underline text-purple-dark hover:text-purple">Book a 30-minute working session</a> with our team. We\'ll map your current referral workflow, show you where drtalk fits in, and get your practice set up for a free trial if you think drtalk is a fit. No pressure, no obligation.',
-								$referral_gap_url
-							)
-						]
-					]
-				]
-			]
-		];
-		$modified = true;
+	if (isset($blocks_by_type['testimonials'])) {
+		if (empty($blocks_by_type['testimonials']['testimonials_list'])) {
+			$items = drtalk_redesign_get_cpt_testimonials_for_migration();
+			if (!empty($items)) {
+				$blocks_by_type['testimonials']['testimonials_list'] = $items;
+				$modified = true;
+			}
+		}
 	}
 
 	if (!has_site_icon()) {
@@ -1617,7 +1417,36 @@ function drtalk_redesign_sync_blocks_to_carbon()
 	}
 
 	if ($modified) {
-		carbon_set_theme_option('home_blocks', $blocks);
+		$ordered_blocks = [];
+		foreach ($canonical_order as $type) {
+			if (isset($blocks_by_type[$type])) {
+				$ordered_blocks[] = $blocks_by_type[$type];
+				unset($blocks_by_type[$type]);
+			}
+		}
+		foreach ($blocks_by_type as $remaining_block) {
+			$ordered_blocks[] = $remaining_block;
+		}
+
+		carbon_set_theme_option('home_blocks', $ordered_blocks);
 	}
 }
 add_action('admin_init', 'drtalk_redesign_sync_blocks_to_carbon', 30);
+
+/**
+ * Ensures missing blocks are synced when visiting front-end before admin.
+ */
+function drtalk_redesign_maybe_sync_frontend()
+{
+	if (is_admin() || wp_doing_ajax() || wp_doing_cron()) {
+		return;
+	}
+	if (!function_exists('carbon_get_theme_option')) {
+		return;
+	}
+	$blocks = carbon_get_theme_option('home_blocks');
+	if (empty($blocks) || count($blocks) < 14) {
+		drtalk_redesign_sync_blocks_to_carbon();
+	}
+}
+add_action('init', 'drtalk_redesign_maybe_sync_frontend', 40);
