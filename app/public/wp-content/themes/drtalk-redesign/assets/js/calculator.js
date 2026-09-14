@@ -2,6 +2,7 @@ import {
   clampCalculatorInputValue,
   getTypedCalculatorState,
   getTypedCalculatorValue,
+  normalizeCalculatorRange,
 } from './calculator-input.mjs';
 
 const calculatorRoot = document.querySelector('[data-calculator-root]');
@@ -28,6 +29,35 @@ if (calculatorRoot) {
     { minimum: 25, label: 'Poor', color: '#ed8f43' },
     { minimum: 0, label: 'Critical', color: '#c9252d' },
   ];
+  const calculatorDefaults = {
+    referrals: { value: 80, minimum: 10, maximum: 300, step: 1 },
+    'case-value': { value: 3000, minimum: 100, maximum: 10000, step: 100 },
+    'conversion-rate': { value: 42, minimum: 0, maximum: 100, step: 1 },
+  };
+
+  calculatorInputs.forEach((input) => {
+    const defaults = calculatorDefaults[input.dataset.calculatorInput] || {
+      value: 0,
+      minimum: 0,
+      maximum: 1,
+      step: 1,
+    };
+    const range = normalizeCalculatorRange(
+      input.value,
+      input.min,
+      input.max,
+      input.step,
+      defaults.value,
+      defaults.minimum,
+      defaults.maximum,
+      defaults.step,
+    );
+
+    input.value = String(range.value);
+    input.min = String(range.minimum);
+    input.max = String(range.maximum);
+    input.step = String(range.step);
+  });
   let calculatorValues = Object.fromEntries(
     Array.from(calculatorInputs, (input) => [input.dataset.calculatorInput, Number(input.value)]),
   );
@@ -43,7 +73,10 @@ if (calculatorRoot) {
     const thumb = calculatorRoot.querySelector(`[data-calculator-thumb="${name}"]`);
     const minimum = Number(rangeInput.min);
     const maximum = Number(rangeInput.max);
-    const percentage = ((value - minimum) / (maximum - minimum)) * 100;
+    const percentage = Math.max(
+      0,
+      Math.min(100, maximum > minimum ? ((value - minimum) / (maximum - minimum)) * 100 : 0),
+    );
 
     rangeInput.value = String(value);
     fill.style.width = `${percentage}%`;

@@ -10,6 +10,8 @@
     "dev": "npm run watch",
     "format": "prettier --write \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
     "format:check": "prettier --check \"**/*.{php,js,css,json,md,yml,yaml,mjs}\"",
+    "test:calculator": "node --test tests/calculator-input.test.mjs",
+    "test:home-blocks": "php tests/home-blocks.test.php",
     "test:foundation": "sh tests/verify-foundation.sh",
     "test:personalized-scroll": "node --test tests/personalized-scroll.test.mjs"
   },

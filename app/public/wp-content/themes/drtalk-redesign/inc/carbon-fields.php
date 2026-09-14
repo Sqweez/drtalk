@@ -13,13 +13,44 @@ use Carbon_Fields\Field;
  */
 function drtalk_redesign_boot_carbon_fields()
 {
+	if (class_exists(Carbon_Fields::class)) {
+		Carbon_Fields::boot();
+		return;
+	}
+
 	$autoload = get_theme_file_path('vendor/autoload.php');
 	if (file_exists($autoload)) {
 		require_once $autoload;
-		Carbon_Fields::boot();
 	}
+
+	if (class_exists(Carbon_Fields::class)) {
+		Carbon_Fields::boot();
+		return;
+	}
+
+	error_log(
+		'drtalk-redesign: Carbon Fields is unavailable. Run "composer install --no-dev --optimize-autoloader" in the theme directory.'
+	);
+	add_action('admin_notices', 'drtalk_redesign_carbon_fields_missing_notice');
 }
 add_action('after_setup_theme', 'drtalk_redesign_boot_carbon_fields');
+
+/**
+ * Displays an actionable dependency error to site administrators.
+ */
+function drtalk_redesign_carbon_fields_missing_notice()
+{
+	if (!current_user_can('manage_options')) {
+		return;
+	}
+	$message = __(
+		'drtalk-redesign cannot load Carbon Fields. Run composer install --no-dev --optimize-autoloader in the theme directory.',
+		'drtalk-redesign'
+	);
+	?>
+	<div class="notice notice-error"><p><?php echo esc_html($message); ?></p></div>
+	<?php
+}
 
 /**
  * Registers custom fields for the Front Page.
@@ -609,7 +640,8 @@ function drtalk_redesign_get_home_block($type)
 function drtalk_redesign_get_or_create_theme_attachment($relative_path, $title = '')
 {
 	$source_path = get_theme_file_path($relative_path);
-	if (!file_exists($source_path)) {
+	if (!is_file($source_path) || !is_readable($source_path)) {
+		error_log('drtalk-redesign: Cannot import unreadable theme asset: ' . $relative_path);
 		return 0;
 	}
 
@@ -634,8 +666,24 @@ function drtalk_redesign_get_or_create_theme_attachment($relative_path, $title =
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 
 	$upload_dir = wp_upload_dir();
+	if (!empty($upload_dir['error']) || empty($upload_dir['path'])) {
+		error_log('drtalk-redesign: Cannot import theme asset because the upload directory is unavailable.');
+		return 0;
+	}
+	if (!is_dir($upload_dir['path']) && !wp_mkdir_p($upload_dir['path'])) {
+		error_log('drtalk-redesign: Cannot create the upload directory for theme assets.');
+		return 0;
+	}
+	if (!is_writable($upload_dir['path'])) {
+		error_log('drtalk-redesign: Cannot write theme assets to the upload directory.');
+		return 0;
+	}
+
 	$dest_path = $upload_dir['path'] . '/' . wp_unique_filename($upload_dir['path'], $filename);
-	copy($source_path, $dest_path);
+	if (!@copy($source_path, $dest_path)) {
+		error_log('drtalk-redesign: Failed to copy theme asset into the upload directory: ' . $relative_path);
+		return 0;
+	}
 
 	$filetype = wp_check_filetype($filename, null);
 	$mime_type = $filetype['type'];
@@ -650,8 +698,20 @@ function drtalk_redesign_get_or_create_theme_attachment($relative_path, $title =
 		'post_status' => 'inherit'
 	];
 
-	$attach_id = wp_insert_attachment($attachment, $dest_path);
+	$attach_id = wp_insert_attachment($attachment, $dest_path, 0, true);
+	if (is_wp_error($attach_id) || !$attach_id) {
+		wp_delete_file($dest_path);
+		$message = is_wp_error($attach_id) ? $attach_id->get_error_message() : 'Unknown attachment insertion error.';
+		error_log('drtalk-redesign: Failed to create media attachment: ' . $message);
+		return 0;
+	}
+
 	$attach_data = wp_generate_attachment_metadata($attach_id, $dest_path);
+	if ($mime_type !== 'image/svg+xml' && strpos((string) $mime_type, 'image/') === 0 && !is_array($attach_data)) {
+		wp_delete_attachment($attach_id, true);
+		error_log('drtalk-redesign: Failed to generate metadata for theme asset: ' . $relative_path);
+		return 0;
+	}
 	wp_update_attachment_metadata($attach_id, $attach_data);
 
 	return (int) $attach_id;
@@ -1357,54 +1417,28 @@ function drtalk_redesign_sync_blocks_to_carbon()
 		return;
 	}
 
-	$canonical_order = [
-		'hero',
-		'partners',
-		'problem_cards',
-		'calculator',
-		'how_it_works',
-		'responsiveness',
-		'stats',
-		'personas',
-		'testimonials',
-		'founder',
-		'concerns',
-		'fomo',
-		'cta',
-		'faq'
-	];
+	$existing_types = array_filter(array_column($blocks, '_type'));
+	$canonical_types = drtalk_redesign_get_canonical_home_block_types();
+	$needs_merge =
+		count(array_unique($existing_types)) !== count($blocks) ||
+		!empty(array_diff($canonical_types, $existing_types));
+	$merged = $needs_merge
+		? drtalk_redesign_merge_home_blocks($blocks, drtalk_redesign_get_default_home_blocks())
+		: ['blocks' => $blocks, 'modified' => false];
+	$blocks = $merged['blocks'];
+	$modified = $merged['modified'];
 
-	$blocks_by_type = [];
-	foreach ($blocks as $b) {
-		if (isset($b['_type'])) {
-			$blocks_by_type[$b['_type']] = $b;
-		}
-	}
-
-	$default_blocks_map = null;
-	$modified = false;
-
-	foreach ($canonical_order as $type) {
-		if (!isset($blocks_by_type[$type])) {
-			if ($default_blocks_map === null) {
-				$default_blocks_map = drtalk_redesign_get_default_home_blocks();
-			}
-			if (isset($default_blocks_map[$type])) {
-				$blocks_by_type[$type] = $default_blocks_map[$type];
-				$modified = true;
-			}
-		}
-	}
-
-	if (isset($blocks_by_type['testimonials'])) {
-		if (empty($blocks_by_type['testimonials']['testimonials_list'])) {
+	foreach ($blocks as &$block) {
+		if (isset($block['_type']) && $block['_type'] === 'testimonials' && empty($block['testimonials_list'])) {
 			$items = drtalk_redesign_get_cpt_testimonials_for_migration();
 			if (!empty($items)) {
-				$blocks_by_type['testimonials']['testimonials_list'] = $items;
+				$block['testimonials_list'] = $items;
 				$modified = true;
 			}
+			break;
 		}
 	}
+	unset($block);
 
 	if (!has_site_icon()) {
 		$site_icon_id = drtalk_redesign_get_or_create_theme_attachment(
@@ -1417,18 +1451,7 @@ function drtalk_redesign_sync_blocks_to_carbon()
 	}
 
 	if ($modified) {
-		$ordered_blocks = [];
-		foreach ($canonical_order as $type) {
-			if (isset($blocks_by_type[$type])) {
-				$ordered_blocks[] = $blocks_by_type[$type];
-				unset($blocks_by_type[$type]);
-			}
-		}
-		foreach ($blocks_by_type as $remaining_block) {
-			$ordered_blocks[] = $remaining_block;
-		}
-
-		carbon_set_theme_option('home_blocks', $ordered_blocks);
+		carbon_set_theme_option('home_blocks', $blocks);
 	}
 }
 add_action('admin_init', 'drtalk_redesign_sync_blocks_to_carbon', 30);

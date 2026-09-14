@@ -17,26 +17,47 @@ $calculator_noise_style = esc_attr("--calculator-noise-image: url('{$calculator_
 $title = isset($block['title']) ? $block['title'] : '';
 $form_title = isset($block['form_title']) ? $block['form_title'] : '';
 
-$referrals_val =
-	isset($block['referrals_default']) && $block['referrals_default'] !== '' ? (int) $block['referrals_default'] : 80;
-$referrals_min = isset($block['referrals_min']) && $block['referrals_min'] !== '' ? (int) $block['referrals_min'] : 10;
-$referrals_max = isset($block['referrals_max']) && $block['referrals_max'] !== '' ? (int) $block['referrals_max'] : 300;
+$referrals_range = drtalk_redesign_normalize_calculator_range(
+	isset($block['referrals_default']) ? $block['referrals_default'] : 80,
+	isset($block['referrals_min']) ? $block['referrals_min'] : 10,
+	isset($block['referrals_max']) ? $block['referrals_max'] : 300,
+	1,
+	80,
+	10,
+	300,
+	1
+);
+$case_range = drtalk_redesign_normalize_calculator_range(
+	isset($block['case_value_default']) ? $block['case_value_default'] : 3000,
+	isset($block['case_value_min']) ? $block['case_value_min'] : 100,
+	isset($block['case_value_max']) ? $block['case_value_max'] : 10000,
+	isset($block['case_value_step']) ? $block['case_value_step'] : 100,
+	3000,
+	100,
+	10000,
+	100
+);
+$conversion_range = drtalk_redesign_normalize_calculator_range(
+	isset($block['conversion_default']) ? $block['conversion_default'] : 42,
+	isset($block['conversion_min']) ? $block['conversion_min'] : 0,
+	isset($block['conversion_max']) ? $block['conversion_max'] : 100,
+	1,
+	42,
+	0,
+	100,
+	1
+);
 
-$case_val =
-	isset($block['case_value_default']) && $block['case_value_default'] !== ''
-		? (int) $block['case_value_default']
-		: 3000;
-$case_min = isset($block['case_value_min']) && $block['case_value_min'] !== '' ? (int) $block['case_value_min'] : 100;
-$case_max = isset($block['case_value_max']) && $block['case_value_max'] !== '' ? (int) $block['case_value_max'] : 10000;
-$case_step =
-	isset($block['case_value_step']) && $block['case_value_step'] !== '' ? (int) $block['case_value_step'] : 100;
-
-$conv_val =
-	isset($block['conversion_default']) && $block['conversion_default'] !== ''
-		? (int) $block['conversion_default']
-		: 42;
-$conv_min = isset($block['conversion_min']) && $block['conversion_min'] !== '' ? (int) $block['conversion_min'] : 0;
-$conv_max = isset($block['conversion_max']) && $block['conversion_max'] !== '' ? (int) $block['conversion_max'] : 100;
+$referrals_val = $referrals_range['value'];
+$referrals_min = $referrals_range['minimum'];
+$referrals_max = $referrals_range['maximum'];
+$case_val = $case_range['value'];
+$case_min = $case_range['minimum'];
+$case_max = $case_range['maximum'];
+$case_step = $case_range['step'];
+$conv_val = $conversion_range['value'];
+$conv_min = $conversion_range['minimum'];
+$conv_max = $conversion_range['maximum'];
 
 $note_text = isset($block['note_text']) ? $block['note_text'] : '';
 $button_text = isset($block['button_text']) ? $block['button_text'] : '';

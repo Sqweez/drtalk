@@ -204,6 +204,24 @@
     const normalizedValue = String(value).replace(/[^\d.-]/g, "");
     return normalizedValue ? Number(normalizedValue) : Number.NaN;
   };
+  var normalizeCalculatorRange = (value, minimum, maximum, step, fallbackValue, fallbackMinimum, fallbackMaximum, fallbackStep) => {
+    let normalizedMinimum = Number.isFinite(Number(minimum)) ? Number(minimum) : fallbackMinimum;
+    let normalizedMaximum = Number.isFinite(Number(maximum)) ? Number(maximum) : fallbackMaximum;
+    let normalizedValue = Number.isFinite(Number(value)) ? Number(value) : fallbackValue;
+    let normalizedStep = Number.isFinite(Number(step)) ? Number(step) : fallbackStep;
+    if (normalizedMaximum <= normalizedMinimum) {
+      normalizedMinimum = fallbackMinimum;
+      normalizedMaximum = fallbackMaximum;
+      normalizedValue = fallbackValue;
+    }
+    if (normalizedStep <= 0) normalizedStep = Math.max(1, fallbackStep);
+    return {
+      value: Math.max(normalizedMinimum, Math.min(normalizedMaximum, normalizedValue)),
+      minimum: normalizedMinimum,
+      maximum: normalizedMaximum,
+      step: normalizedStep
+    };
+  };
   var getTypedCalculatorValue = (value, minimum, maximum) => {
     const parsedValue = parseCalculatorInputValue(value);
     return Number.isFinite(parsedValue) && parsedValue >= minimum && parsedValue <= maximum ? parsedValue : null;
@@ -241,6 +259,33 @@
       { minimum: 25, label: "Poor", color: "#ed8f43" },
       { minimum: 0, label: "Critical", color: "#c9252d" }
     ];
+    const calculatorDefaults = {
+      referrals: { value: 80, minimum: 10, maximum: 300, step: 1 },
+      "case-value": { value: 3e3, minimum: 100, maximum: 1e4, step: 100 },
+      "conversion-rate": { value: 42, minimum: 0, maximum: 100, step: 1 }
+    };
+    calculatorInputs.forEach((input) => {
+      const defaults2 = calculatorDefaults[input.dataset.calculatorInput] || {
+        value: 0,
+        minimum: 0,
+        maximum: 1,
+        step: 1
+      };
+      const range = normalizeCalculatorRange(
+        input.value,
+        input.min,
+        input.max,
+        input.step,
+        defaults2.value,
+        defaults2.minimum,
+        defaults2.maximum,
+        defaults2.step
+      );
+      input.value = String(range.value);
+      input.min = String(range.minimum);
+      input.max = String(range.maximum);
+      input.step = String(range.step);
+    });
     let calculatorValues = Object.fromEntries(
       Array.from(calculatorInputs, (input) => [input.dataset.calculatorInput, Number(input.value)])
     );
@@ -253,7 +298,10 @@
       const thumb = calculatorRoot.querySelector(`[data-calculator-thumb="${name}"]`);
       const minimum = Number(rangeInput.min);
       const maximum = Number(rangeInput.max);
-      const percentage = (value - minimum) / (maximum - minimum) * 100;
+      const percentage = Math.max(
+        0,
+        Math.min(100, maximum > minimum ? (value - minimum) / (maximum - minimum) * 100 : 0)
+      );
       rangeInput.value = String(value);
       fill.style.width = `${percentage}%`;
       thumb.style.left = `${percentage}%`;
