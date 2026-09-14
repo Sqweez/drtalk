@@ -1606,6 +1606,16 @@ function drtalk_redesign_sync_blocks_to_carbon()
 		$modified = true;
 	}
 
+	if (!has_site_icon()) {
+		$site_icon_id = drtalk_redesign_get_or_create_theme_attachment(
+			'assets/images/favicon/android-chrome-512x512.png',
+			'drtalk Site Icon'
+		);
+		if ($site_icon_id) {
+			update_option('site_icon', $site_icon_id);
+		}
+	}
+
 	if ($modified) {
 		carbon_set_theme_option('home_blocks', $blocks);
 	}

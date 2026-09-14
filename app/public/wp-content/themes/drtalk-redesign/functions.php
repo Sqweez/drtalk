@@ -80,3 +80,25 @@ function drtalk_redesign_disable_sharing_on_pages()
 }
 add_action('template_redirect', 'drtalk_redesign_disable_sharing_on_pages');
 add_action('loop_start', 'drtalk_redesign_disable_sharing_on_pages');
+
+/**
+ * Outputs modern SVG favicon, fallbacks, web manifest, and theme color in <head>.
+ */
+function drtalk_redesign_favicon_head_tags()
+{
+	$favicon_dir = get_theme_file_uri('assets/images/favicon'); ?>
+	<link rel="icon" href="<?php echo esc_url($favicon_dir . '/favicon.svg'); ?>" type="image/svg+xml">
+	<link rel="alternate icon" href="<?php echo esc_url(
+ 	$favicon_dir . '/favicon-32x32.png'
+ ); ?>" type="image/png" sizes="32x32">
+	<link rel="alternate icon" href="<?php echo esc_url(
+ 	$favicon_dir . '/favicon-16x16.png'
+ ); ?>" type="image/png" sizes="16x16">
+	<link rel="apple-touch-icon" href="<?php echo esc_url($favicon_dir . '/apple-touch-icon.png'); ?>" sizes="180x180">
+	<link rel="manifest" href="<?php echo esc_url($favicon_dir . '/site.webmanifest'); ?>">
+	<meta name="theme-color" content="#4A1E4F">
+	<?php
+}
+add_action('wp_head', 'drtalk_redesign_favicon_head_tags', 1);
+add_action('admin_head', 'drtalk_redesign_favicon_head_tags', 1);
+add_action('login_head', 'drtalk_redesign_favicon_head_tags', 1);
