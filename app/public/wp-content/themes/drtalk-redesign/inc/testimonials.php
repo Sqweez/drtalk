@@ -22,7 +22,7 @@ function drtalk_redesign_register_testimonial_post_type()
 		],
 		'public' => false,
 		'show_ui' => true,
-		'show_in_menu' => true,
+		'show_in_menu' => false,
 		'show_in_rest' => true,
 		'menu_icon' => 'dashicons-format-quote',
 		'menu_position' => 21,
