@@ -590,6 +590,262 @@ function drtalk_redesign_register_front_page_fields()
 add_action('carbon_fields_register_fields', 'drtalk_redesign_register_front_page_fields');
 
 /**
+ * Registers custom fields for the Header.
+ */
+function drtalk_redesign_register_header_fields()
+{
+	Container::make('theme_options', __('Header Settings', 'drtalk-redesign'))
+		->set_page_file('drtalk-header')
+		->set_page_menu_title(__('Header', 'drtalk-redesign'))
+		->set_icon('dashicons-table-row-before')
+		->set_page_menu_position(21)
+		->add_tab(__('Logo', 'drtalk-redesign'), [
+			Field::make('image', 'header_logo', __('Logo Image', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(
+					__('Upload custom logo SVG or PNG. Leave empty to use the default drtalk logo.', 'drtalk-redesign')
+				),
+			Field::make('text', 'header_logo_url', __('Logo Destination URL', 'drtalk-redesign'))->set_help_text(
+				__('Leave empty to link to the site homepage.', 'drtalk-redesign')
+			),
+			Field::make('text', 'header_logo_alt', __('Logo Alt Text', 'drtalk-redesign'))->set_default_value('DrTalk')
+		])
+		->add_tab(__('Navigation Links', 'drtalk-redesign'), [
+			Field::make('complex', 'header_nav_links', __('Navigation Items', 'drtalk-redesign'))
+				->set_layout('tabbed-horizontal')
+				->add_fields([
+					Field::make('text', 'text', __('Link Text', 'drtalk-redesign'))->set_required(true)->set_width(40),
+					Field::make('text', 'url', __('Link URL', 'drtalk-redesign'))->set_required(true)->set_width(40),
+					Field::make('checkbox', 'target_blank', __('Open in new tab', 'drtalk-redesign'))->set_width(20)
+				])
+				->set_help_text(
+					__(
+						'Add menu links for desktop and mobile. If empty, defaults (About, News) will be used.',
+						'drtalk-redesign'
+					)
+				)
+		])
+		->add_tab(__('Action Buttons', 'drtalk-redesign'), [
+			Field::make('separator', 'sep_header_primary_btn', __('Primary Button (Right CTA)', 'drtalk-redesign')),
+			Field::make('checkbox', 'header_primary_btn_enable', __('Enable Primary Button', 'drtalk-redesign'))
+				->set_default_value(true)
+				->set_width(100),
+			Field::make('text', 'header_primary_btn_text', __('Button Text', 'drtalk-redesign'))
+				->set_default_value('Get a Free Referral Analysis')
+				->set_width(50),
+			Field::make('text', 'header_primary_btn_url', __('Button URL', 'drtalk-redesign'))
+				->set_help_text(__('Leave empty to use default Referral Gap Analysis URL.', 'drtalk-redesign'))
+				->set_width(50),
+			Field::make(
+				'checkbox',
+				'header_primary_btn_target_blank',
+				__('Open in new tab', 'drtalk-redesign')
+			)->set_default_value(true),
+
+			Field::make('separator', 'sep_header_secondary_btn', __('Secondary Button (Log In)', 'drtalk-redesign')),
+			Field::make('checkbox', 'header_secondary_btn_enable', __('Enable Secondary Button', 'drtalk-redesign'))
+				->set_default_value(true)
+				->set_width(100),
+			Field::make('text', 'header_secondary_btn_text', __('Button Text', 'drtalk-redesign'))
+				->set_default_value('Log In')
+				->set_width(50),
+			Field::make('text', 'header_secondary_btn_url', __('Button URL', 'drtalk-redesign'))
+				->set_help_text(__('Leave empty to use default Login URL.', 'drtalk-redesign'))
+				->set_width(50),
+			Field::make(
+				'checkbox',
+				'header_secondary_btn_target_blank',
+				__('Open in new tab', 'drtalk-redesign')
+			)->set_default_value(true)
+		]);
+}
+add_action('carbon_fields_register_fields', 'drtalk_redesign_register_header_fields');
+
+/**
+ * Retrieves the header configuration settings.
+ *
+ * @return array
+ */
+function drtalk_redesign_get_header_settings()
+{
+	$default_logo_url = get_theme_file_uri('assets/images/drtalk-logo.svg');
+	$default_referral_url = function_exists('drtalk_redesign_referral_gap_analysis_url')
+		? drtalk_redesign_referral_gap_analysis_url()
+		: '#';
+	$default_login_url = function_exists('drtalk_redesign_login_url') ? drtalk_redesign_login_url() : '#';
+	$default_nav_links = [
+		[
+			'text' => 'About',
+			'url' => home_url('/about-us/'),
+			'target_blank' => false
+		],
+		[
+			'text' => 'News',
+			'url' => home_url('/blog/'),
+			'target_blank' => false
+		]
+	];
+
+	if (!function_exists('carbon_get_theme_option')) {
+		return [
+			'logo_url' => $default_logo_url,
+			'logo_link' => home_url('/'),
+			'logo_alt' => get_bloginfo('name') ?: 'DrTalk',
+			'nav_links' => $default_nav_links,
+			'primary_btn' => [
+				'enable' => true,
+				'text' => 'Get a Free Referral Analysis',
+				'url' => $default_referral_url,
+				'target_blank' => true
+			],
+			'secondary_btn' => [
+				'enable' => true,
+				'text' => 'Log In',
+				'url' => $default_login_url,
+				'target_blank' => true
+			]
+		];
+	}
+
+	$logo_id = carbon_get_theme_option('header_logo');
+	$logo_url = $logo_id ? wp_get_attachment_url($logo_id) : '';
+	if (empty($logo_url)) {
+		$logo_url = $default_logo_url;
+	}
+
+	$logo_link = carbon_get_theme_option('header_logo_url');
+	if (empty($logo_link)) {
+		$logo_link = home_url('/');
+	}
+
+	$logo_alt = carbon_get_theme_option('header_logo_alt');
+	if (empty($logo_alt)) {
+		$logo_alt = get_bloginfo('name') ?: 'DrTalk';
+	}
+
+	$raw_nav = carbon_get_theme_option('header_nav_links');
+	$nav_links = [];
+	if (!empty($raw_nav) && is_array($raw_nav)) {
+		foreach ($raw_nav as $item) {
+			if (!empty($item['text']) && !empty($item['url'])) {
+				$nav_links[] = [
+					'text' => $item['text'],
+					'url' => $item['url'],
+					'target_blank' => !empty($item['target_blank'])
+				];
+			}
+		}
+	}
+
+	if (empty($nav_links)) {
+		if (has_nav_menu('primary')) {
+			$locations = get_nav_menu_locations();
+			$menu_id = $locations['primary'] ?? 0;
+			$menu_items = $menu_id ? wp_get_nav_menu_items($menu_id) : [];
+			if (!empty($menu_items) && is_array($menu_items)) {
+				foreach ($menu_items as $menu_item) {
+					$nav_links[] = [
+						'text' => $menu_item->title,
+						'url' => $menu_item->url,
+						'target_blank' => $menu_item->target === '_blank'
+					];
+				}
+			}
+		}
+	}
+
+	if (empty($nav_links)) {
+		$nav_links = $default_nav_links;
+	}
+
+	$primary_enable = carbon_get_theme_option('header_primary_btn_enable');
+	if ($primary_enable === null || $primary_enable === '') {
+		$primary_enable = true;
+	}
+	$primary_text = carbon_get_theme_option('header_primary_btn_text');
+	if ($primary_text === null || $primary_text === '') {
+		$primary_text = 'Get a Free Referral Analysis';
+	}
+	$primary_url = carbon_get_theme_option('header_primary_btn_url');
+	if (empty($primary_url)) {
+		$primary_url = $default_referral_url;
+	}
+	$primary_target = carbon_get_theme_option('header_primary_btn_target_blank');
+	if ($primary_target === null || $primary_target === '') {
+		$primary_target = true;
+	}
+
+	$secondary_enable = carbon_get_theme_option('header_secondary_btn_enable');
+	if ($secondary_enable === null || $secondary_enable === '') {
+		$secondary_enable = true;
+	}
+	$secondary_text = carbon_get_theme_option('header_secondary_btn_text');
+	if ($secondary_text === null || $secondary_text === '') {
+		$secondary_text = 'Log In';
+	}
+	$secondary_url = carbon_get_theme_option('header_secondary_btn_url');
+	if (empty($secondary_url)) {
+		$secondary_url = $default_login_url;
+	}
+	$secondary_target = carbon_get_theme_option('header_secondary_btn_target_blank');
+	if ($secondary_target === null || $secondary_target === '') {
+		$secondary_target = true;
+	}
+
+	return [
+		'logo_url' => $logo_url,
+		'logo_link' => $logo_link,
+		'logo_alt' => $logo_alt,
+		'nav_links' => $nav_links,
+		'primary_btn' => [
+			'enable' => (bool) $primary_enable,
+			'text' => $primary_text,
+			'url' => $primary_url,
+			'target_blank' => (bool) $primary_target
+		],
+		'secondary_btn' => [
+			'enable' => (bool) $secondary_enable,
+			'text' => $secondary_text,
+			'url' => $secondary_url,
+			'target_blank' => (bool) $secondary_target
+		]
+	];
+}
+
+/**
+ * Seeds default header navigation links into Carbon Fields if not configured yet.
+ */
+function drtalk_redesign_seed_header_settings()
+{
+	if (!function_exists('carbon_get_theme_option') || !function_exists('carbon_set_theme_option')) {
+		return;
+	}
+
+	if (get_option('drtalk_header_seeded_v1')) {
+		return;
+	}
+
+	$existing_nav = carbon_get_theme_option('header_nav_links');
+	if (empty($existing_nav)) {
+		carbon_set_theme_option('header_nav_links', [
+			[
+				'text' => 'About',
+				'url' => home_url('/about-us/'),
+				'target_blank' => false
+			],
+			[
+				'text' => 'News',
+				'url' => home_url('/blog/'),
+				'target_blank' => false
+			]
+		]);
+	}
+
+	update_option('drtalk_header_seeded_v1', 1);
+}
+add_action('admin_init', 'drtalk_redesign_seed_header_settings');
+
+/**
  * Returns all configured home blocks from Carbon Fields.
  *
  * @return array
