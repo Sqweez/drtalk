@@ -1248,6 +1248,893 @@ function drtalk_redesign_seed_footer_settings()
 add_action('admin_init', 'drtalk_redesign_seed_footer_settings');
 
 /**
+ * Registers custom fields for the About Page.
+ */
+function drtalk_redesign_register_about_page_fields()
+{
+	Container::make('theme_options', __('About Page', 'drtalk-redesign'))
+		->set_page_file('drtalk-about-page')
+		->set_page_menu_title(__('About Page', 'drtalk-redesign'))
+		->set_icon('dashicons-businessperson')
+		->set_page_menu_position(23)
+		->add_tab(__('Hero Section', 'drtalk-redesign'), [
+			Field::make('checkbox', 'about_hero_is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+				true
+			),
+			Field::make('text', 'about_hero_eyebrow', __('Eyebrow Text', 'drtalk-redesign'))->set_default_value(
+				'After 25 years on the receiving end of broken referral workflows,'
+			),
+			Field::make('text', 'about_hero_title', __('Title (H1)', 'drtalk-redesign'))->set_default_value(
+				'Dr. Tom Stone decided to do something about it.'
+			),
+			Field::make('textarea', 'about_hero_description', __('Description', 'drtalk-redesign'))
+				->set_default_value(
+					'Today, drtalk is the AI-powered referral and communication platform developed specifically for dental specialists and trusted by over 1,500 practices nationwide.'
+				)
+				->set_rows(3),
+			Field::make('text', 'about_hero_button_text', __('Button Text', 'drtalk-redesign'))->set_default_value(
+				'See How drtalk Works'
+			),
+			Field::make('text', 'about_hero_button_url', __('Button URL', 'drtalk-redesign'))->set_help_text(
+				__('Leave empty for default Gap Analysis link.', 'drtalk-redesign')
+			),
+			Field::make('image', 'about_hero_image', __('Dashboard Preview Image', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(__('Leave empty to use the default dashboard image.', 'drtalk-redesign')),
+			Field::make('image', 'about_hero_pattern', __('Background Pattern', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(__('Leave empty to use the default dark pattern.', 'drtalk-redesign'))
+		])
+		->add_tab(__('What We Solve', 'drtalk-redesign'), [
+			Field::make(
+				'checkbox',
+				'about_problems_is_active',
+				__('Enable Section', 'drtalk-redesign')
+			)->set_default_value(true),
+			Field::make('text', 'about_problems_eyebrow', __('Eyebrow Text', 'drtalk-redesign'))->set_default_value(
+				'What we built drtalk to solve'
+			),
+			Field::make('text', 'about_problems_title', __('Section Title (H2)', 'drtalk-redesign'))->set_default_value(
+				"Your growth shouldn't depend on luck and lunches."
+			),
+			Field::make('complex', 'about_problems_cards', __('Problem Cards', 'drtalk-redesign'))
+				->set_layout('tabbed-horizontal')
+				->add_fields([
+					Field::make('text', 'title', __('Card Title', 'drtalk-redesign'))
+						->set_required(true)
+						->set_width(50),
+					Field::make('select', 'preset_icon', __('Preset Icon', 'drtalk-redesign'))
+						->set_options([
+							'outdated_methods' => 'Outdated Methods',
+							'incomplete_insights' => 'Incomplete Insights',
+							'custom' => __('Custom Icon (upload below)', 'drtalk-redesign')
+						])
+						->set_default_value('outdated_methods')
+						->set_width(25),
+					Field::make('image', 'icon', __('Custom Icon', 'drtalk-redesign'))
+						->set_value_type('id')
+						->set_width(25),
+					Field::make('textarea', 'description', __('Description', 'drtalk-redesign'))
+						->set_rows(3)
+						->set_required(true)
+						->set_width(100)
+				])
+				->set_help_text(__('Leave empty to use the default 2 problem cards.', 'drtalk-redesign'))
+		])
+		->add_tab(__('Founder Story', 'drtalk-redesign'), [
+			Field::make(
+				'checkbox',
+				'about_founder_is_active',
+				__('Enable Section', 'drtalk-redesign')
+			)->set_default_value(true),
+			Field::make('text', 'about_founder_title', __('Section Title (H2)', 'drtalk-redesign'))->set_default_value(
+				'Created by a dental specialist who felt the frustration firsthand.'
+			),
+			Field::make('textarea', 'about_founder_story', __('Story Content (HTML allowed)', 'drtalk-redesign'))
+				->set_default_value(
+					"<p>In 2014, Dr. Tom Stone set out to fix what he'd spent decades navigating. Referring dentists had no idea what happened after they sent a case his way. Patients he needed weren't showing up. The tools that were supposed to connect the two were the thing getting in the way.</p>\n<p>So he founded drtalk to fix it. To make professional communication seamless, referrals smart and efficient, and the knowledge dentists rely on easy to share. Not as an outsider guessing at the problem, but as someone who'd already spent decades inside it. <strong class=\"font-normal lg:font-bold\">And it's already working for practices like yours.</strong></p>"
+				)
+				->set_rows(6),
+			Field::make('image', 'about_founder_image', __('Founder Photo', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(__('Photo of Dr. Thomas L. Stone.', 'drtalk-redesign'))
+				->set_width(33),
+			Field::make('textarea', 'about_founder_quote', __('Quote', 'drtalk-redesign'))
+				->set_default_value(
+					'I believe the future of dentistry belongs to those who embrace intelligent systems, not just harder work.'
+				)
+				->set_rows(3)
+				->set_width(34),
+			Field::make('text', 'about_founder_caption', __('Quote Caption / Author', 'drtalk-redesign'))
+				->set_default_value('– Thomas L. Stone, MD, DDS, FACS')
+				->set_width(33)
+		])
+		->add_tab(__('Outcomes & Stats', 'drtalk-redesign'), [
+			Field::make(
+				'checkbox',
+				'about_stats_is_active',
+				__('Enable Section', 'drtalk-redesign')
+			)->set_default_value(true),
+			Field::make('text', 'about_stats_title', __('Section Title (H2)', 'drtalk-redesign'))->set_default_value(
+				"Ten years later, here's what that looks like."
+			),
+			Field::make('complex', 'about_stats_cards', __('Stats Cards', 'drtalk-redesign'))
+				->set_layout('tabbed-horizontal')
+				->add_fields([
+					Field::make('text', 'value', __('Stat Value / Metric', 'drtalk-redesign'))
+						->set_required(true)
+						->set_width(40),
+					Field::make('textarea', 'label', __('Label (HTML allowed)', 'drtalk-redesign'))
+						->set_required(true)
+						->set_rows(2)
+						->set_width(60)
+				])
+				->set_help_text(__('Leave empty to use the default 3 statistics.', 'drtalk-redesign'))
+		])
+		->add_tab(__('Testimonial', 'drtalk-redesign'), [
+			Field::make(
+				'checkbox',
+				'about_testimonial_is_active',
+				__('Enable Section', 'drtalk-redesign')
+			)->set_default_value(true),
+			Field::make('text', 'about_testimonial_eyebrow', __('Eyebrow Text', 'drtalk-redesign'))->set_default_value(
+				'What practices see after switching'
+			),
+			Field::make('textarea', 'about_testimonial_quote', __('Quote', 'drtalk-redesign'))
+				->set_default_value(
+					"drtalk has transformed our practice. Our team works in sync with referring offices, and we've seen a significant boost in efficiency and practice revenue."
+				)
+				->set_rows(3),
+			Field::make('text', 'about_testimonial_name', __('Author Name', 'drtalk-redesign'))
+				->set_default_value('Dr. Albert Kang')
+				->set_width(33),
+			Field::make('text', 'about_testimonial_role', __('Author Role / Practice', 'drtalk-redesign'))
+				->set_default_value('Oral & Maxillofacial Surgeon, New England Oral & Maxillofacial Surgery')
+				->set_width(34),
+			Field::make('image', 'about_testimonial_avatar', __('Author Photo', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_width(33)
+		])
+		->add_tab(__('Platform Features', 'drtalk-redesign'), [
+			Field::make(
+				'checkbox',
+				'about_features_is_active',
+				__('Enable Section', 'drtalk-redesign')
+			)->set_default_value(true),
+			Field::make('text', 'about_features_title', __('Section Title (H2)', 'drtalk-redesign'))->set_default_value(
+				'What Tom actually built.'
+			),
+			Field::make('textarea', 'about_features_description', __('Description (HTML allowed)', 'drtalk-redesign'))
+				->set_default_value(
+					'drtalk replaces the workarounds most specialty practices are still stitching together - fax, phone, email, paper - with <strong>one connected platform</strong>.'
+				)
+				->set_rows(2),
+			Field::make('complex', 'about_features_list', __('Features List', 'drtalk-redesign'))
+				->set_layout('tabbed-horizontal')
+				->add_fields([
+					Field::make('text', 'title', __('Feature Title', 'drtalk-redesign'))
+						->set_required(true)
+						->set_width(40),
+					Field::make('select', 'preset_icon', __('Preset Icon', 'drtalk-redesign'))
+						->set_options([
+							'referrals' => 'Referral Management',
+							'secure' => 'Secure Communication',
+							'growth' => 'Practice Growth',
+							'custom' => __('Custom Icon (upload below)', 'drtalk-redesign')
+						])
+						->set_default_value('referrals')
+						->set_width(30),
+					Field::make('image', 'icon', __('Custom Icon', 'drtalk-redesign'))
+						->set_value_type('id')
+						->set_width(30),
+					Field::make('textarea', 'body', __('Feature Description', 'drtalk-redesign'))
+						->set_rows(3)
+						->set_required(true)
+						->set_width(100)
+				])
+				->set_help_text(__('Leave empty to use the default 3 platform features.', 'drtalk-redesign'))
+		])
+		->add_tab(__('Deliberate Choices', 'drtalk-redesign'), [
+			Field::make(
+				'checkbox',
+				'about_choices_is_active',
+				__('Enable Section', 'drtalk-redesign')
+			)->set_default_value(true),
+			Field::make('text', 'about_choices_title', __('Section Title (H2)', 'drtalk-redesign'))->set_default_value(
+				"Three things we've deliberately said no to."
+			),
+			Field::make('textarea', 'about_choices_description', __('Description', 'drtalk-redesign'))
+				->set_default_value(
+					"Every feature a platform adds is one more thing your team has to learn, adopt, and troubleshoot. drtalk exists to reduce that surface area, not expand it. So we've made some deliberate choices about what we don't do."
+				)
+				->set_rows(3),
+			Field::make('complex', 'about_choices_list', __('Choices List', 'drtalk-redesign'))
+				->set_layout('tabbed-horizontal')
+				->add_fields([
+					Field::make('text', 'title', __('Choice Title', 'drtalk-redesign'))
+						->set_required(true)
+						->set_width(40),
+					Field::make('textarea', 'body', __('Description', 'drtalk-redesign'))
+						->set_rows(3)
+						->set_required(true)
+						->set_width(60)
+				])
+				->set_help_text(__('Leave empty to use the default 3 deliberate choices.', 'drtalk-redesign'))
+		])
+		->add_tab(__('Call to Action', 'drtalk-redesign'), [
+			Field::make('checkbox', 'about_cta_is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+				true
+			),
+			Field::make('text', 'about_cta_eyebrow', __('Eyebrow Text', 'drtalk-redesign'))->set_default_value(
+				'Free 30-minute session'
+			),
+			Field::make('text', 'about_cta_title', __('Heading', 'drtalk-redesign'))->set_default_value(
+				'See exactly where your referrals are slipping through the cracks.'
+			),
+			Field::make('textarea', 'about_cta_description', __('Description', 'drtalk-redesign'))
+				->set_default_value(
+					'30 minutes. We walk through how referrals move through your practice today, identify where your current process is costing you, and give you a summary to keep. Whether or not drtalk turns out to be right for you.'
+				)
+				->set_rows(3),
+			Field::make('text', 'about_cta_button_text', __('Button Text', 'drtalk-redesign'))->set_default_value(
+				'Book your free Referral Gap Analysis'
+			),
+			Field::make('text', 'about_cta_button_url', __('Button URL', 'drtalk-redesign'))->set_help_text(
+				__('Leave empty for default Gap Analysis link.', 'drtalk-redesign')
+			),
+			Field::make('text', 'about_cta_subtext', __('Subtext', 'drtalk-redesign'))->set_default_value(
+				'30 minutes · Best with practice owner + office manager · No obligation'
+			)
+		]);
+}
+add_action('carbon_fields_register_fields', 'drtalk_redesign_register_about_page_fields');
+
+/**
+ * Retrieves the About page configuration settings.
+ *
+ * @return array
+ */
+function drtalk_redesign_get_about_page_settings()
+{
+	$default_pattern_url = get_theme_file_uri('assets/images/personalized-pattern-dark.png');
+	$default_orange_pattern_url = get_theme_file_uri('assets/images/footer-pattern.png');
+	$default_hero_image_url = get_theme_file_uri('assets/images/about-dashboard.png');
+	$default_founder_image_url = get_theme_file_uri('assets/images/about-thomas.png');
+	$default_testimonial_image_url = get_theme_file_uri('assets/images/about-albert.png');
+	$default_referral_url = function_exists('drtalk_redesign_referral_gap_analysis_url')
+		? drtalk_redesign_referral_gap_analysis_url()
+		: '#';
+
+	$defaults = [
+		'hero' => [
+			'is_active' => true,
+			'eyebrow' => 'After 25 years on the receiving end of broken referral workflows,',
+			'title' => 'Dr. Tom Stone decided to do something about it.',
+			'description' =>
+				'Today, drtalk is the AI-powered referral and communication platform developed specifically for dental specialists and trusted by over 1,500 practices nationwide.',
+			'button_text' => 'See How drtalk Works',
+			'button_url' => $default_referral_url,
+			'image_url' => $default_hero_image_url,
+			'pattern_url' => $default_pattern_url
+		],
+		'problems' => [
+			'is_active' => true,
+			'eyebrow' => 'What we built drtalk to solve',
+			'title' => "Your growth shouldn't depend on luck and lunches.",
+			'pattern_url' => $default_orange_pattern_url,
+			'cards' => [
+				[
+					'title' => 'Outdated Methods',
+					'description' =>
+						'Most specialists are still managing referrals the way they did a decade ago…a call here, a lunch there. Hoping the GP down the street remembers you the next time a patient needs work.',
+					'icon_url' => get_theme_file_uri('assets/images/different-referral-friction-static.png')
+				],
+				[
+					'title' => 'Incomplete Insights',
+					'description' =>
+						"Referrals arrive missing details. Relationships go quiet without warning. And there's no reliable way to know if what you're investing in referring offices is actually paying off.",
+					'icon_url' => get_theme_file_uri('assets/images/about-incomplete.svg')
+				]
+			]
+		],
+		'founder' => [
+			'is_active' => true,
+			'title' => 'Created by a dental specialist who felt the frustration firsthand.',
+			'story' =>
+				"<p>In 2014, Dr. Tom Stone set out to fix what he'd spent decades navigating. Referring dentists had no idea what happened after they sent a case his way. Patients he needed weren't showing up. The tools that were supposed to connect the two were the thing getting in the way.</p>\n<p>So he founded drtalk to fix it. To make professional communication seamless, referrals smart and efficient, and the knowledge dentists rely on easy to share. Not as an outsider guessing at the problem, but as someone who'd already spent decades inside it. <strong class=\"font-normal lg:font-bold\">And it's already working for practices like yours.</strong></p>",
+			'image_url' => $default_founder_image_url,
+			'quote' =>
+				'I believe the future of dentistry belongs to those who embrace intelligent systems, not just harder work.',
+			'caption' => '– Thomas L. Stone, MD, DDS, FACS'
+		],
+		'stats' => [
+			'is_active' => true,
+			'title' => "Ten years later, here's what that looks like.",
+			'pattern_url' => $default_pattern_url,
+			'cards' => [
+				[
+					'value' => '$500M+',
+					'label' => 'In referral-driven <strong>revenue</strong> tracked'
+				],
+				[
+					'value' => 'Up to 20%',
+					'label' => '<strong>Revenue growth</strong> for drtalk practices in year one'
+				],
+				[
+					'value' => '70%',
+					'label' => '<strong>Faster</strong> time-to-scheduled appointment'
+				]
+			]
+		],
+		'testimonial' => [
+			'is_active' => true,
+			'eyebrow' => 'What practices see after switching',
+			'quote' =>
+				"drtalk has transformed our practice. Our team works in sync with referring offices, and we've seen a significant boost in efficiency and practice revenue.",
+			'name' => 'Dr. Albert Kang',
+			'role' => 'Oral & Maxillofacial Surgeon, New England Oral & Maxillofacial Surgery',
+			'avatar_url' => $default_testimonial_image_url,
+			'pattern_url' => $default_pattern_url
+		],
+		'features' => [
+			'is_active' => true,
+			'title' => 'What Tom actually built.',
+			'description' =>
+				'drtalk replaces the workarounds most specialty practices are still stitching together - fax, phone, email, paper - with <strong>one connected platform</strong>.',
+			'list' => [
+				[
+					'title' => 'Referral Management',
+					'body' =>
+						'Capture, track, and close referrals without the leakage. Know exactly where every patient is in the process. And who owns the next step.',
+					'icon_url' => get_theme_file_uri('assets/images/about-referrals.svg')
+				],
+				[
+					'title' => 'Secure Communication',
+					'body' =>
+						'HIPAA-compliant messaging with bank-level encryption and verified senders. Every conversation stays secure. Every referral stays on track.',
+					'icon_url' => get_theme_file_uri('assets/images/about-secure.svg')
+				],
+				[
+					'title' => 'Practice Growth',
+					'body' =>
+						"Strengthen GP relationships, reduce scheduling friction by up to 70%, and track revenue tied directly to referrals. So you can see what's working.",
+					'icon_url' => get_theme_file_uri('assets/images/about-growth.svg')
+				]
+			]
+		],
+		'choices' => [
+			'is_active' => true,
+			'title' => "Three things we've deliberately said no to.",
+			'description' =>
+				"Every feature a platform adds is one more thing your team has to learn, adopt, and troubleshoot. drtalk exists to reduce that surface area, not expand it. So we've made some deliberate choices about what we don't do.",
+			'pattern_url' => $default_pattern_url,
+			'icon_url' => get_theme_file_uri('assets/images/about-no.svg'),
+			'list' => [
+				[
+					'title' => "We don't replace what you already use.",
+					'body' =>
+						"drtalk plugs into the referral channels you're already using. Your scheduling, billing, and patient records stay exactly where they are."
+				],
+				[
+					'title' => "We don't ask referring GPs to change how they work.",
+					'body' =>
+						'We built drtalk around the way referrals actually happen today, not the way a software company wishes they did. GPs keep sending referrals the way they always have. drtalk captures them regardless of channel.'
+				],
+				[
+					'title' => "We don't ship features we can't stand behind.",
+					'body' =>
+						"Every AI capability in drtalk is built to reduce your staff's workload. Not add another system for them to babysit. If a feature doesn't clearly do that, we don't ship it."
+				]
+			]
+		],
+		'cta' => [
+			'is_active' => true,
+			'eyebrow' => 'Free 30-minute session',
+			'title' => 'See exactly where your referrals are slipping through the cracks.',
+			'description' =>
+				'30 minutes. We walk through how referrals move through your practice today, identify where your current process is costing you, and give you a summary to keep. Whether or not drtalk turns out to be right for you.',
+			'button_text' => 'Book your free Referral Gap Analysis',
+			'button_url' => $default_referral_url,
+			'subtext' => '30 minutes · Best with practice owner + office manager · No obligation',
+			'pattern_url' => $default_pattern_url
+		]
+	];
+
+	if (!function_exists('carbon_get_theme_option')) {
+		return $defaults;
+	}
+
+	// Hero
+	$hero_active = carbon_get_theme_option('about_hero_is_active');
+	$hero_image_id = carbon_get_theme_option('about_hero_image');
+	$hero_image_url = $hero_image_id ? wp_get_attachment_url($hero_image_id) : '';
+	$hero_pattern_id = carbon_get_theme_option('about_hero_pattern');
+	$hero_pattern_url = $hero_pattern_id ? wp_get_attachment_url($hero_pattern_id) : '';
+	$hero_btn_url = carbon_get_theme_option('about_hero_button_url');
+
+	$hero = [
+		'is_active' => $hero_active === null || $hero_active === '' ? true : (bool) $hero_active,
+		'eyebrow' => carbon_get_theme_option('about_hero_eyebrow') ?: $defaults['hero']['eyebrow'],
+		'title' => carbon_get_theme_option('about_hero_title') ?: $defaults['hero']['title'],
+		'description' => carbon_get_theme_option('about_hero_description') ?: $defaults['hero']['description'],
+		'button_text' => carbon_get_theme_option('about_hero_button_text') ?: $defaults['hero']['button_text'],
+		'button_url' => !empty($hero_btn_url) ? $hero_btn_url : $defaults['hero']['button_url'],
+		'image_url' => !empty($hero_image_url) ? $hero_image_url : $defaults['hero']['image_url'],
+		'pattern_url' => !empty($hero_pattern_url) ? $hero_pattern_url : $defaults['hero']['pattern_url']
+	];
+
+	// Problems
+	$problems_active = carbon_get_theme_option('about_problems_is_active');
+	$raw_problems = carbon_get_theme_option('about_problems_cards');
+	$problems_cards = [];
+	$problem_icons_preset = [
+		'outdated_methods' => get_theme_file_uri('assets/images/different-referral-friction-static.png'),
+		'incomplete_insights' => get_theme_file_uri('assets/images/about-incomplete.svg')
+	];
+
+	if (!empty($raw_problems) && is_array($raw_problems)) {
+		foreach ($raw_problems as $item) {
+			if (!empty($item['title'])) {
+				$icon_id = !empty($item['icon']) ? (int) $item['icon'] : 0;
+				$icon_url = $icon_id ? wp_get_attachment_url($icon_id) : '';
+				if (empty($icon_url)) {
+					$preset = !empty($item['preset_icon']) ? $item['preset_icon'] : 'outdated_methods';
+					$icon_url = $problem_icons_preset[$preset] ?? $problem_icons_preset['outdated_methods'];
+				}
+				$problems_cards[] = [
+					'title' => $item['title'],
+					'description' => !empty($item['description']) ? $item['description'] : '',
+					'icon_url' => $icon_url
+				];
+			}
+		}
+	}
+	if (empty($problems_cards)) {
+		$problems_cards = $defaults['problems']['cards'];
+	}
+
+	$problems = [
+		'is_active' => $problems_active === null || $problems_active === '' ? true : (bool) $problems_active,
+		'eyebrow' => carbon_get_theme_option('about_problems_eyebrow') ?: $defaults['problems']['eyebrow'],
+		'title' => carbon_get_theme_option('about_problems_title') ?: $defaults['problems']['title'],
+		'pattern_url' => $default_orange_pattern_url,
+		'cards' => $problems_cards
+	];
+
+	// Founder
+	$founder_active = carbon_get_theme_option('about_founder_is_active');
+	$founder_img_id = carbon_get_theme_option('about_founder_image');
+	$founder_img_url = $founder_img_id ? wp_get_attachment_url($founder_img_id) : '';
+
+	$founder = [
+		'is_active' => $founder_active === null || $founder_active === '' ? true : (bool) $founder_active,
+		'title' => carbon_get_theme_option('about_founder_title') ?: $defaults['founder']['title'],
+		'story' => carbon_get_theme_option('about_founder_story') ?: $defaults['founder']['story'],
+		'image_url' => !empty($founder_img_url) ? $founder_img_url : $defaults['founder']['image_url'],
+		'quote' => carbon_get_theme_option('about_founder_quote') ?: $defaults['founder']['quote'],
+		'caption' => carbon_get_theme_option('about_founder_caption') ?: $defaults['founder']['caption']
+	];
+
+	// Stats
+	$stats_active = carbon_get_theme_option('about_stats_is_active');
+	$raw_stats = carbon_get_theme_option('about_stats_cards');
+	$stats_cards = [];
+	if (!empty($raw_stats) && is_array($raw_stats)) {
+		foreach ($raw_stats as $item) {
+			if (!empty($item['value'])) {
+				$stats_cards[] = [
+					'value' => $item['value'],
+					'label' => !empty($item['label']) ? $item['label'] : ''
+				];
+			}
+		}
+	}
+	if (empty($stats_cards)) {
+		$stats_cards = $defaults['stats']['cards'];
+	}
+
+	$stats = [
+		'is_active' => $stats_active === null || $stats_active === '' ? true : (bool) $stats_active,
+		'title' => carbon_get_theme_option('about_stats_title') ?: $defaults['stats']['title'],
+		'pattern_url' => $default_pattern_url,
+		'cards' => $stats_cards
+	];
+
+	// Testimonial
+	$testimonial_active = carbon_get_theme_option('about_testimonial_is_active');
+	$avatar_id = carbon_get_theme_option('about_testimonial_avatar');
+	$avatar_url = $avatar_id ? wp_get_attachment_url($avatar_id) : '';
+
+	$testimonial = [
+		'is_active' => $testimonial_active === null || $testimonial_active === '' ? true : (bool) $testimonial_active,
+		'eyebrow' => carbon_get_theme_option('about_testimonial_eyebrow') ?: $defaults['testimonial']['eyebrow'],
+		'quote' => carbon_get_theme_option('about_testimonial_quote') ?: $defaults['testimonial']['quote'],
+		'name' => carbon_get_theme_option('about_testimonial_name') ?: $defaults['testimonial']['name'],
+		'role' => carbon_get_theme_option('about_testimonial_role') ?: $defaults['testimonial']['role'],
+		'avatar_url' => !empty($avatar_url) ? $avatar_url : $defaults['testimonial']['avatar_url'],
+		'pattern_url' => $default_pattern_url
+	];
+
+	// Features
+	$features_active = carbon_get_theme_option('about_features_is_active');
+	$raw_features = carbon_get_theme_option('about_features_list');
+	$features_list = [];
+	$feature_icons_preset = [
+		'referrals' => get_theme_file_uri('assets/images/about-referrals.svg'),
+		'secure' => get_theme_file_uri('assets/images/about-secure.svg'),
+		'growth' => get_theme_file_uri('assets/images/about-growth.svg')
+	];
+
+	if (!empty($raw_features) && is_array($raw_features)) {
+		foreach ($raw_features as $item) {
+			if (!empty($item['title'])) {
+				$icon_id = !empty($item['icon']) ? (int) $item['icon'] : 0;
+				$icon_url = $icon_id ? wp_get_attachment_url($icon_id) : '';
+				if (empty($icon_url)) {
+					$preset = !empty($item['preset_icon']) ? $item['preset_icon'] : 'referrals';
+					$icon_url = $feature_icons_preset[$preset] ?? $feature_icons_preset['referrals'];
+				}
+				$features_list[] = [
+					'title' => $item['title'],
+					'body' => !empty($item['body']) ? $item['body'] : '',
+					'icon_url' => $icon_url
+				];
+			}
+		}
+	}
+	if (empty($features_list)) {
+		$features_list = $defaults['features']['list'];
+	}
+
+	$features = [
+		'is_active' => $features_active === null || $features_active === '' ? true : (bool) $features_active,
+		'title' => carbon_get_theme_option('about_features_title') ?: $defaults['features']['title'],
+		'description' => carbon_get_theme_option('about_features_description') ?: $defaults['features']['description'],
+		'list' => $features_list
+	];
+
+	// Choices
+	$choices_active = carbon_get_theme_option('about_choices_is_active');
+	$raw_choices = carbon_get_theme_option('about_choices_list');
+	$choices_list = [];
+	if (!empty($raw_choices) && is_array($raw_choices)) {
+		foreach ($raw_choices as $item) {
+			if (!empty($item['title'])) {
+				$choices_list[] = [
+					'title' => $item['title'],
+					'body' => !empty($item['body']) ? $item['body'] : ''
+				];
+			}
+		}
+	}
+	if (empty($choices_list)) {
+		$choices_list = $defaults['choices']['list'];
+	}
+
+	$choices = [
+		'is_active' => $choices_active === null || $choices_active === '' ? true : (bool) $choices_active,
+		'title' => carbon_get_theme_option('about_choices_title') ?: $defaults['choices']['title'],
+		'description' => carbon_get_theme_option('about_choices_description') ?: $defaults['choices']['description'],
+		'pattern_url' => $default_pattern_url,
+		'icon_url' => get_theme_file_uri('assets/images/about-no.svg'),
+		'list' => $choices_list
+	];
+
+	// CTA
+	$cta_active = carbon_get_theme_option('about_cta_is_active');
+	$cta_btn_url = carbon_get_theme_option('about_cta_button_url');
+
+	$cta = [
+		'is_active' => $cta_active === null || $cta_active === '' ? true : (bool) $cta_active,
+		'eyebrow' => carbon_get_theme_option('about_cta_eyebrow') ?: $defaults['cta']['eyebrow'],
+		'title' => carbon_get_theme_option('about_cta_title') ?: $defaults['cta']['title'],
+		'description' => carbon_get_theme_option('about_cta_description') ?: $defaults['cta']['description'],
+		'button_text' => carbon_get_theme_option('about_cta_button_text') ?: $defaults['cta']['button_text'],
+		'button_url' => !empty($cta_btn_url) ? $cta_btn_url : $defaults['cta']['button_url'],
+		'subtext' => carbon_get_theme_option('about_cta_subtext') ?: $defaults['cta']['subtext'],
+		'pattern_url' => $default_pattern_url
+	];
+
+	return [
+		'hero' => $hero,
+		'problems' => $problems,
+		'founder' => $founder,
+		'stats' => $stats,
+		'testimonial' => $testimonial,
+		'features' => $features,
+		'choices' => $choices,
+		'cta' => $cta
+	];
+}
+
+/**
+ * Seeds default About Page fields into Carbon Fields if not configured yet.
+ */
+function drtalk_redesign_seed_about_page_settings()
+{
+	if (!function_exists('carbon_get_theme_option') || !function_exists('carbon_set_theme_option')) {
+		return;
+	}
+
+	if (get_option('drtalk_about_page_seeded_v1')) {
+		return;
+	}
+
+	$existing_problems = carbon_get_theme_option('about_problems_cards');
+	if (empty($existing_problems)) {
+		carbon_set_theme_option('about_problems_cards', [
+			[
+				'title' => 'Outdated Methods',
+				'preset_icon' => 'outdated_methods',
+				'description' =>
+					'Most specialists are still managing referrals the way they did a decade ago…a call here, a lunch there. Hoping the GP down the street remembers you the next time a patient needs work.'
+			],
+			[
+				'title' => 'Incomplete Insights',
+				'preset_icon' => 'incomplete_insights',
+				'description' =>
+					"Referrals arrive missing details. Relationships go quiet without warning. And there's no reliable way to know if what you're investing in referring offices is actually paying off."
+			]
+		]);
+	}
+
+	$existing_stats = carbon_get_theme_option('about_stats_cards');
+	if (empty($existing_stats)) {
+		carbon_set_theme_option('about_stats_cards', [
+			[
+				'value' => '$500M+',
+				'label' => 'In referral-driven <strong>revenue</strong> tracked'
+			],
+			[
+				'value' => 'Up to 20%',
+				'label' => '<strong>Revenue growth</strong> for drtalk practices in year one'
+			],
+			[
+				'value' => '70%',
+				'label' => '<strong>Faster</strong> time-to-scheduled appointment'
+			]
+		]);
+	}
+
+	$existing_features = carbon_get_theme_option('about_features_list');
+	if (empty($existing_features)) {
+		carbon_set_theme_option('about_features_list', [
+			[
+				'title' => 'Referral Management',
+				'preset_icon' => 'referrals',
+				'body' =>
+					'Capture, track, and close referrals without the leakage. Know exactly where every patient is in the process. And who owns the next step.'
+			],
+			[
+				'title' => 'Secure Communication',
+				'preset_icon' => 'secure',
+				'body' =>
+					'HIPAA-compliant messaging with bank-level encryption and verified senders. Every conversation stays secure. Every referral stays on track.'
+			],
+			[
+				'title' => 'Practice Growth',
+				'preset_icon' => 'growth',
+				'body' =>
+					"Strengthen GP relationships, reduce scheduling friction by up to 70%, and track revenue tied directly to referrals. So you can see what's working."
+			]
+		]);
+	}
+
+	$existing_choices = carbon_get_theme_option('about_choices_list');
+	if (empty($existing_choices)) {
+		carbon_set_theme_option('about_choices_list', [
+			[
+				'title' => "We don't replace what you already use.",
+				'body' =>
+					"drtalk plugs into the referral channels you're already using. Your scheduling, billing, and patient records stay exactly where they are."
+			],
+			[
+				'title' => "We don't ask referring GPs to change how they work.",
+				'body' =>
+					'We built drtalk around the way referrals actually happen today, not the way a software company wishes they did. GPs keep sending referrals the way they always have. drtalk captures them regardless of channel.'
+			],
+			[
+				'title' => "We don't ship features we can't stand behind.",
+				'body' =>
+					"Every AI capability in drtalk is built to reduce your staff's workload. Not add another system for them to babysit. If a feature doesn't clearly do that, we don't ship it."
+			]
+		]);
+	}
+
+	update_option('drtalk_about_page_seeded_v1', 1);
+}
+add_action('admin_init', 'drtalk_redesign_seed_about_page_settings');
+
+/**
+ * Registers custom fields for the News / Blog Page.
+ */
+function drtalk_redesign_register_news_page_fields()
+{
+	Container::make('theme_options', __('News Page', 'drtalk-redesign'))
+		->set_page_file('drtalk-news-page')
+		->set_page_menu_title(__('News', 'drtalk-redesign'))
+		->set_icon('dashicons-format-aside')
+		->set_page_menu_position(24)
+		->add_tab(__('Hero Section', 'drtalk-redesign'), [
+			Field::make('text', 'news_hero_title', __('Title (H1)', 'drtalk-redesign'))->set_default_value(
+				'The Latest from drtalk'
+			),
+			Field::make('textarea', 'news_hero_description', __('Description', 'drtalk-redesign'))
+				->set_default_value('Product news, company updates, and more from the team at drtalk.')
+				->set_rows(2),
+			Field::make('image', 'news_hero_pattern', __('Background Pattern', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(
+					__('Upload custom background pattern. Leave empty to use default pattern.', 'drtalk-redesign')
+				)
+		])
+		->add_tab(__('Articles Grid', 'drtalk-redesign'), [
+			Field::make('text', 'news_posts_per_page', __('Articles Per Page', 'drtalk-redesign'))
+				->set_default_value('9')
+				->set_attribute('type', 'number'),
+			Field::make('image', 'news_default_thumbnail', __('Fallback Article Image', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(
+					__(
+						'Fallback thumbnail for articles that do not have a featured image. If empty, drtalk logo is used.',
+						'drtalk-redesign'
+					)
+				)
+		])
+		->add_tab(__('Call to Action', 'drtalk-redesign'), [
+			Field::make('checkbox', 'news_cta_is_active', __('Enable Section', 'drtalk-redesign'))->set_default_value(
+				true
+			),
+			Field::make('text', 'news_cta_eyebrow', __('Eyebrow Text', 'drtalk-redesign'))->set_default_value(
+				'FREE 30-MINUTE SESSION'
+			),
+			Field::make('text', 'news_cta_title', __('Heading (H2)', 'drtalk-redesign'))->set_default_value(
+				'See exactly where your referrals are slipping through the cracks'
+			),
+			Field::make('textarea', 'news_cta_description', __('Description', 'drtalk-redesign'))
+				->set_default_value(
+					'30 minutes. We walk through how referrals move through your practice today, identify where your current process is costing you, and give you a summary to keep. Whether or not drtalk turns out to be right for you.'
+				)
+				->set_rows(3),
+			Field::make('text', 'news_cta_button_text', __('Button Text', 'drtalk-redesign'))->set_default_value(
+				'Book your free Referral Gap Analysis'
+			),
+			Field::make('text', 'news_cta_button_url', __('Button URL', 'drtalk-redesign'))->set_help_text(
+				__('Leave empty for default Gap Analysis link.', 'drtalk-redesign')
+			),
+			Field::make('text', 'news_cta_subtext', __('Subtext', 'drtalk-redesign'))->set_default_value(
+				'30 minutes · Best with practice owner + office manager · No obligation'
+			),
+			Field::make('image', 'news_cta_pattern', __('Background Pattern', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(
+					__('Upload custom background pattern. Leave empty to use default pattern.', 'drtalk-redesign')
+				)
+		])
+		->add_tab(__('Single Article', 'drtalk-redesign'), [
+			Field::make(
+				'text',
+				'news_single_breadcrumb_label',
+				__('Breadcrumb Label', 'drtalk-redesign')
+			)->set_default_value('News'),
+			Field::make(
+				'checkbox',
+				'news_single_show_share',
+				__('Show Social Share Buttons', 'drtalk-redesign')
+			)->set_default_value(true),
+			Field::make(
+				'textarea',
+				'news_single_cta_description',
+				__('Single Article CTA Description', 'drtalk-redesign')
+			)
+				->set_default_value(
+					'In your free Referral Gap Analysis, we walk through how referrals move through your practice, identify where your current process is costing you, and show you what a more reliable system looks like going forward.'
+				)
+				->set_rows(3)
+				->set_help_text(
+					__('Custom description for the Call to Action section on single article pages.', 'drtalk-redesign')
+				)
+		]);
+}
+add_action('carbon_fields_register_fields', 'drtalk_redesign_register_news_page_fields');
+
+/**
+ * Retrieves the News / Blog page configuration settings.
+ *
+ * @return array
+ */
+function drtalk_redesign_get_news_settings()
+{
+	$default_hero_pattern_url = get_theme_file_uri('assets/images/footer-pattern.png');
+	$default_cta_pattern_url = get_theme_file_uri('assets/images/personalized-pattern-dark.png');
+	$default_fallback_logo = get_theme_file_uri('assets/images/footer-logo.svg');
+	$default_referral_url = function_exists('drtalk_redesign_referral_gap_analysis_url')
+		? drtalk_redesign_referral_gap_analysis_url()
+		: '#';
+
+	$defaults = [
+		'hero' => [
+			'title' => 'The Latest from drtalk',
+			'description' => 'Product news, company updates, and more from the team at drtalk.',
+			'pattern_url' => $default_hero_pattern_url
+		],
+		'posts_per_page' => 9,
+		'default_thumbnail_url' => $default_fallback_logo,
+		'cta' => [
+			'is_active' => true,
+			'eyebrow' => 'FREE 30-MINUTE SESSION',
+			'title' => 'See exactly where your referrals are slipping through the cracks',
+			'description' =>
+				'30 minutes. We walk through how referrals move through your practice today, identify where your current process is costing you, and give you a summary to keep. Whether or not drtalk turns out to be right for you.',
+			'button_text' => 'Book your free Referral Gap Analysis',
+			'button_url' => $default_referral_url,
+			'subtext' => '30 minutes · Best with practice owner + office manager · No obligation',
+			'pattern_url' => $default_cta_pattern_url
+		],
+		'single' => [
+			'breadcrumb_label' => 'News',
+			'show_share' => true,
+			'cta_description' =>
+				'In your free Referral Gap Analysis, we walk through how referrals move through your practice, identify where your current process is costing you, and show you what a more reliable system looks like going forward.'
+		]
+	];
+
+	if (!function_exists('carbon_get_theme_option')) {
+		return $defaults;
+	}
+
+	$hero_pattern_id = carbon_get_theme_option('news_hero_pattern');
+	$hero_pattern_url = $hero_pattern_id ? wp_get_attachment_url($hero_pattern_id) : '';
+
+	$hero = [
+		'title' => carbon_get_theme_option('news_hero_title') ?: $defaults['hero']['title'],
+		'description' => carbon_get_theme_option('news_hero_description') ?: $defaults['hero']['description'],
+		'pattern_url' => !empty($hero_pattern_url) ? $hero_pattern_url : $defaults['hero']['pattern_url']
+	];
+
+	$posts_per_page = (int) carbon_get_theme_option('news_posts_per_page');
+	if ($posts_per_page <= 0) {
+		$posts_per_page = 9;
+	}
+
+	$thumb_id = carbon_get_theme_option('news_default_thumbnail');
+	$default_thumbnail_url = $thumb_id ? wp_get_attachment_url($thumb_id) : $default_fallback_logo;
+
+	$cta_active = carbon_get_theme_option('news_cta_is_active');
+	$cta_pattern_id = carbon_get_theme_option('news_cta_pattern');
+	$cta_pattern_url = $cta_pattern_id ? wp_get_attachment_url($cta_pattern_id) : '';
+	$cta_btn_url = carbon_get_theme_option('news_cta_button_url');
+
+	$cta = [
+		'is_active' => $cta_active === null || $cta_active === '' ? true : (bool) $cta_active,
+		'eyebrow' => carbon_get_theme_option('news_cta_eyebrow') ?: $defaults['cta']['eyebrow'],
+		'title' => carbon_get_theme_option('news_cta_title') ?: $defaults['cta']['title'],
+		'description' => carbon_get_theme_option('news_cta_description') ?: $defaults['cta']['description'],
+		'button_text' => carbon_get_theme_option('news_cta_button_text') ?: $defaults['cta']['button_text'],
+		'button_url' => !empty($cta_btn_url) ? $cta_btn_url : $defaults['cta']['button_url'],
+		'subtext' => carbon_get_theme_option('news_cta_subtext') ?: $defaults['cta']['subtext'],
+		'pattern_url' => !empty($cta_pattern_url) ? $cta_pattern_url : $defaults['cta']['pattern_url']
+	];
+
+	$single_share = carbon_get_theme_option('news_single_show_share');
+	$single = [
+		'breadcrumb_label' =>
+			carbon_get_theme_option('news_single_breadcrumb_label') ?: $defaults['single']['breadcrumb_label'],
+		'show_share' => $single_share === null || $single_share === '' ? true : (bool) $single_share,
+		'cta_description' =>
+			carbon_get_theme_option('news_single_cta_description') ?: $defaults['single']['cta_description']
+	];
+
+	return [
+		'hero' => $hero,
+		'posts_per_page' => $posts_per_page,
+		'default_thumbnail_url' => $default_thumbnail_url,
+		'cta' => $cta,
+		'single' => $single
+	];
+}
+
+/**
  * Returns all configured home blocks from Carbon Fields.
  *
  * @return array

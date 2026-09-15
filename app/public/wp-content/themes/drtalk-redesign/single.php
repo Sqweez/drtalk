@@ -5,11 +5,29 @@
  * @package drtalk-redesign
  */
 
+$news_settings = function_exists('drtalk_redesign_get_news_settings') ? drtalk_redesign_get_news_settings() : [];
+
+$cta = $news_settings['cta'] ?? [
+	'is_active' => true,
+	'eyebrow' => 'FREE 30-MINUTE SESSION',
+	'title' => 'See exactly where your referrals are slipping through the cracks',
+	'description' =>
+		'In your free Referral Gap Analysis, we walk through how referrals move through your practice, identify where your current process is costing you, and show you what a more reliable system looks like going forward.',
+	'button_text' => 'Book your free Referral Gap Analysis',
+	'button_url' => drtalk_redesign_referral_gap_analysis_url(),
+	'subtext' => '30 minutes · Best with practice owner + office manager · No obligation',
+	'pattern_url' => get_theme_file_uri('assets/images/personalized-pattern-dark.png')
+];
+$single = $news_settings['single'] ?? [
+	'breadcrumb_label' => 'News',
+	'show_share' => true,
+	'cta_description' =>
+		'In your free Referral Gap Analysis, we walk through how referrals move through your practice, identify where your current process is costing you, and show you what a more reliable system looks like going forward.'
+];
+
 get_header();
 
-$noise_dark_url = esc_url(get_theme_file_uri('assets/images/personalized-pattern-dark.png'));
-$cta_noise_style = esc_attr("--news-cta-noise-image: url('{$noise_dark_url}');");
-$referral_gap_analysis_url = esc_url(drtalk_redesign_referral_gap_analysis_url());
+$cta_noise_style = esc_attr(sprintf("--news-cta-noise-image: url('%s');", esc_url($cta['pattern_url'])));
 $blog_url = esc_url(home_url('/blog/'));
 ?>
 
@@ -49,7 +67,7 @@ $blog_url = esc_url(home_url('/blog/'));
       	'drtalk-redesign'
       ); ?>" data-name="headline">
 							<a href="<?php echo $blog_url; ?>" class="shrink-0 transition-colors hover:text-purple">
-								<?php esc_html_e('News', 'drtalk-redesign'); ?>
+								<?php echo esc_html($single['breadcrumb_label']); ?>
 							</a>
 							<span class="shrink-0 text-purple-dark opacity-50" aria-hidden="true">/</span>
 							<span class="min-w-0 flex-1 truncate text-purple-dark opacity-50" aria-current="page">
@@ -91,64 +109,73 @@ $blog_url = esc_url(home_url('/blog/'));
 					</div>
 
 					<!-- Share Section -->
-					<div class="flex w-full max-w-[1200px] flex-col gap-4" data-name="links">
-						<p class="font-body text-[14px] font-bold leading-5 text-purple-dark">
-							<?php esc_html_e('Share this article:', 'drtalk-redesign'); ?>
-						</p>
-						<div class="flex flex-wrap items-center gap-4" data-name="actions">
-							<a
-								href="https://www.facebook.com/sharer/sharer.php?u=<?php echo rawurlencode($permalink); ?>"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inline-flex h-10 items-center justify-center rounded-full border border-purple-dark bg-cream px-5 py-2 font-body text-[16px] font-bold leading-6 text-purple-dark transition hover:bg-purple-dark hover:text-cream focus-visible:outline-orange"
-								data-name="button"
-							>
-								<?php esc_html_e('Facebook', 'drtalk-redesign'); ?>
-							</a>
-							<a
-								href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode($permalink); ?>&text=<?php echo rawurlencode(
+					<?php if (!empty($single['show_share'])): ?>
+						<div class="flex w-full max-w-[1200px] flex-col gap-4" data-name="links">
+							<p class="font-body text-[14px] font-bold leading-5 text-purple-dark">
+								<?php esc_html_e('Share this article:', 'drtalk-redesign'); ?>
+							</p>
+							<div class="flex flex-wrap items-center gap-4" data-name="actions">
+								<a
+									href="https://www.facebook.com/sharer/sharer.php?u=<?php echo rawurlencode($permalink); ?>"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="inline-flex h-10 items-center justify-center rounded-full border border-purple-dark bg-cream px-5 py-2 font-body text-[16px] font-bold leading-6 text-purple-dark transition hover:bg-purple-dark hover:text-cream focus-visible:outline-orange"
+									data-name="button"
+								>
+									<?php esc_html_e('Facebook', 'drtalk-redesign'); ?>
+								</a>
+								<a
+									href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode($permalink); ?>&text=<?php echo rawurlencode(
 	$title
 ); ?>"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inline-flex h-10 items-center justify-center rounded-full border border-purple-dark bg-cream px-5 py-2 font-body text-[16px] font-bold leading-6 text-purple-dark transition hover:bg-purple-dark hover:text-cream focus-visible:outline-orange"
-								data-name="button"
-							>
-								<?php esc_html_e('X (Twitter)', 'drtalk-redesign'); ?>
-							</a>
+									target="_blank"
+									rel="noopener noreferrer"
+									class="inline-flex h-10 items-center justify-center rounded-full border border-purple-dark bg-cream px-5 py-2 font-body text-[16px] font-bold leading-6 text-purple-dark transition hover:bg-purple-dark hover:text-cream focus-visible:outline-orange"
+									data-name="button"
+								>
+									<?php esc_html_e('X (Twitter)', 'drtalk-redesign'); ?>
+								</a>
+							</div>
 						</div>
-					</div>
+					<?php endif; ?>
 				</div>
 			</section>
 
 			<!-- CTA Section -->
-			<section class="relative overflow-hidden bg-[#f3e8f7] px-5 py-14 lg:px-12 lg:py-20" aria-labelledby="cta-article-title" data-name="cta-section">
-				<div class="news-cta-noise" style="<?php echo $cta_noise_style; ?>" aria-hidden="true"></div>
-				<div class="relative mx-auto flex w-full max-w-[1024px] flex-col items-center gap-8 text-center" data-name="left">
-					<div class="flex w-full flex-col items-center gap-4 text-purple-dark" data-name="textblock">
-						<div class="flex w-full flex-col justify-end pb-4 font-body text-[13px] font-black uppercase leading-4 tracking-[1.95px] text-purple-dark">
-							<p class="mb-0 leading-4"><?php esc_html_e('FREE 30-MINUTE SESSION', 'drtalk-redesign'); ?></p>
+			<?php if (!empty($cta['is_active'])): ?>
+				<section class="relative overflow-hidden bg-[#f3e8f7] px-5 py-14 lg:px-12 lg:py-20" aria-labelledby="cta-article-title" data-name="cta-section">
+					<div class="news-cta-noise" style="<?php echo $cta_noise_style; ?>" aria-hidden="true"></div>
+					<div class="relative mx-auto flex w-full max-w-[1024px] flex-col items-center gap-8 text-center" data-name="left">
+						<div class="flex w-full flex-col items-center gap-4 text-purple-dark" data-name="textblock">
+							<?php if (!empty($cta['eyebrow'])): ?>
+								<div class="flex w-full flex-col justify-end pb-4 font-body text-[13px] font-black uppercase leading-4 tracking-[1.95px] text-purple-dark">
+									<p class="mb-0 leading-4"><?php echo esc_html($cta['eyebrow']); ?></p>
+								</div>
+							<?php endif; ?>
+							<h2 id="cta-article-title" class="font-heading text-[36px] font-semibold leading-none tracking-normal text-purple-dark sm:text-[48px] sm:leading-[1.1] sm:tracking-[-0.48px]">
+								<?php echo esc_html($cta['title']); ?>
+							</h2>
+							<p class="max-w-[1024px] font-body text-[18px] font-normal leading-6 text-purple-dark opacity-90">
+								<?php echo esc_html(!empty($single['cta_description']) ? $single['cta_description'] : $cta['description']); ?>
+							</p>
 						</div>
-						<h2 id="cta-article-title" class="font-heading text-[36px] font-semibold leading-none tracking-normal text-purple-dark sm:text-[48px] sm:leading-[1.1] sm:tracking-[-0.48px]">
-							<?php esc_html_e('See exactly where your referrals are slipping through the cracks', 'drtalk-redesign'); ?>
-						</h2>
-						<p class="max-w-[1024px] font-body text-[18px] font-normal leading-6 text-purple-dark opacity-90">
-							<?php esc_html_e(
-       	'In your free Referral Gap Analysis, we walk through how referrals move through your practice, identify where your current process is costing you, and show you what a more reliable system looks like going forward.',
-       	'drtalk-redesign'
-       ); ?>
-						</p>
+						<div class="flex w-full flex-col items-center gap-4" data-name="actions">
+							<?php if (!empty($cta['button_text']) && !empty($cta['button_url'])): ?>
+								<a class="inline-flex min-h-16 items-center justify-center rounded-[32px] bg-purple px-8 py-5 text-center font-body text-[16px] font-bold leading-6 text-cream transition hover:bg-purple-dark focus-visible:outline-orange" href="<?php echo esc_url(
+        	$cta['button_url']
+        ); ?>" target="_blank" rel="noreferrer" data-name="button">
+									<?php echo esc_html($cta['button_text']); ?>
+								</a>
+							<?php endif; ?>
+							<?php if (!empty($cta['subtext'])): ?>
+								<p class="text-center font-body text-[14px] font-normal leading-5 text-purple-dark opacity-75">
+									<?php echo esc_html($cta['subtext']); ?>
+								</p>
+							<?php endif; ?>
+						</div>
 					</div>
-					<div class="flex w-full flex-col items-center gap-4" data-name="actions">
-						<a class="inline-flex min-h-16 items-center justify-center rounded-[32px] bg-purple px-8 py-5 text-center font-body text-[16px] font-bold leading-6 text-cream transition hover:bg-purple-dark focus-visible:outline-orange" href="<?php echo $referral_gap_analysis_url; ?>" target="_blank" rel="noreferrer" data-name="button">
-							<?php esc_html_e('Book your free Referral Gap Analysis', 'drtalk-redesign'); ?>
-						</a>
-						<p class="text-center font-body text-[14px] font-normal leading-5 text-purple-dark opacity-75">
-							<?php esc_html_e('30 minutes · Best with practice owner + office manager · No obligation', 'drtalk-redesign'); ?>
-						</p>
-					</div>
-				</div>
-			</section>
+				</section>
+			<?php endif; ?>
 		</article>
 	<?php endwhile; ?>
 <?php else: ?>
