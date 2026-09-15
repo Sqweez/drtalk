@@ -846,6 +846,408 @@ function drtalk_redesign_seed_header_settings()
 add_action('admin_init', 'drtalk_redesign_seed_header_settings');
 
 /**
+ * Registers custom fields for the Footer.
+ */
+function drtalk_redesign_register_footer_fields()
+{
+	Container::make('theme_options', __('Footer Settings', 'drtalk-redesign'))
+		->set_page_file('drtalk-footer')
+		->set_page_menu_title(__('Footer', 'drtalk-redesign'))
+		->set_icon('dashicons-table-row-after')
+		->set_page_menu_position(22)
+		->add_tab(__('Logo', 'drtalk-redesign'), [
+			Field::make('image', 'footer_logo', __('Logo Image', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(
+					__('Upload custom logo SVG or PNG. Leave empty to use the default footer logo.', 'drtalk-redesign')
+				),
+			Field::make('text', 'footer_logo_url', __('Logo Destination URL', 'drtalk-redesign'))->set_help_text(
+				__('Leave empty to link to the site homepage.', 'drtalk-redesign')
+			),
+			Field::make('text', 'footer_logo_alt', __('Logo Alt Text', 'drtalk-redesign'))->set_default_value('DrTalk')
+		])
+		->add_tab(__('Navigation Columns', 'drtalk-redesign'), [
+			Field::make('complex', 'footer_columns', __('Navigation Columns', 'drtalk-redesign'))
+				->set_layout('tabbed-horizontal')
+				->add_fields([
+					Field::make('text', 'column_title', __('Column Title', 'drtalk-redesign'))
+						->set_required(true)
+						->set_width(100),
+					Field::make('complex', 'links', __('Links', 'drtalk-redesign'))
+						->set_collapsed(true)
+						->add_fields([
+							Field::make('text', 'text', __('Link Text', 'drtalk-redesign'))
+								->set_required(true)
+								->set_width(40),
+							Field::make('text', 'url', __('Link URL', 'drtalk-redesign'))
+								->set_required(true)
+								->set_width(40),
+							Field::make(
+								'checkbox',
+								'target_blank',
+								__('Open in new tab', 'drtalk-redesign')
+							)->set_width(20)
+						])
+				])
+				->set_help_text(
+					__(
+						'Configure footer navigation columns (e.g., Website, Company). If empty, defaults will be used.',
+						'drtalk-redesign'
+					)
+				)
+		])
+		->add_tab(__('Social Links', 'drtalk-redesign'), [
+			Field::make('complex', 'footer_social_links', __('Social Links', 'drtalk-redesign'))
+				->set_layout('tabbed-horizontal')
+				->add_fields([
+					Field::make('text', 'title', __('Platform Name / Alt Text', 'drtalk-redesign'))
+						->set_required(true)
+						->set_width(35),
+					Field::make('text', 'url', __('Profile URL', 'drtalk-redesign'))->set_required(true)->set_width(35),
+					Field::make('select', 'preset_icon', __('Preset Icon', 'drtalk-redesign'))
+						->set_options([
+							'linkedin' => 'LinkedIn',
+							'facebook' => 'Facebook',
+							'instagram' => 'Instagram',
+							'custom' => __('Custom Icon (upload below)', 'drtalk-redesign')
+						])
+						->set_default_value('linkedin')
+						->set_width(30),
+					Field::make('image', 'custom_icon', __('Custom Icon (SVG/PNG)', 'drtalk-redesign'))
+						->set_value_type('id')
+						->set_help_text(
+							__(
+								'Used if Preset Icon is set to "Custom Icon", or to override the preset icon.',
+								'drtalk-redesign'
+							)
+						)
+				])
+				->set_help_text(
+					__(
+						'Social links shown at the bottom right. If empty, defaults (LinkedIn, Facebook, Instagram) will be used.',
+						'drtalk-redesign'
+					)
+				)
+		])
+		->add_tab(__('Bottom Bar', 'drtalk-redesign'), [
+			Field::make('text', 'footer_copyright', __('Copyright Text', 'drtalk-redesign'))
+				->set_default_value('© {year} drtalk. All rights reserved.')
+				->set_help_text(__('Use {year} to dynamically insert the current year.', 'drtalk-redesign')),
+			Field::make('image', 'footer_pattern', __('Background Pattern', 'drtalk-redesign'))
+				->set_value_type('id')
+				->set_help_text(
+					__('Upload custom noise/pattern image. Leave empty to use the default pattern.', 'drtalk-redesign')
+				)
+		]);
+}
+add_action('carbon_fields_register_fields', 'drtalk_redesign_register_footer_fields');
+
+/**
+ * Retrieves the footer configuration settings.
+ *
+ * @return array
+ */
+function drtalk_redesign_get_footer_settings()
+{
+	$default_logo_url = get_theme_file_uri('assets/images/footer-logo.svg');
+	$default_noise_url = get_theme_file_uri('assets/images/footer-pattern.png');
+	$default_referral_url = function_exists('drtalk_redesign_referral_gap_analysis_url')
+		? drtalk_redesign_referral_gap_analysis_url()
+		: '#';
+	$default_login_url = function_exists('drtalk_redesign_login_url') ? drtalk_redesign_login_url() : '#';
+	$default_contact_url = function_exists('drtalk_redesign_contact_url') ? drtalk_redesign_contact_url() : '#';
+
+	$default_columns = [
+		[
+			'title' => 'Website',
+			'links' => [
+				[
+					'text' => 'Book a Demo',
+					'url' => $default_referral_url,
+					'target_blank' => true
+				],
+				[
+					'text' => 'Log In',
+					'url' => $default_login_url,
+					'target_blank' => true
+				],
+				[
+					'text' => 'About',
+					'url' => home_url('/about-us/'),
+					'target_blank' => false
+				],
+				[
+					'text' => 'News',
+					'url' => home_url('/blog/'),
+					'target_blank' => false
+				]
+			]
+		],
+		[
+			'title' => 'Company',
+			'links' => [
+				[
+					'text' => 'Contact Us',
+					'url' => $default_contact_url,
+					'target_blank' => false
+				],
+				[
+					'text' => 'Privacy Policy',
+					'url' => home_url('/privacy/'),
+					'target_blank' => false
+				],
+				[
+					'text' => 'Business Associates Agreement',
+					'url' => home_url('/business-associates-agreement/'),
+					'target_blank' => false
+				],
+				[
+					'text' => 'Terms of Use',
+					'url' => home_url('/terms-and-conditions/'),
+					'target_blank' => false
+				]
+			]
+		]
+	];
+
+	$default_social_links = [
+		[
+			'title' => 'LinkedIn',
+			'url' => 'https://www.linkedin.com/company/drtalk/',
+			'icon_url' => get_theme_file_uri('assets/images/icon-linkedin.svg')
+		],
+		[
+			'title' => 'Facebook',
+			'url' => 'https://www.facebook.com/DrTalk1',
+			'icon_url' => get_theme_file_uri('assets/images/icon-facebook.svg')
+		],
+		[
+			'title' => 'Instagram',
+			'url' => 'https://www.instagram.com/drtalk_',
+			'icon_url' => get_theme_file_uri('assets/images/icon-instagram.svg')
+		]
+	];
+
+	$default_copyright_format = '© {year} drtalk. All rights reserved.';
+
+	if (!function_exists('carbon_get_theme_option')) {
+		return [
+			'logo_url' => $default_logo_url,
+			'logo_link' => home_url('/'),
+			'logo_alt' => get_bloginfo('name') ?: 'DrTalk',
+			'noise_url' => $default_noise_url,
+			'columns' => $default_columns,
+			'social_links' => $default_social_links,
+			'copyright' => str_replace('{year}', gmdate('Y'), $default_copyright_format)
+		];
+	}
+
+	$logo_id = carbon_get_theme_option('footer_logo');
+	$logo_url = $logo_id ? wp_get_attachment_url($logo_id) : '';
+	if (empty($logo_url)) {
+		$logo_url = $default_logo_url;
+	}
+
+	$logo_link = carbon_get_theme_option('footer_logo_url');
+	if (empty($logo_link)) {
+		$logo_link = home_url('/');
+	}
+
+	$logo_alt = carbon_get_theme_option('footer_logo_alt');
+	if (empty($logo_alt)) {
+		$logo_alt = get_bloginfo('name') ?: 'DrTalk';
+	}
+
+	$pattern_id = carbon_get_theme_option('footer_pattern');
+	$noise_url = $pattern_id ? wp_get_attachment_url($pattern_id) : '';
+	if (empty($noise_url)) {
+		$noise_url = $default_noise_url;
+	}
+
+	$raw_columns = carbon_get_theme_option('footer_columns');
+	$columns = [];
+	if (!empty($raw_columns) && is_array($raw_columns)) {
+		foreach ($raw_columns as $raw_col) {
+			$title = !empty($raw_col['column_title']) ? trim($raw_col['column_title']) : '';
+			$links = [];
+			if (!empty($raw_col['links']) && is_array($raw_col['links'])) {
+				foreach ($raw_col['links'] as $item) {
+					if (!empty($item['text']) && !empty($item['url'])) {
+						$links[] = [
+							'text' => $item['text'],
+							'url' => $item['url'],
+							'target_blank' => !empty($item['target_blank'])
+						];
+					}
+				}
+			}
+			if ($title !== '' || !empty($links)) {
+				$columns[] = [
+					'title' => $title,
+					'links' => $links
+				];
+			}
+		}
+	}
+
+	if (empty($columns)) {
+		$columns = $default_columns;
+	}
+
+	$raw_social = carbon_get_theme_option('footer_social_links');
+	$social_links = [];
+	$preset_icons = [
+		'linkedin' => get_theme_file_uri('assets/images/icon-linkedin.svg'),
+		'facebook' => get_theme_file_uri('assets/images/icon-facebook.svg'),
+		'instagram' => get_theme_file_uri('assets/images/icon-instagram.svg')
+	];
+
+	if (!empty($raw_social) && is_array($raw_social)) {
+		foreach ($raw_social as $item) {
+			if (!empty($item['url'])) {
+				$custom_icon_id = !empty($item['custom_icon']) ? (int) $item['custom_icon'] : 0;
+				$icon_url = $custom_icon_id ? wp_get_attachment_url($custom_icon_id) : '';
+				if (empty($icon_url)) {
+					$preset = !empty($item['preset_icon']) ? $item['preset_icon'] : 'linkedin';
+					$icon_url = $preset_icons[$preset] ?? $preset_icons['linkedin'];
+				}
+
+				$social_links[] = [
+					'title' => !empty($item['title']) ? $item['title'] : 'Social',
+					'url' => $item['url'],
+					'icon_url' => $icon_url
+				];
+			}
+		}
+	}
+
+	if (empty($social_links)) {
+		$social_links = $default_social_links;
+	}
+
+	$copyright_text = carbon_get_theme_option('footer_copyright');
+	if ($copyright_text === null || $copyright_text === '') {
+		$copyright_text = $default_copyright_format;
+	}
+	$copyright = str_replace('{year}', gmdate('Y'), $copyright_text);
+
+	return [
+		'logo_url' => $logo_url,
+		'logo_link' => $logo_link,
+		'logo_alt' => $logo_alt,
+		'noise_url' => $noise_url,
+		'columns' => $columns,
+		'social_links' => $social_links,
+		'copyright' => $copyright
+	];
+}
+
+/**
+ * Seeds default footer navigation and social links into Carbon Fields if not configured yet.
+ */
+function drtalk_redesign_seed_footer_settings()
+{
+	if (!function_exists('carbon_get_theme_option') || !function_exists('carbon_set_theme_option')) {
+		return;
+	}
+
+	if (get_option('drtalk_footer_seeded_v1')) {
+		return;
+	}
+
+	$default_referral_url = function_exists('drtalk_redesign_referral_gap_analysis_url')
+		? drtalk_redesign_referral_gap_analysis_url()
+		: '#';
+	$default_login_url = function_exists('drtalk_redesign_login_url') ? drtalk_redesign_login_url() : '#';
+	$default_contact_url = function_exists('drtalk_redesign_contact_url') ? drtalk_redesign_contact_url() : '#';
+
+	$existing_columns = carbon_get_theme_option('footer_columns');
+	if (empty($existing_columns)) {
+		carbon_set_theme_option('footer_columns', [
+			[
+				'column_title' => 'Website',
+				'links' => [
+					[
+						'text' => 'Book a Demo',
+						'url' => $default_referral_url,
+						'target_blank' => true
+					],
+					[
+						'text' => 'Log In',
+						'url' => $default_login_url,
+						'target_blank' => true
+					],
+					[
+						'text' => 'About',
+						'url' => home_url('/about-us/'),
+						'target_blank' => false
+					],
+					[
+						'text' => 'News',
+						'url' => home_url('/blog/'),
+						'target_blank' => false
+					]
+				]
+			],
+			[
+				'column_title' => 'Company',
+				'links' => [
+					[
+						'text' => 'Contact Us',
+						'url' => $default_contact_url,
+						'target_blank' => false
+					],
+					[
+						'text' => 'Privacy Policy',
+						'url' => home_url('/privacy/'),
+						'target_blank' => false
+					],
+					[
+						'text' => 'Business Associates Agreement',
+						'url' => home_url('/business-associates-agreement/'),
+						'target_blank' => false
+					],
+					[
+						'text' => 'Terms of Use',
+						'url' => home_url('/terms-and-conditions/'),
+						'target_blank' => false
+					]
+				]
+			]
+		]);
+	}
+
+	$existing_social = carbon_get_theme_option('footer_social_links');
+	if (empty($existing_social)) {
+		carbon_set_theme_option('footer_social_links', [
+			[
+				'title' => 'LinkedIn',
+				'url' => 'https://www.linkedin.com/company/drtalk/',
+				'preset_icon' => 'linkedin'
+			],
+			[
+				'title' => 'Facebook',
+				'url' => 'https://www.facebook.com/DrTalk1',
+				'preset_icon' => 'facebook'
+			],
+			[
+				'title' => 'Instagram',
+				'url' => 'https://www.instagram.com/drtalk_',
+				'preset_icon' => 'instagram'
+			]
+		]);
+	}
+
+	$existing_copyright = carbon_get_theme_option('footer_copyright');
+	if (empty($existing_copyright)) {
+		carbon_set_theme_option('footer_copyright', '© {year} drtalk. All rights reserved.');
+	}
+
+	update_option('drtalk_footer_seeded_v1', 1);
+}
+add_action('admin_init', 'drtalk_redesign_seed_footer_settings');
+
+/**
  * Returns all configured home blocks from Carbon Fields.
  *
  * @return array
