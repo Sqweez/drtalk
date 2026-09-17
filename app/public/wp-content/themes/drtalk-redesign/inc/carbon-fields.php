@@ -1361,7 +1361,7 @@ function drtalk_redesign_register_about_page_fields()
 			Field::make('complex', 'about_stats_cards', __('Stats Cards', 'drtalk-redesign'))
 				->set_layout('tabbed-horizontal')
 				->add_fields([
-					Field::make('text', 'value', __('Stat Value / Metric', 'drtalk-redesign'))
+					Field::make('text', 'stat_value', __('Stat Value / Metric', 'drtalk-redesign'))
 						->set_required(true)
 						->set_width(40),
 					Field::make('textarea', 'label', __('Label (HTML allowed)', 'drtalk-redesign'))
@@ -1553,14 +1553,17 @@ function drtalk_redesign_get_about_page_settings()
 			'pattern_url' => $default_pattern_url,
 			'cards' => [
 				[
+					'stat_value' => '$500M+',
 					'value' => '$500M+',
 					'label' => 'In referral-driven <strong>revenue</strong> tracked'
 				],
 				[
+					'stat_value' => 'Up to 20%',
 					'value' => 'Up to 20%',
 					'label' => '<strong>Revenue growth</strong> for drtalk practices in year one'
 				],
 				[
+					'stat_value' => '70%',
 					'value' => '70%',
 					'label' => '<strong>Faster</strong> time-to-scheduled appointment'
 				]
@@ -1721,9 +1724,11 @@ function drtalk_redesign_get_about_page_settings()
 	$stats_cards = [];
 	if (!empty($raw_stats) && is_array($raw_stats)) {
 		foreach ($raw_stats as $item) {
-			if (!empty($item['value'])) {
+			$val = !empty($item['stat_value']) ? $item['stat_value'] : (!empty($item['value']) ? $item['value'] : '');
+			if (!empty($val)) {
 				$stats_cards[] = [
-					'value' => $item['value'],
+					'stat_value' => $val,
+					'value' => $val,
 					'label' => !empty($item['label']) ? $item['label'] : ''
 				];
 			}
@@ -1882,15 +1887,15 @@ function drtalk_redesign_seed_about_page_settings()
 	if (empty($existing_stats)) {
 		carbon_set_theme_option('about_stats_cards', [
 			[
-				'value' => '$500M+',
+				'stat_value' => '$500M+',
 				'label' => 'In referral-driven <strong>revenue</strong> tracked'
 			],
 			[
-				'value' => 'Up to 20%',
+				'stat_value' => 'Up to 20%',
 				'label' => '<strong>Revenue growth</strong> for drtalk practices in year one'
 			],
 			[
-				'value' => '70%',
+				'stat_value' => '70%',
 				'label' => '<strong>Faster</strong> time-to-scheduled appointment'
 			]
 		]);

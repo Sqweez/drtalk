@@ -135,7 +135,7 @@ get_header();
      	$stats['pattern_url']
      ); ?>'); background-size: 35rem 35rem;">
 						<p class="font-heading text-[3.5rem] font-medium leading-none tracking-[-0.01em]"><?php echo esc_html(
-      	$card['value']
+      	$card['stat_value'] ?? ($card['value'] ?? '')
       ); ?></p>
 						<p class="mt-1 text-sm leading-5"><?php echo wp_kses_post($card['label']); ?></p>
 					</div>
