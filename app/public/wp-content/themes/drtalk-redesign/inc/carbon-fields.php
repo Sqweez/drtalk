@@ -1275,9 +1275,50 @@ function drtalk_redesign_register_about_page_fields()
 			Field::make('text', 'about_hero_button_text', __('Button Text', 'drtalk-redesign'))->set_default_value(
 				'See How drtalk Works'
 			),
-			Field::make('text', 'about_hero_button_url', __('Button URL', 'drtalk-redesign'))->set_help_text(
-				__('Leave empty for default Gap Analysis link.', 'drtalk-redesign')
-			),
+			Field::make('select', 'about_hero_button_link_type', __('Button Link Destination', 'drtalk-redesign'))
+				->set_options([
+					'section' => __('Scroll to Section on Page (Anchor)', 'drtalk-redesign'),
+					'custom' => __('Custom URL / External Link', 'drtalk-redesign')
+				])
+				->set_default_value('section')
+				->set_help_text(
+					__(
+						'Choose whether the button scrolls to a section on this page or opens a custom URL.',
+						'drtalk-redesign'
+					)
+				),
+			Field::make('select', 'about_hero_button_section', __('Select Section', 'drtalk-redesign'))
+				->set_options([
+					'#what-tom-built' => __('What Tom actually built (Features)', 'drtalk-redesign'),
+					'#problems' => __('What We Solve (Problems)', 'drtalk-redesign'),
+					'#founder' => __('Founder Story', 'drtalk-redesign'),
+					'#outcomes' => __('Outcomes / Stats', 'drtalk-redesign'),
+					'#testimonial' => __('Testimonial', 'drtalk-redesign'),
+					'#choices' => __('Better Results or Money Back', 'drtalk-redesign')
+				])
+				->set_default_value('#what-tom-built')
+				->set_conditional_logic([
+					[
+						'field' => 'about_hero_button_link_type',
+						'value' => 'section'
+					]
+				]),
+			Field::make('text', 'about_hero_button_url', __('Custom URL', 'drtalk-redesign'))
+				->set_help_text(__('Enter full URL (e.g. https://... or /page/).', 'drtalk-redesign'))
+				->set_conditional_logic([
+					[
+						'field' => 'about_hero_button_link_type',
+						'value' => 'custom'
+					]
+				]),
+			Field::make('checkbox', 'about_hero_button_new_tab', __('Open in new tab', 'drtalk-redesign'))
+				->set_help_text(__('Only applies to Custom URL links.', 'drtalk-redesign'))
+				->set_conditional_logic([
+					[
+						'field' => 'about_hero_button_link_type',
+						'value' => 'custom'
+					]
+				]),
 			Field::make('image', 'about_hero_image', __('Dashboard Preview Image', 'drtalk-redesign'))
 				->set_value_type('id')
 				->set_help_text(__('Leave empty to use the default dashboard image.', 'drtalk-redesign')),
@@ -1513,7 +1554,10 @@ function drtalk_redesign_get_about_page_settings()
 			'description' =>
 				'Today, drtalk is the AI-powered referral and communication platform developed specifically for dental specialists and trusted by over 1,500 practices nationwide.',
 			'button_text' => 'See How drtalk Works',
-			'button_url' => $default_referral_url,
+			'button_link_type' => 'section',
+			'button_section' => '#what-tom-built',
+			'button_url' => '#what-tom-built',
+			'button_new_tab' => false,
 			'image_url' => $default_hero_image_url,
 			'pattern_url' => $default_pattern_url
 		],
@@ -1653,7 +1697,34 @@ function drtalk_redesign_get_about_page_settings()
 	$hero_image_url = $hero_image_id ? wp_get_attachment_url($hero_image_id) : '';
 	$hero_pattern_id = carbon_get_theme_option('about_hero_pattern');
 	$hero_pattern_url = $hero_pattern_id ? wp_get_attachment_url($hero_pattern_id) : '';
-	$hero_btn_url = carbon_get_theme_option('about_hero_button_url');
+
+	$raw_hero_link_type = carbon_get_theme_option('about_hero_button_link_type');
+	$hero_button_section = carbon_get_theme_option('about_hero_button_section') ?: '#what-tom-built';
+	$hero_custom_url = carbon_get_theme_option('about_hero_button_url');
+	$hero_new_tab = (bool) carbon_get_theme_option('about_hero_button_new_tab');
+
+	if (empty($raw_hero_link_type)) {
+		if (!empty($hero_custom_url) && !str_starts_with($hero_custom_url, '#')) {
+			$hero_link_type = 'custom';
+			$hero_button_url = $hero_custom_url;
+			$hero_open_new_tab = $hero_new_tab;
+		} else {
+			$hero_link_type = 'section';
+			$hero_button_url =
+				!empty($hero_custom_url) && str_starts_with($hero_custom_url, '#')
+					? $hero_custom_url
+					: $hero_button_section;
+			$hero_open_new_tab = false;
+		}
+	} elseif ($raw_hero_link_type === 'section') {
+		$hero_link_type = 'section';
+		$hero_button_url = $hero_button_section;
+		$hero_open_new_tab = false;
+	} else {
+		$hero_link_type = 'custom';
+		$hero_button_url = !empty($hero_custom_url) ? $hero_custom_url : '#what-tom-built';
+		$hero_open_new_tab = str_starts_with($hero_button_url, '#') ? false : $hero_new_tab;
+	}
 
 	$hero = [
 		'is_active' => $hero_active === null || $hero_active === '' ? true : (bool) $hero_active,
@@ -1661,7 +1732,10 @@ function drtalk_redesign_get_about_page_settings()
 		'title' => carbon_get_theme_option('about_hero_title') ?: $defaults['hero']['title'],
 		'description' => carbon_get_theme_option('about_hero_description') ?: $defaults['hero']['description'],
 		'button_text' => carbon_get_theme_option('about_hero_button_text') ?: $defaults['hero']['button_text'],
-		'button_url' => !empty($hero_btn_url) ? $hero_btn_url : $defaults['hero']['button_url'],
+		'button_link_type' => $hero_link_type,
+		'button_section' => $hero_button_section,
+		'button_url' => $hero_button_url,
+		'button_new_tab' => $hero_open_new_tab,
 		'image_url' => !empty($hero_image_url) ? $hero_image_url : $defaults['hero']['image_url'],
 		'pattern_url' => !empty($hero_pattern_url) ? $hero_pattern_url : $defaults['hero']['pattern_url']
 	];

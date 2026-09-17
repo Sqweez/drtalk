@@ -40,7 +40,7 @@ get_header();
 			<?php if (!empty($hero['button_text']) && !empty($hero['button_url'])): ?>
 				<a class="inline-flex h-16 items-center justify-center gap-2 rounded-full border-2 border-purple-dark px-8 text-center text-base font-bold leading-6 text-purple-dark transition-colors hover:bg-purple-dark hover:text-cream" href="<?php echo esc_url(
     	$hero['button_url']
-    ); ?>" target="_blank" rel="noreferrer">
+    ); ?>"<?php echo !empty($hero['button_new_tab']) ? ' target="_blank" rel="noreferrer"' : ''; ?>>
 					<?php echo esc_html($hero['button_text']); ?>
 					<span class="text-2xl leading-none" aria-hidden="true">→</span>
 				</a>
@@ -59,7 +59,7 @@ get_header();
 <?php endif; ?>
 
 <?php if (!empty($problems['is_active'])): ?>
-<section class="px-5 py-16 sm:px-8 lg:px-12 lg:py-[6.5rem]" aria-labelledby="growth-title">
+<section id="problems" class="scroll-mt-24 px-5 py-16 sm:px-8 lg:px-12 lg:py-[6.5rem]" aria-labelledby="growth-title">
 	<div class="mx-auto max-w-[75rem]">
 		<div class="text-center">
 			<?php if (!empty($problems['eyebrow'])): ?>
@@ -97,7 +97,7 @@ get_header();
 <?php endif; ?>
 
 <?php if (!empty($founder['is_active'])): ?>
-<section class="px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="founder-title">
+<section id="founder" class="scroll-mt-24 px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="founder-title">
 	<div class="mx-auto grid max-w-[75rem] gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,.75fr)] lg:gap-16">
 		<div class="order-2 lg:order-1">
 			<h2 id="founder-title" class="text-[2rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-[2.5rem]"><?php echo esc_html(
@@ -123,7 +123,7 @@ get_header();
 <?php endif; ?>
 
 <?php if (!empty($stats['is_active'])): ?>
-<section class="px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="outcomes-title">
+<section id="outcomes" class="scroll-mt-24 px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="outcomes-title">
 	<div class="mx-auto max-w-[75rem]">
 		<h2 id="outcomes-title" class="text-center text-[2rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-[2.5rem]"><?php echo esc_html(
   	$stats['title']
@@ -147,7 +147,7 @@ get_header();
 <?php endif; ?>
 
 <?php if (!empty($testimonial['is_active'])): ?>
-<section class="px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="testimonial-title">
+<section id="testimonial" class="scroll-mt-24 px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="testimonial-title">
 	<div class="mx-auto flex max-w-[75rem] flex-col gap-10 overflow-hidden rounded-3xl bg-lilac px-6 py-8 lg:p-12" style="background-image: url('<?php echo esc_url(
  	$testimonial['pattern_url']
  ); ?>'); background-size: 35rem 35rem;">
@@ -209,7 +209,7 @@ get_header();
 <?php endif; ?>
 
 <?php if (!empty($choices['is_active'])): ?>
-<section class="px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="choices-title">
+<section id="choices" class="scroll-mt-24 px-5 py-16 sm:px-8 lg:px-12 lg:py-20" aria-labelledby="choices-title">
 	<div class="mx-auto max-w-[75rem]">
 		<div class="text-center">
 			<h2 id="choices-title" class="text-[2rem] font-medium leading-[1.1] tracking-[-0.01em] lg:text-[2.5rem]"><?php echo esc_html(
