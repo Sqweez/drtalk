@@ -83,6 +83,33 @@ add_action('template_redirect', 'drtalk_redesign_disable_sharing_on_pages');
 add_action('loop_start', 'drtalk_redesign_disable_sharing_on_pages');
 
 /**
+ * Redirects legacy /privacy-policy requests to /privacy preserving query parameters.
+ */
+function drtalk_redesign_redirect_legacy_privacy_policy()
+{
+	$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+	$req_path = trim((string) wp_parse_url($request_uri, PHP_URL_PATH), '/');
+	$site_path = trim((string) wp_parse_url(home_url(), PHP_URL_PATH), '/');
+
+	if ($site_path !== '' && str_starts_with($req_path, $site_path)) {
+		$req_path = trim(substr($req_path, strlen($site_path)), '/');
+	}
+
+	if ($req_path === 'privacy-policy') {
+		$query = wp_parse_url($request_uri, PHP_URL_QUERY);
+		$target_url = home_url('/privacy/');
+
+		if (!empty($query)) {
+			$target_url .= '?' . $query;
+		}
+
+		wp_safe_redirect($target_url, 301);
+		exit();
+	}
+}
+add_action('template_redirect', 'drtalk_redesign_redirect_legacy_privacy_policy', 1);
+
+/**
  * Outputs modern SVG favicon, fallbacks, web manifest, and theme color in <head>.
  */
 function drtalk_redesign_favicon_head_tags()
